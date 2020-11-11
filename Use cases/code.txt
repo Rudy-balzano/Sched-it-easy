@@ -1,0 +1,47 @@
+@startuml
+title Sched it'Easy
+actor Visitor
+actor Admin
+actor Client
+Client <|-- Admin
+
+left to right direction
+
+rectangle ScheditEasy {
+
+package account_management { 
+Visitor --> (register)
+(register) .> (validation) : include
+Admin -->(validation)
+Admin --> (Delete a client)
+Admin -->(Add new admin)
+}
+
+package room_management { 
+Admin -->(Add/Update/Delete rooms)
+Admin --> (Add/Update/Delete topics)
+}
+
+package EDT_Management{
+Admin -->(Create a schedule)
+(Create a schedule) <|-- (manually)
+(Create a schedule) <|-- (automatically)
+Admin -->(Invite ppl to a meeting)
+Admin -->(Book a room for a meeting)
+(order equipements) .> (Book a room for a meeting) : extends
+(payment) .> (order equipements) : include
+Admin -->(validate demands)
+Client -->(Make reservation demand)
+(Make reservation demand) .down.> (validate demands) : include
+Client -->(Answer to an invitation)
+(Answer to an invitation) .> (Invite ppl to a meeting) : include
+}
+
+package user_management {
+Client --> (login/logout)
+Client --> (Check schedule)
+Client -->(See available rooms)
+}
+
+}
+@enduml
