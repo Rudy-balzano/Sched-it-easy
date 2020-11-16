@@ -18,14 +18,12 @@ Admin -->(Add new admin)
 }
 
 package room_management { 
-Admin -->(Add/Update/Delete rooms)
-Admin --> (Add/Update/Delete topics)
+Admin -->(manage rooms)
+Admin --> (manage topics)
 }
 
 package EDT_Management{
-Admin -->(Create a schedule)
-(Create a schedule) <|-- (manually)
-(Create a schedule) <|-- (automatically)
+Admin -->(Create an automatic schedule)
 Admin -->(Invite ppl to a meeting)
 Admin -->(Book a room for a meeting)
 (order equipements) .> (Book a room for a meeting) : extends
@@ -40,7 +38,7 @@ Client -->(Answer to an invitation)
 package user_management {
 Client --> (login/logout)
 Client --> (Check schedule)
-Client -->(See available rooms)
+(Answer to an invitation) .> (Check schedule) : extends
 }
 
 }
