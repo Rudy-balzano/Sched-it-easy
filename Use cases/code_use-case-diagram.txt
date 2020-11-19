@@ -3,43 +3,46 @@ title Sched it'Easy
 actor Visitor
 actor Admin
 actor Client
-Client <|-- Admin
-
+actor Manager
+Client <|-- Manager
 left to right direction
-
 rectangle ScheditEasy {
-
 package account_management { 
 Visitor --> (register)
 (register) .> (validation) : include
 Admin -->(validation)
 Admin --> (Delete a client)
 Admin -->(Add new admin)
+Admin --> (Add new manager)
 }
-
-package room_management { 
+package room_topic_management { 
 Admin -->(manage rooms)
 Admin --> (manage topics)
 }
-
 package EDT_Management{
-Admin -->(Create an automatic schedule)
-Admin -->(Invite ppl to a meeting)
-Admin -->(Book a room for a meeting)
+Manager -->(Create an automatic schedule)
+Client -->(Invite ppl to a meeting)
+Manager --> (Create a meeting)
+Client --> (Ask to create a meeting)
+Manager -->(Book a room for a meeting)
+Client --> (Ask to book a room)
+(Ask to create a meeting) .> (Ask to book a room) : extends
+(Book a room for a meeting) .> (Create a meeting) : extends
 (order equipements) .> (Book a room for a meeting) : extends
+(order equipements) .> (Ask to book a room) : extends
 (payment) .> (order equipements) : include
-Admin -->(validate demands)
-Client -->(Make reservation demand)
-(Make reservation demand) .down.> (validate demands) : include
+Manager -->(accept request)
+
+(Ask to book a room) .down.> (accept request) : include
+(Ask to create a meeting) .down.> (accept request) : include
 Client -->(Answer to an invitation)
 (Answer to an invitation) .> (Invite ppl to a meeting) : include
 }
-
 package user_management {
 Client --> (login/logout)
 Client --> (Check schedule)
 (Answer to an invitation) .> (Check schedule) : extends
 }
-
 }
-@enduml
+@enduml 
+
