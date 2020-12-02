@@ -1,13 +1,10 @@
-package core;
+package gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
-
-import java.awt.event.ActionEvent;
-import java.sql.SQLException;
 
 public class LoginController {
 

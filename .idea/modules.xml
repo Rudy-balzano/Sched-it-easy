@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Sched-it-easy.iml" filepath="$PROJECT_DIR$/Sched-it-easy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/projet/models.iml" filepath="$PROJECT_DIR$/projet/models.iml" />
     </modules>
   </component>
 </project>
