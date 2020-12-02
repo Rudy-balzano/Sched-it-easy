@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import core.SessionFacade;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -17,7 +18,9 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
-    public void handleButtonAction(javafx.event.ActionEvent actionEvent) {
+    private SessionFacade session = new SessionFacade();
+
+    public void handleLogin(javafx.event.ActionEvent actionEvent) {
         Window owner = loginButton.getScene().getWindow();
 
         System.out.println(username.getText());
@@ -33,6 +36,11 @@ public class LoginController {
                     "Please enter a password");
             return;
         }
+        String userN = username.getText();
+        String pass = password.getText();
+
+        session.login(userN, pass);
+
     }
 
     private static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
