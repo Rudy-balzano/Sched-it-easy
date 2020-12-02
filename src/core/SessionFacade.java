@@ -12,7 +12,7 @@ public class SessionFacade {
 
     User connectedUser;
 //    MySQLFactoryDAO mySQLFactoryDAO;
-    MySQLUserDAO mySQLUserDAO;
+    MySQLUserDAO mySQLUserDAO = new MySQLUserDAO();
 
 
     /**

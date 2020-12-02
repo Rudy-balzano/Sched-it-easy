@@ -5,8 +5,10 @@ import java.sql.*;
 
 public class MySQLUserDAO implements UserDAO {
 
-    ConnectionDBMySQL instanceConnection = ConnectionDBMySQL.getInstance();
-    Connection connection = instanceConnection.getConnection();
+    private ConnectionDBMySQL instanceConnection = ConnectionDBMySQL.getInstance();
+    private Connection connection = instanceConnection.getConnection();
+
+    public MySQLUserDAO(){ }
 
     public ArrayList<String> findByUsername(String username){
 
