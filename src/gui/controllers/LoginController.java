@@ -23,9 +23,6 @@ public class LoginController {
     public void handleLogin(javafx.event.ActionEvent actionEvent) {
         Window owner = loginButton.getScene().getWindow();
 
-        System.out.println(username.getText());
-        System.out.println(password.getText());
-
         if (username.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
                     "Please enter your email id");
@@ -40,6 +37,8 @@ public class LoginController {
         String pass = password.getText();
 
         session.login(userN, pass);
+        username.setText("");
+        password.setText("");
 
     }
 

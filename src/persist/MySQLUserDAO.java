@@ -2,6 +2,7 @@ package persist;
 
 import java.util.ArrayList;
 import java.sql.*;
+import java.util.HashMap;
 
 public class MySQLUserDAO implements UserDAO {
 
@@ -10,24 +11,24 @@ public class MySQLUserDAO implements UserDAO {
 
     public MySQLUserDAO(){ }
 
-    public ArrayList<String> findByUsername(String username){
+    public HashMap<String,String> findByUsername(String username){
 
-        ArrayList<String> user = new ArrayList<>();
+        HashMap<String,String> infoUser = new HashMap<String, String>();
 
         try{
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from users where username = '" + username + "';");
             if(rs.next()){
-                user.add(rs.getString(2));
-                user.add(rs.getString(3));
-                user.add(rs.getString(4));
-                user.add(rs.getString(5));
+                infoUser.put("username",rs.getString(2));
+                infoUser.put("password",rs.getString(3));
+                infoUser.put("firstname",rs.getString(4));
+                infoUser.put("lastname",rs.getString(5));
             }
         } catch (SQLException ex){
             System.out.println("SQL request error");
         }
 
-        return user;
+        return infoUser;
     }
 
 }
