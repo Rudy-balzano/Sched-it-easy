@@ -1,4 +1,4 @@
-package core;
+package gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,18 +8,22 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    public static Stage scheditWindow;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        scheditWindow = primaryStage;
+
         // Main App
-        primaryStage.setTitle("Sched'it easy");
-        primaryStage.centerOnScreen();
+        scheditWindow.setTitle("Sched'it easy");
+        scheditWindow.centerOnScreen();
 
         //Login
-        Parent loginRoot = FXMLLoader.load(getClass().getResource("../gui/views/loginView.fxml"));
-//        Scene loginView = new LoginView(loginRoot, 300, 275);
+        Parent loginRoot = FXMLLoader.load(getClass().getResource("views/loginView.fxml"));
+        Scene loginView = new Scene(loginRoot);
 
-
-        primaryStage.setScene(new Scene(loginRoot));
+        primaryStage.setScene(loginView);
         primaryStage.show();
     }
 

@@ -1,11 +1,19 @@
 package gui.controllers;
 
+import gui.Main;
+import gui.roots.Roots;
+import javafx.event.ActionEvent;
 import core.SessionFacade;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
+
+import java.io.IOException;
 
 public class LoginController {
 
@@ -18,9 +26,13 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
+    @FXML
+    private Button registerButton;
+
     private SessionFacade session = new SessionFacade();
 
-    public void handleLogin(javafx.event.ActionEvent actionEvent) {
+    @FXML
+    public void handleLogin(ActionEvent actionEvent) {
         Window owner = loginButton.getScene().getWindow();
 
         if (username.getText().isEmpty()) {
@@ -47,6 +59,15 @@ public class LoginController {
         password.setText("");
 
     }
+
+    @FXML
+    public void switchToRegisterView (ActionEvent actionEvent) throws IOException {
+        Parent registerRoot = FXMLLoader.load(getClass().getResource(Roots.registerRoot));
+        Scene registerView = new Scene(registerRoot);
+        Main.scheditWindow.setScene(registerView);
+
+    }
+
 
     private static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
         Alert alert = new Alert(alertType);
