@@ -52,7 +52,7 @@ public class SessionFacade {
         connectedUser = mySQLUserDAO.findByUsername(u);
 
         // si on trouve le user dans la db
-        if (connectedUser != null){
+        if (connectedUser.getUserName() != null){
 
             check = verification(connectedUser.getPassword(), p);
             System.out.println("is checking...");

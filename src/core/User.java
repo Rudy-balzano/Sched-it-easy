@@ -21,6 +21,10 @@ public class User {
     }
 
     public User() {
+        this.username = null;
+        this.password = null;
+        this.firstName = null;
+        this.lastName = null;
 
     }
     //private void seeAccount() {
