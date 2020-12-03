@@ -50,17 +50,16 @@ public class SessionFacade {
         mySQLFactoryDAO.getInstance();
 */
         // on récupère les infos du user : username, password, firstname, lastname
-        InfoUser = mySQLUserDAO.findByUsername(u);
+        connectedUser = mySQLUserDAO.findByUsername(u);
 
         // si on trouve le user dans la db
-        if (InfoUser.size() != 0){
+        if (connectedUser != null){
 
             check = verification(InfoUser, p);
             System.out.println("is checking...");
 
             // si le mot de passe entré est le bon
             if (check){
-                connectedUser = new User(InfoUser.get(0), InfoUser.get(1), InfoUser.get(2), InfoUser.get(3));
                 System.out.println("You are logged !");
             }
 
@@ -90,15 +89,15 @@ public class SessionFacade {
     /**
      *
      */
-    public void getFirstName() {
-        // TODO implement here
+    public String getFirstName() {
+        return connectedUser.getFirstName();
     }
 
     /**
      *
      */
-    public void getLastName() {
-        // TODO implement here
+    public String getLastName() {
+        return connectedUser.getLastName();
     }
 
 }
