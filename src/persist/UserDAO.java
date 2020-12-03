@@ -2,8 +2,9 @@ package persist;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import core.User;
 
 public interface UserDAO {
 
-    public HashMap<String,String> findByUsername(String username);
+    public User findByUsername(String username);
 }

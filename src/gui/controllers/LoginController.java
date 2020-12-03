@@ -36,7 +36,13 @@ public class LoginController {
         String userN = username.getText();
         String pass = password.getText();
 
-        session.login(userN, pass);
+        boolean check = false;
+
+        check = session.login(userN, pass);
+
+        if (check){
+            System.out.println("L'utilisateur " + session.getFirstName() + " " + session.getLastName() + " est connecté!");
+        }
         username.setText("");
         password.setText("");
 

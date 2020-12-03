@@ -39,13 +39,12 @@ public class SessionFacade {
      * @param username
      * @param password
      */
-    public void login(String username, String password) {
+    public boolean login(String username, String password) {
 
         Boolean check = false;
         String u = username;
         String p = password;
 
-        HashMap<String,String> InfoUser = new HashMap<>();
 /*
         mySQLFactoryDAO.getInstance();
 */
@@ -55,7 +54,7 @@ public class SessionFacade {
         // si on trouve le user dans la db
         if (connectedUser != null){
 
-            check = verification(InfoUser, p);
+            check = verification(connectedUser.getPassword(), p);
             System.out.println("is checking...");
 
             // si le mot de passe entré est le bon
@@ -68,19 +67,20 @@ public class SessionFacade {
             System.out.println("Sorry, bad username or password, try again !");
         }
 
+        return check;
+
     }
 
     /**
      * fonction qui vérifie le mot de passe de l'utilisateur
-     * @param infoUser
+     * @param userPassword
      * @param passwordEnter
      * @return
      */
-    public Boolean verification(HashMap<String,String> infoUser, String passwordEnter){
+    public Boolean verification(String userPassword, String passwordEnter){
         Boolean check = false;
 
-        String password = infoUser.get("password");
-        if(password.equals(passwordEnter)){
+        if(userPassword.equals(passwordEnter)){
             check = true;
         }
         return check;
@@ -99,5 +99,7 @@ public class SessionFacade {
     public String getLastName() {
         return connectedUser.getLastName();
     }
+
+    public User getConnectedUser() { return this.connectedUser;}
 
 }
