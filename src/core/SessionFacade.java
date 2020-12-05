@@ -2,8 +2,9 @@ package core;
 
 import javafx.scene.control.TextField;
 import persist.ConnectionDBMySQL;
-import persist.MySQLFactoryDAO;
-import persist.MySQLUserDAO;
+import persist.FactoryDAO;
+import persist.FactoryDAOImpl;
+import persist.UserDAO;
 
 import java.util.*;
 
@@ -13,16 +14,16 @@ import java.util.*;
 public class SessionFacade {
 
     private User connectedUser;
-    private MySQLFactoryDAO mySQLFactoryDAO;
-    private MySQLUserDAO mySQLUserDAO;
+    private FactoryDAOImpl factoryDAO;
+    private UserDAO userDAO;
 
 
     /**
      * Default constructor
      */
     public SessionFacade() {
-        mySQLFactoryDAO = MySQLFactoryDAO.getInstance();
-        mySQLUserDAO = mySQLFactoryDAO.createUserDAO();
+        factoryDAO = factoryDAO.getInstance();
+        userDAO = factoryDAO.createUserDAO();
     }
 
     /**
@@ -49,7 +50,7 @@ public class SessionFacade {
         mySQLFactoryDAO.getInstance();
 */
         // on récupère les infos du user : username, password, firstname, lastname
-        connectedUser = mySQLUserDAO.findByUsername(u);
+        connectedUser = userDAO.findByUsername(u);
 
         // si on trouve le user dans la db
         if (connectedUser.getUserName() != null){

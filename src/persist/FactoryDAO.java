@@ -4,6 +4,7 @@ public interface FactoryDAO {
     /**
      *
      */
-    public MySQLUserDAO createUserDAO();
+    public UserDAO createUserDAO();
+
 
 }
