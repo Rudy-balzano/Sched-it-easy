@@ -35,17 +35,17 @@ public class MySQLUserDAO implements UserDAO {
         return u;
     }
 
-    public boolean insert(String username, String first, String last, String mdp){
+    public boolean insertWaitingUser(String username, String first, String last, String mdp){
         boolean result = false;
 
         if(!verify(username)){
 
             try{
                 Statement stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery("INSERT INTO waiting_users (username,password,first_name,last_name) VALUES ('" + username + "','" + mdp + "','" + first + "','" + last +"');");
+                stmt.executeUpdate("insert into waiting_users (username,password,first_name,last_name) values('" + username + "','" + mdp + "','" + first + "','" + last +"');");
                 result = true;
             } catch (SQLException ex){
-                System.out.println("SQL request error");
+                System.out.println(ex);
             }
         }
 
@@ -57,12 +57,13 @@ public class MySQLUserDAO implements UserDAO {
 
         try {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from users, waiting_users where username = '" + username + "';");
-            if (rs.next()) {
+            ResultSet rs1 = stmt.executeQuery("select * from users where username = '" + username + "';");
+            ResultSet rs2 = stmt.executeQuery("select * from waiting_users where username = '" + username + "';");
+            if (rs1.next() || rs2.next()) {
                 exist = true;
             }
         } catch (SQLException ex){
-                System.out.println("SQL request error");
+
         }
 
         return exist;

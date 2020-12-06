@@ -35,7 +35,7 @@ public class SessionFacade {
      */
     public boolean register(String username, String firstName,String lastName, String password) {
 
-        return userDAO.insert(username,firstName,lastName,password);
+        return userDAO.insertWaitingUser(username,firstName,lastName,password);
 
     }
 
