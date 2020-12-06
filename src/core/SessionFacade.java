@@ -22,6 +22,8 @@ public class SessionFacade {
      * Default constructor
      */
     public SessionFacade() {
+        this.factoryDAO = FactoryDAOImpl.getInstance();
+        this.userDAO = factoryDAO.createUserDAO();
 
     }
 
