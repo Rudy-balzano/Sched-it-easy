@@ -29,8 +29,6 @@ public class LoginController {
     @FXML
     private Button registerButton;
 
-    private SessionFacade session = new SessionFacade();
-
     @FXML
     public void handleLogin(ActionEvent actionEvent) {
         Window owner = loginButton.getScene().getWindow();
@@ -45,6 +43,9 @@ public class LoginController {
                     "Please enter a password");
             return;
         }
+
+        SessionFacade session = new SessionFacade();
+
         String userN = username.getText();
         String pass = password.getText();
 
