@@ -14,23 +14,28 @@ import java.util.*;
 public class SessionFacade {
 
     private User connectedUser;
+    private FactoryDAOImpl factoryDAO;
+    private UserDAO userDAO;
 
 
     /**
      * Default constructor
      */
     public SessionFacade() {
+
     }
 
     /**
-     * @param String username
-     * @param String password
-     * @param String firstName
-     * @param String lastName
+     * @param username
+     * @param password
+     * @param firstName
+     * @param lastName
      */
-//    public void register(void String username, void String password, void String firstName, void String lastName) {
-//        // TODO implement here
-//    }
+    public boolean register(String username, String firstName,String lastName, String password) {
+
+        return userDAO.insert(username,firstName,lastName,password);
+
+    }
 
     /**
      * @param username
@@ -39,20 +44,14 @@ public class SessionFacade {
     public boolean login(String username, String password) {
 
         Boolean check = false;
-        String u = username;
-        String p = password;
-
-        // on crée la connection à la base de données
-        FactoryDAOImpl factoryDAO = FactoryDAOImpl.getInstance();
-        UserDAO userDAO = factoryDAO.createUserDAO();
 
         // on récupère les infos du user : username, password, firstname, lastname
-        connectedUser = userDAO.findByUsername(u);
+        connectedUser = userDAO.findByUsername(username);
 
         // si on trouve le user dans la db
         if (connectedUser.getUserName() != null){
 
-            check = verification(connectedUser.getPassword(), p);
+            check = verification(connectedUser.getPassword(), password);
             System.out.println("is checking...");
 
             // si le mot de passe entré est le bon
