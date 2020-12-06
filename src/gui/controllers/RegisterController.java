@@ -55,7 +55,7 @@ public class RegisterController {
         String Password = password.getText();
         String ConfirmPassword = confirmPassword.getText();
 
-        if (Password != ConfirmPassword){
+        if (!Password.equals(ConfirmPassword) ){
             System.out.println("password and confirmPassword are different !");
             password.setText("");
             confirmPassword.setText("");
