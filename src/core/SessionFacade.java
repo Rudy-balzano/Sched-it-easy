@@ -14,16 +14,12 @@ import java.util.*;
 public class SessionFacade {
 
     private User connectedUser;
-    private FactoryDAOImpl factoryDAO;
-    private UserDAO userDAO;
 
 
     /**
      * Default constructor
      */
     public SessionFacade() {
-        factoryDAO = factoryDAO.getInstance();
-        userDAO = factoryDAO.createUserDAO();
     }
 
     /**
@@ -46,9 +42,10 @@ public class SessionFacade {
         String u = username;
         String p = password;
 
-/*
-        mySQLFactoryDAO.getInstance();
-*/
+        // on crée la connection à la base de données
+        FactoryDAOImpl factoryDAO = FactoryDAOImpl.getInstance();
+        UserDAO userDAO = factoryDAO.createUserDAO();
+
         // on récupère les infos du user : username, password, firstname, lastname
         connectedUser = userDAO.findByUsername(u);
 
@@ -78,7 +75,7 @@ public class SessionFacade {
      * @param passwordEnter
      * @return
      */
-    public Boolean verification(String userPassword, String passwordEnter){
+    private Boolean verification(String userPassword, String passwordEnter){
         Boolean check = false;
 
         if(userPassword.equals(passwordEnter)){
