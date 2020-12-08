@@ -4,19 +4,21 @@ import java.util.Date;
 import java.util.ArrayList;
 
 public class Meeting {
+    private int id;
     private Date date;
     private int duration;
     private User clientMeeting;
-    private ArrayList<Invitation> listInvitation = new ArrayList<Invitation> ();
-    //private Topic meetingTopic;
+    private ArrayList<Invitation> listInvitation;
+    private Topic meetingTopic;
 
-    public Meeting(Date date,int duration,User clientMeeting) {
+    public Meeting(Date date,int duration,User clientMeeting, ArrayList<Invitation> listInvitation, Topic meetingTopic, int id) {
 
         this.clientMeeting = clientMeeting;
         this.date = date;
         this.duration = duration;
         this.listInvitation = listInvitation;
-        //this.meetingTopic = meetingTopic
+        this.meetingTopic = meetingTopic;
+        this.id = id;
 
     }
 
@@ -52,5 +54,21 @@ public class Meeting {
 
     public void setListInvitation(ArrayList<Invitation> listInvitation) {
         this.listInvitation = listInvitation;
+    }
+
+    public Topic getMeetingTopic() {
+        return meetingTopic;
+    }
+
+    public void setMeetingTopic(Topic meetingTopic) {
+        this.meetingTopic = meetingTopic;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
