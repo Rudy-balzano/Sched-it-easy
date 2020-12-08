@@ -1,8 +1,6 @@
 package persist;
 
-import java.util.ArrayList;
 import java.sql.*;
-import java.util.HashMap;
 import core.User;
 
 public class MySQLUserDAO implements UserDAO {
@@ -15,6 +13,7 @@ public class MySQLUserDAO implements UserDAO {
         this.connection = instanceConnection.getConnection();
     }
 
+    @Override
     public User findByUsername(String username){
 
         User u = new User();
@@ -35,6 +34,7 @@ public class MySQLUserDAO implements UserDAO {
         return u;
     }
 
+    @Override
     public boolean insertWaitingUser(String username, String first, String last, String mdp){
         boolean result = false;
 
@@ -56,13 +56,16 @@ public class MySQLUserDAO implements UserDAO {
         boolean exist = false;
 
         try {
-            Statement stmt = connection.createStatement();
-            ResultSet rs1 = stmt.executeQuery("select * from users where username = '" + username + "';");
-            ResultSet rs2 = stmt.executeQuery("select * from waiting_users where username = '" + username + "';");
+            Statement stmt1 = connection.createStatement();
+            Statement stmt2 = connection.createStatement();
+            ResultSet rs1 = stmt1.executeQuery("select * from users where username = '" + username + "';");
+            ResultSet rs2 = stmt2.executeQuery("select * from waiting_users where username = '" + username + "';");
             if (rs1.next() || rs2.next()) {
                 exist = true;
             }
         } catch (SQLException ex){
+
+            System.out.println(ex);
 
         }
 
