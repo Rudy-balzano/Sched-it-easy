@@ -3,6 +3,7 @@ package persist;
 import core.Topic;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class MySQLMeetingDAO implements MeetingDAO{
@@ -16,14 +17,14 @@ public class MySQLMeetingDAO implements MeetingDAO{
     }
 
     @Override
-    public boolean insert(String topicName, Date date, int duration, String meetingCreator) {
+    public boolean insert(String topicName, LocalDate date, String time,  String duration, String meetingCreator) {
 
         boolean result = false;
         
 
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into meetings (topic,date,duration,meetingCreator) values('" + topicName + "','" + date + "','" + duration + "','" + meetingCreator +"');");
+            stmt.executeUpdate("insert into meetings (topic,date,time,duration,meetingCreator) values('" + topicName + "','" + date + "','" + time + "','" + duration + "','" + meetingCreator +"');");
             result = true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
