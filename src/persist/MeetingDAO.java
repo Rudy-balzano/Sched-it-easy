@@ -5,5 +5,5 @@ import core.Topic;
 
 public interface MeetingDAO {
 
-    public boolean insert(Topic topic,Date date,int duration);
+    public boolean insert(String topicName,Date date,int duration);
 }

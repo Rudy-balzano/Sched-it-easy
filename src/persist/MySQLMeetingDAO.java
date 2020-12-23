@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class MySQLMeetingDAO implements MeetingDAO{
 
+    private static int id=1;
     private ConnectionDBMySQL instanceConnection;
     private Connection connection;
 
@@ -16,7 +17,19 @@ public class MySQLMeetingDAO implements MeetingDAO{
     }
 
     @Override
-    public boolean insert(Topic topic, Date date, int duration) {
-        return false;
+    public boolean insert(String topicName, Date date, int duration) {
+
+        boolean result = false;
+        
+
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("insert into meetings (id,topic,date,duration) values('" + id + "','" + topicName + "','" + date + "','" + duration + "','" + "');");
+            this.id++;
+            result = true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
     }
 }

@@ -35,7 +35,7 @@ public class LoginController {
 
         if (username.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
-                    "Please enter your email id");
+                    "Please enter your username");
             return;
         }
         if (password.getText().isEmpty()) {
@@ -54,6 +54,11 @@ public class LoginController {
         check = session.login(userN, pass);
 
         if (check){
+            try {
+                switchToHomeView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             System.out.println("L'utilisateur " + session.getFirstName() + " " + session.getLastName() + " est connecté!");
         }
         username.setText("");
@@ -63,11 +68,26 @@ public class LoginController {
 
     @FXML
     public void switchToRegisterView (ActionEvent actionEvent) throws IOException {
+        Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.registerRoot))));
+        /*
         Parent registerRoot = FXMLLoader.load(getClass().getResource(Roots.registerRoot));
         Scene registerView = new Scene(registerRoot);
         Main.scheditWindow.setScene(registerView);
 
+         */
+
     }
+
+    private void switchToHomeView () throws IOException {
+        Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.homeRoot))));
+        /*
+        Parent homeRoot = FXMLLoader.load(getClass().getResource(Roots.homeRoot));
+        Scene homeView = new Scene(homeRoot);
+        Main.scheditWindow.setScene(homeView);
+         */
+
+    }
+
 
 
     private static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
