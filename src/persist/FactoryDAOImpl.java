@@ -20,6 +20,17 @@ public class FactoryDAOImpl implements FactoryDAO{
 
     }
 
+    @Override
+    public MeetingDAO createMeetingDAO() {
+        return new MySQLMeetingDAO();
+    }
+
+    @Override
+    public InvitationDAO createInvitationDAO() {
+
+        return new MySQLInvitationDAO();
+    }
+
     /**
      * Singleton getInstance()
      */

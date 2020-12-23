@@ -3,7 +3,8 @@ package persist;
 import core.Meeting;
 import core.User;
 
-import java.sql.Connection;
+import java.sql.*;
+
 
 public class MySQLInvitationDAO implements InvitationDAO{
 
@@ -17,6 +18,16 @@ public class MySQLInvitationDAO implements InvitationDAO{
 
     @Override
     public boolean insert(User invitedUser, int state, Meeting meetingInvitation) {
-        return false;
+        boolean result = false;
+
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("insert into invitation (invitedUsername, state, idMeetingInvitaion) values('" + invitedUser.getUserName() + "','" + state + "','" + meetingInvitation.getId() + "');");
+            result = true;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return result;
     }
 }
