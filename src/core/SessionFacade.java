@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class SessionFacade {
 
-    private User connectedUser;
+    private static User connectedUser;
     private FactoryDAOImpl factoryDAO;
     private UserDAO userDAO;
 
@@ -66,6 +66,8 @@ public class SessionFacade {
             System.out.println("Sorry, bad username or password, try again !");
         }
 
+
+
         return check;
 
     }
@@ -99,6 +101,6 @@ public class SessionFacade {
         return connectedUser.getLastName();
     }
 
-    public User getConnectedUser() { return this.connectedUser;}
+    public static User getConnectedUser() { return connectedUser; }
 
 }
