@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CreateMeetingController">
    <children>
-      <GridPane layoutX="151.0" layoutY="83.0" prefHeight="138.0" prefWidth="284.0">
+      <GridPane layoutX="151.0" layoutY="83.0" prefHeight="164.0" prefWidth="284.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="80.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="277.0" minWidth="10.0" prefWidth="190.0" />
@@ -20,14 +20,26 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField prefHeight="27.0" prefWidth="201.0" promptText="topic name" GridPane.columnIndex="1" />
-            <DatePicker prefHeight="27.0" prefWidth="201.0" promptText="select a date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="topic" prefHeight="27.0" prefWidth="201.0" promptText="topic name" GridPane.columnIndex="1" />
+            <DatePicker fx:id="date" prefHeight="27.0" prefWidth="201.0" promptText="select a date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Topic" />
             <Label text="Date" GridPane.rowIndex="1" />
             <Label prefHeight="17.0" prefWidth="48.0" text="Hour" GridPane.rowIndex="2" />
             <Label prefHeight="17.0" prefWidth="48.0" text="Duration" GridPane.rowIndex="3" />
-            <TextField prefHeight="27.0" prefWidth="201.0" promptText="hour" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField prefHeight="27.0" prefWidth="201.0" promptText="duration" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <ChoiceBox fx:id="hour_meeting" opacity="0.7" prefHeight="27.0" prefWidth="85.0" />
+                  <Label prefHeight="27.0" prefWidth="17.0" text="  :" />
+                  <ChoiceBox fx:id="minute_meeting" opacity="0.7" prefHeight="27.0" prefWidth="82.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <ChoiceBox fx:id="hour_duration" opacity="0.7" prefHeight="27.0" prefWidth="85.0" />
+                  <Label prefHeight="17.0" prefWidth="16.0" text="  :" />
+                  <ChoiceBox fx:id="minute_duration" opacity="0.7" prefHeight="27.0" prefWidth="84.0" />
+               </children>
+            </HBox>
          </children>
       </GridPane>
       <Button fx:id="createMeetingButton" layoutX="235.0" layoutY="301.0" mnemonicParsing="false" onAction="#handleCreateMeeting" text="Create meeting" />
