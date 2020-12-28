@@ -1,7 +1,5 @@
 package persist;
 
-import core.Topic;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Date;
