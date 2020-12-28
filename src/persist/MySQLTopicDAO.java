@@ -2,6 +2,7 @@ package persist;
 import java.sql.Connection;
 import core.Topic;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class MySQLTopicDAO implements TopicDAO {
     private ConnectionDBMySQL instanceConnection;
@@ -71,6 +72,22 @@ public class MySQLTopicDAO implements TopicDAO {
             System.out.println(ex);
         }
         return t;
+    }
+
+    @Override
+    public ArrayList<Topic> findAll() {
+        ArrayList<Topic> topics = new ArrayList<>();
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM topics");
+            while(rs.next()){
+                Topic t = new Topic(rs.getString(1),rs.getString(2));
+                topics.add(t);
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+        return topics;
     }
 
 }

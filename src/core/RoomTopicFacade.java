@@ -22,8 +22,8 @@ public class RoomTopicFacade {
     public void displayRoomsByName(String name){
         //TODO
     }
-    public void displayTopics(){
-        //TODO
+    public ArrayList<Topic> displayTopics(){
+        return topicDAO.findAll();
     }
     public  void displayTopicByName(String name){
         Topic topic = topicDAO.findBy(name);
