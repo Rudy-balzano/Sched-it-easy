@@ -1,10 +1,7 @@
 package core;
 
 import javafx.scene.control.TextField;
-import persist.ConnectionDBMySQL;
-import persist.FactoryDAO;
-import persist.FactoryDAOImpl;
-import persist.UserDAO;
+import persist.*;
 
 import java.util.*;
 
@@ -14,8 +11,10 @@ import java.util.*;
 public class SessionFacade {
 
     private static User connectedUser;
+    private static Admin connectedAdmin;
     private FactoryDAOImpl factoryDAO;
     private UserDAO userDAO;
+    private AdminDAO adminDAO;
 
 
     /**
@@ -24,6 +23,7 @@ public class SessionFacade {
     public SessionFacade() {
         this.factoryDAO = FactoryDAOImpl.getInstance();
         this.userDAO = factoryDAO.createUserDAO();
+        this.adminDAO = factoryDAO.createAdminDAO();
 
     }
 
@@ -43,30 +43,24 @@ public class SessionFacade {
      * @param username
      * @param password
      */
-    public boolean login(String username, String password) {
+    public int login(String username, String password) {
 
-        Boolean check = false;
+        int check = -1;
 
         // on récupère les infos du user : username, password, firstname, lastname
         connectedUser = userDAO.findByUsername(username);
+        connectedAdmin = adminDAO.findByUsername(username);
 
         // si on trouve le user dans la db
-        if (connectedUser.getUserName() != null){
-
-            check = verification(connectedUser.getPassword(), password);
-            System.out.println("is checking...");
-
-            // si le mot de passe entré est le bon
-            if (check){
-                System.out.println("You are logged !");
-            }
-
+        if (connectedUser.getUserName() != null && verification(connectedUser.getPassword(), password)){
+            check = 0;
+        }
+        else if (connectedAdmin.getUsername() != null && verification(connectedAdmin.getPassword(), password)) {
+            check = 1;
         }
         else {
-            System.out.println("Sorry, bad username or password, try again !");
+            System.out.println("Mauvais mot de passe");
         }
-
-
 
         return check;
 
@@ -90,17 +84,27 @@ public class SessionFacade {
     /**
      *
      */
-    public String getFirstName() {
+    public String getUserFirstName() {
         return connectedUser.getFirstName();
     }
 
     /**
      *
      */
-    public String getLastName() {
+    public String getUserLastName() {
         return connectedUser.getLastName();
     }
 
     public static User getConnectedUser() { return connectedUser; }
+
+    public String getAdminFirstName(){
+        return connectedAdmin.getFirstName();
+    }
+
+    public String getAdminLastName(){
+        return connectedAdmin.getLastName();
+    }
+
+    public static Admin getConnectedAdmin() { return connectedAdmin;}
 
 }

@@ -40,6 +40,11 @@ public class FactoryDAOImpl implements FactoryDAO{
         return new MySQLTopicDAO();
     }
 
+    @Override
+    public AdminDAO createAdminDAO(){
+        return new MySQLAdminDAO();
+    }
+
 
     /**
      * Singleton getInstance()

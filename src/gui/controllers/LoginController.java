@@ -49,17 +49,20 @@ public class LoginController {
         String userN = username.getText();
         String pass = password.getText();
 
-        boolean check = false;
+        int check = -1;
 
         check = session.login(userN, pass);
 
-        if (check){
+        if (check == 0){
             try {
                 switchToHomeView();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("L'utilisateur " + session.getFirstName() + " " + session.getLastName() + " est connecté!");
+            System.out.println("L'utilisateur " + session.getUserFirstName() + " " + session.getUserLastName() + " est connecté!");
+        }
+        else if (check == 1){
+            System.out.println("L'admin " +session.getAdminFirstName() + " " + session.getAdminLastName() + " est connceté!");
         }
         username.setText("");
         password.setText("");
