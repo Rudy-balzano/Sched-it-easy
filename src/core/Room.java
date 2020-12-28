@@ -12,6 +12,9 @@ public class Room {
         this.equipment = equipment;
     }
 
+    public Room() {
+    };
+
     public String getNameRoom() {
         return nameRoom;
     }

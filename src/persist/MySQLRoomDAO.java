@@ -5,6 +5,7 @@ import core.Equipment;
 import java.sql.*;
 
 public class MySQLRoomDAO implements RoomDAO {
+
     private ConnectionDBMySQL instanceConnection;
     private Connection connection;
 
@@ -38,13 +39,91 @@ public class MySQLRoomDAO implements RoomDAO {
 
     @Override
     public boolean insert(String nameRoom, int capacity, Equipment[] eq) {
-        boolean result = false;
-        insertRoom(nameRoom, capacity);
+        boolean result1 = false;
+        boolean result2 = false;
+        result1 = insertRoom(nameRoom, capacity);
         for (int i=0; i<eq.length; i++){
-            insertEquipmentRoom(nameRoom, eq[i].getName(), eq[i].getDescription());
+            result2 = insertEquipmentRoom(nameRoom, eq[i].getName(), eq[i].getDescription());
+        }
+        if (result1 & result2){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean update(String name, int capacity, Equipment[] eq) {
+        boolean result1 = false;
+        boolean result2 = false;
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("UPDATE rooms SET capacity = " + capacity + "WHERE nameRoom = " + name);
+            result1 = true;
+            result2 = updateEquipmentsForRoom(name, eq);
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+        if (result1 & result2){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    private boolean updateEquipmentsForRoom (String name, Equipment[] eq){
+        boolean result1 = false;
+        boolean result2 = false;
+
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("DELETE FROM roomEquipments WHERE nameRoom = " + name);
+            result1 = true;
+            for (int i=0; i<eq.length; i++){
+                result2 = insertEquipmentRoom(name, eq[i].getName(), eq[i].getDescription());
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+        if (result1 & result2){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean delete(String name) {
+        boolean result = false;
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("DELETE FROM rooms WHERE nameRoom = " + name);
             result = true;
+        } catch (SQLException ex){
+            System.out.println(ex);
         }
         return result;
+    }
+
+    @Override
+    public Room findByName(String name) {
+
+        Room room = new Room();
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from rooms where username = '" + name + "';");
+            if(rs.next()){
+                room.setNameRoom(rs.getString(1));
+                room.setCapacity(rs.getInt(2));
+            }
+        } catch (SQLException ex){
+            System.out.println("SQL request error");
         }
+
+        return room;
+    }
+
+
 }
 
