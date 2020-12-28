@@ -1,21 +1,21 @@
 package core;
 
-public class Equipment {
+public abstract class Equipment {
 
-    private String nameEquipment;
+    private String name;
     private String description;
 
 
-    public Equipment(String nameEquipment, String description) {
-        this.nameEquipment = nameEquipment;
+    public Equipment(String name, String description) {
+        this.name = name;
         this.description = description;
     }
-    public String getNameEquipment() {
-        return nameEquipment;
+    public String getName() {
+        return name;
     }
 
-    public void setNameEquipment(String nameEquipment) {
-        this.nameEquipment = nameEquipment;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
