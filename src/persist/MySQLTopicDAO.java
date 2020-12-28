@@ -31,4 +31,46 @@ public class MySQLTopicDAO implements TopicDAO {
         result = true;
         return result;
     }
+
+    @Override
+    public boolean update(String name, String description) {
+        boolean result = false;
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("UPDATE topics SET descriptionTopic = " + description + "WHERE nameTopic = " + name);
+            result = true;
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean delete(String name) {
+        boolean result = false;
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("DELETE FROM topics WHERE nameTopic = " + name);
+            result = true;
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+        return result;
+    }
+
+    @Override
+    public Topic findBy(String name) {
+        Topic t = null;
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM topics WHERE nameTopic = " + name);
+            if(rs.next()){
+                t = new Topic(rs.getString(1),rs.getString(2))
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+        return t;
+    }
+
 }
