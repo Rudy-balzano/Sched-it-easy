@@ -1,29 +1,54 @@
 package core;
 import persist.FactoryDAOImpl;
 import java.util.ArrayList;
+import persist.RoomDAO;
 
 public class RoomTopicFacade {
     private FactoryDAOImpl factoryDAO;
+    private RoomDAO roomDAO;
+
     public RoomTopicFacade() {
         this.factoryDAO = FactoryDAOImpl.getInstance();
+        this.roomDAO = factoryDAO.createRoomDAO();
     }
 
     public ArrayList<String> displayRooms(){
-
-    };
-    public displayRoomsById(Int){};
-    public displayTopics(){};
-    public  displayTopicById(String){};
+        //TODO
+        return new ArrayList<>();
+    }
+    public void displayRoomsById(String name){
+        //TODO
+    }
+    public void displayTopics(){
+        //TODO
+    }
+    public  void displayTopicById(String name){
+        //TODO
+    }
 
     public Boolean addRoom(String name, int capacity, Equipment[] equipment){
-        Boolean check = false;
-    //ATTENTION FAIRE UN IF AVEC CE QUE RETOURNE INSERT
-        roomDAO.insert(String name, int capacity, Equipment[] equipment);
-    };
-    public Boolean UpdateRoom(Room,Int, String, Int, Equipment[]){};
-    public Boolean DeleteRoom(Room,Int){};
-    public Boolean addTopic(Topic,String, String) {};
-    public Boolean UpdateTopic(Topic,String, String) {};
-    public Boolean DeleteTopic(Topic){}
+        return roomDAO.insert(name,capacity,equipment);
+    }
+
+    public Boolean UpdateRoom(String name,int cap, Equipment[] eq){
+        //TODO
+        return false;
+    }
+    public Boolean DeleteRoom(String name){
+        //TODO
+        return false;
+    }
+    public Boolean addTopic(String name, String desc) {
+        //TODO
+        return false;
+    }
+    public Boolean UpdateTopic(String name, String desc) {
+        //TODO
+        return false;
+    }
+    public Boolean DeleteTopic(String name){
+        //TODO
+        return false;
+    }
 
 }

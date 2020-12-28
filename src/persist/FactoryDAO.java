@@ -10,5 +10,7 @@ public interface FactoryDAO {
 
     public InvitationDAO createInvitationDAO();
 
+    public RoomDAO createRoomDAO();
+
 
 }

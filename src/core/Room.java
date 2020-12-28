@@ -3,9 +3,9 @@ package core;
 public class Room {
     private String nameRoom;
     private int capacity;
-    private Equipment equipment;
+    private Equipment[] equipment;
 
-    public Room( String nameRoom, int capacity, Equipment equipment) {
+    public Room( String nameRoom, int capacity, Equipment[] equipment) {
 
         this.nameRoom = nameRoom;
         this.capacity = capacity;
@@ -28,11 +28,11 @@ public class Room {
         this.capacity =  capacity;
     }
 
-    public Equipment getEquipment() {
+    public Equipment[] getEquipment() {
         return equipment;
     }
 
-    public void setEquipment(Equipment equipment) {
+    public void setEquipment(Equipment[] equipment) {
         this.equipment = equipment;
     }
 }

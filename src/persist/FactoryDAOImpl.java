@@ -31,6 +31,12 @@ public class FactoryDAOImpl implements FactoryDAO{
         return new MySQLInvitationDAO();
     }
 
+    @Override
+    public RoomDAO createRoomDAO() {
+        return new MySQLRoomDAO();
+    }
+
+
     /**
      * Singleton getInstance()
      */
