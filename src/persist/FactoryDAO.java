@@ -1,5 +1,7 @@
 package persist;
 
+import core.Topic;
+
 public interface FactoryDAO {
     /**
      *
@@ -11,6 +13,7 @@ public interface FactoryDAO {
     public InvitationDAO createInvitationDAO();
 
     public RoomDAO createRoomDAO();
+    public TopicDAO createTopicDAO();
 
 
 }

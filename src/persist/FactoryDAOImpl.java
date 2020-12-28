@@ -36,6 +36,9 @@ public class FactoryDAOImpl implements FactoryDAO{
     public RoomDAO createRoomDAO() {
         return new MySQLRoomDAO();
     }
+    public TopicDAO createTopicDAO() {
+        return new MySQLTopicDAO();
+    }
 
 
     /**
