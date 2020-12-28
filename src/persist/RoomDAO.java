@@ -3,6 +3,8 @@ package persist;
 import core.Equipment;
 import core.Room;
 
+import java.util.ArrayList;
+
 public interface RoomDAO {
     public boolean insert (String name, int capacity, Equipment[] eq);
 
@@ -10,5 +12,7 @@ public interface RoomDAO {
 
     public boolean delete (String name);
 
-    public Room findByName(String name);
+    public Room findBy(String name);
+
+    public ArrayList<Room> findAll();
 }

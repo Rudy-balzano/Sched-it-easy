@@ -1,15 +1,19 @@
 package core;
 
+import javafx.util.Pair;
+
+import java.util.ArrayList;
+
 public class Room {
     private String nameRoom;
     private int capacity;
-    private Equipment[] equipment;
+    private ArrayList<Pair<String,Integer>> equipments;
 
-    public Room( String nameRoom, int capacity, Equipment[] equipment) {
+    public Room( String nameRoom, int capacity, ArrayList<Pair<String,Integer>> equipments) {
 
         this.nameRoom = nameRoom;
         this.capacity = capacity;
-        this.equipment = equipment;
+        this.equipments = equipments;
     }
 
     public Room() {
@@ -31,12 +35,12 @@ public class Room {
         this.capacity =  capacity;
     }
 
-    public Equipment[] getEquipment() {
-        return equipment;
+    public ArrayList<Pair<String,Integer>> getEquipment() {
+        return equipments;
     }
 
-    public void setEquipment(Equipment[] equipment) {
-        this.equipment = equipment;
+    public void setEquipment(ArrayList<Pair<String,Integer>> equipments) {
+        this.equipments = equipments;
     }
 }
 
