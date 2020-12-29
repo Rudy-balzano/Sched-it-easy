@@ -14,12 +14,14 @@ public class User {
     //private Schedule schedule;
 
 
-    public User(String username, String password, String firstName, String lastName, Boolean isManager) {
+    public User(String username, String password, String firstName, String lastName, Boolean isManager, ArrayList<Meeting> listMeetings) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.isManager = isManager;
+        this.listMeetings = listMeetings;
+
     }
 
     public User() {
@@ -28,6 +30,7 @@ public class User {
         this.firstName = null;
         this.lastName = null;
         this.isManager = null;
+        this.listMeetings = null;
 
     }
     //private void seeAccount() {
