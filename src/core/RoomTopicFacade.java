@@ -1,4 +1,6 @@
 package core;
+import javafx.util.Pair;
+import persist.EquipmentDAO;
 import persist.FactoryDAOImpl;
 import java.util.ArrayList;
 import persist.RoomDAO;
@@ -8,11 +10,13 @@ public class RoomTopicFacade {
     private FactoryDAOImpl factoryDAO;
     private RoomDAO roomDAO;
     private TopicDAO topicDAO;
+    private EquipmentDAO equipmentDAO;
 
     public RoomTopicFacade() {
         this.factoryDAO = FactoryDAOImpl.getInstance();
         this.roomDAO = factoryDAO.createRoomDAO();
         this.topicDAO = factoryDAO.createTopicDAO();
+        this.equipmentDAO = factoryDAO.createEquipmentDAO();
     }
 
     public ArrayList<String> displayRooms(){
@@ -25,6 +29,7 @@ public class RoomTopicFacade {
     public ArrayList<Topic> displayTopics(){
         return topicDAO.findAll();
     }
+
     public  void displayTopicByName(String name){
         Topic topic = topicDAO.findBy(name);
         if(topic == null){
@@ -35,12 +40,21 @@ public class RoomTopicFacade {
         }
     }
 
-    public Boolean addRoom(String name, int capacity, Equipment[] equipment){
-        return roomDAO.insert(name,capacity,equipment);
+    public ArrayList<Equipment> displayEquipments() {
+        return equipmentDAO.findAll();
     }
 
-    public Boolean updateRoom(String name,int cap, Equipment[] eq){
-        return roomDAO.update(name,cap,eq);
+    public void displayEquipmentByName(String name){
+        Equipment equipment = equipmentDAO.findBy(name);
+
+    }
+
+    public Boolean addRoom(String name, int capacity, ArrayList<Pair<String,Integer>> equipments){
+        return roomDAO.insert(name,capacity,equipments);
+    }
+
+    public Boolean updateRoom(String name,int cap, ArrayList<Pair<String,Integer>> equipments){
+        return roomDAO.update(name,cap,equipments);
     }
     public Boolean deleteRoom(String name){
         return roomDAO.delete(name);

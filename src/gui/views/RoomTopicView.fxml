@@ -51,14 +51,14 @@
                      <children>
                         <TabPane layoutX="48.0" layoutY="36.0" prefHeight="319.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
-                              <Tab text="Add">
+                              <Tab fx:id="cbAddEquipment" text="Add">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="265.0" prefWidth="200.0">
                                        <children>
                                           <TextField fx:id="nameRoom" layoutX="25.0" layoutY="14.0" text="Name room" />
                                           <TextField fx:id="capacity" layoutX="25.0" layoutY="58.0" text="Capacity" />
                                           <Button fx:id="addButton" layoutX="80.0" layoutY="245.0" mnemonicParsing="false" onAction="#addRoom" text="Add" />
-                                          <ChoiceBox fx:id="equipment" layoutX="6.0" layoutY="94.0" prefWidth="150.0" />
+                                          <ChoiceBox fx:id="cbAddEquipment" layoutX="2.0" layoutY="94.0" prefHeight="27.0" prefWidth="148.0" />
                                           <Button fx:id="addEquipmentButton" layoutX="54.0" layoutY="153.0" mnemonicParsing="false" onAction="#addEquipment" text="Add Equipment" />
                                           <TextField fx:id="nbr" layoutX="159.0" layoutY="93.0" prefHeight="27.0" prefWidth="39.0" text="Nbr" />
                                        </children>
@@ -72,7 +72,7 @@
                                           <Button fx:id="updateButton" layoutX="71.0" layoutY="183.0" mnemonicParsing="false" onAction="#updateRoom" text="Update" />
                                           <TextField fx:id="nameRoom2" layoutX="20.0" layoutY="21.0" text="Name Room" />
                                           <TextField fx:id="capacity2" layoutX="20.0" layoutY="63.0" text="Capacity" />
-                                          <ChoiceBox fx:id="equipment2" layoutX="3.0" layoutY="108.0" prefWidth="150.0" />
+                                          <ChoiceBox fx:id="cbUpdateEquipment" layoutX="3.0" layoutY="108.0" prefWidth="150.0" />
                                           <TextField fx:id="nbr2" layoutX="160.0" layoutY="108.0" prefHeight="27.0" prefWidth="39.0" text="Nbr" />
                                           <Button fx:id="addEquipmentButton2" layoutX="3.0" layoutY="143.0" mnemonicParsing="false" onAction="#addEquipment2" text="Add equipment">
                                              <font>

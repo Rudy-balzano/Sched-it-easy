@@ -41,9 +41,16 @@ public class FactoryDAOImpl implements FactoryDAO{
     }
 
     @Override
+    public EquipmentDAO createEquipmentDAO() {
+        return new MySQLEquipmentDAO();
+    }
+
+    @Override
     public AdminDAO createAdminDAO(){
         return new MySQLAdminDAO();
     }
+
+
 
 
     /**

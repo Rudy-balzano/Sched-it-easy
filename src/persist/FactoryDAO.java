@@ -14,6 +14,8 @@ public interface FactoryDAO {
 
     TopicDAO createTopicDAO();
 
+    EquipmentDAO createEquipmentDAO();
+
     AdminDAO createAdminDAO();
 
 }

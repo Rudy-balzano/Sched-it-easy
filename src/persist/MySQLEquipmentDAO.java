@@ -1,7 +1,6 @@
 package persist;
 
-import core.PayableEquipment;
-import core.RoomEquipment;
+import core.Equipment;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -21,14 +20,17 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
 
 
     @Override
-    public RoomEquipment findRoomEquipmentBy(String name) {
+    public Equipment findBy(String name) {
 
-        RoomEquipment equipment = new RoomEquipment();
+        Equipment equipment = null;
 
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from roomEquipments where equipmentName = '" + name + "';");
+            ResultSet rs = stmt.executeQuery("select * from equipments where equipmentName = '" + name + "';");
             if(rs.next()){
+                equipment.setName(rs.getString(1));
+                equipment.setDescription(rs.getString(2));
+                equipment.setPrice(rs.getInt(3));
             }
         } catch (SQLException ex){
             System.out.println("SQL request error");
@@ -38,14 +40,32 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
     }
 
     @Override
-    public PayableEquipment findPayableEquipmentBy(String name) {
+    public ArrayList<Equipment> findAll() {
+        ArrayList<Equipment> equipments = new ArrayList<>();
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM equipments");
+            while(rs.next()){
+                Equipment equipment = new Equipment(rs.getString(1),rs.getString(2),rs.getInt(3));
+                equipments.add(equipment);
+            }
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+        return equipments;
+    }
 
-        PayableEquipment equipment = new PayableEquipment();
+
+    @Override
+    public String findRoomEquipmentBy(String nameRoom, String nameEquipment) {
+
+        String equipment = null;
 
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from payableEquipments where equipmentName = '" + name + "';");
+            ResultSet rs = stmt.executeQuery("select * from roomEquipments where nameRoom = '" + nameRoom + "' and nameEquipment = '"+ nameEquipment +"';");
             if(rs.next()){
+                equipment = rs.getString(2);
             }
         } catch (SQLException ex){
             System.out.println("SQL request error");
@@ -54,15 +74,15 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
         return equipment;
     }
 
+
     @Override
-    public ArrayList<RoomEquipment> findAllRoomEquipment() {
-        ArrayList<RoomEquipment> equipments = new ArrayList<>();
+    public ArrayList<String> findAllRoomEquipment(String nameRoom) {
+        ArrayList<String> equipments = new ArrayList<>();
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM roomEquipments");
+            ResultSet rs = stmt.executeQuery("select * from roomEquipments where nameRoom = '" + nameRoom + "';");
             while(rs.next()){
-                RoomEquipment equipment = new RoomEquipment(rs.getString(1),rs.getString(2), rs.getInt(3));
-                equipments.add(equipment);
+                equipments.add(rs.getString(2));
             }
         } catch (SQLException ex){
             System.out.println(ex);
@@ -70,19 +90,4 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
         return equipments;
     }
 
-    @Override
-    public ArrayList<PayableEquipment> findAllPayableEquipment() {
-        ArrayList<PayableEquipment> equipments = new ArrayList<>();
-        try{
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM payableEquipments");
-            while(rs.next()){
-                PayableEquipment equipment = new PayableEquipment(rs.getString(1),rs.getString(2), rs.getInt(3));
-                equipments.add(equipment);
-            }
-        } catch (SQLException ex){
-            System.out.println(ex);
-        }
-        return equipments;
-    }
 }

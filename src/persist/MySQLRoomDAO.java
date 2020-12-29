@@ -17,7 +17,8 @@ public class MySQLRoomDAO implements RoomDAO {
         this.instanceConnection = ConnectionDBMySQL.getInstance();
         this.connection = instanceConnection.getConnection();
     }
-    public boolean insertRoom(String nameRoom, int capacity){
+
+    private boolean insertRoom(String nameRoom, int capacity){
         boolean result = false;
         try{
             Statement stmt = connection.createStatement();
@@ -29,11 +30,11 @@ public class MySQLRoomDAO implements RoomDAO {
         return result;
     }
 
-    public boolean insertEquipmentRoom(String nameRoom, String nameEquipment, String descriptionEquipment){
+    private boolean insertEquipmentForRoom(String nameRoom, String nameEquipment, int quantity){
         boolean result = false;
         try{
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into roomEquipments (nameRoom, nameEquipment, descriptionEquipment) values('" + nameRoom + "','" + nameEquipment + "', '" +descriptionEquipment + "');");
+            stmt.executeUpdate("insert into roomEquipments (nameRoom, nameEquipment, quantity) values('" + nameRoom + "','" + nameEquipment + "', '" +quantity + "');");
             result = true;
         } catch (SQLException ex){
             System.out.println(ex);
@@ -42,12 +43,12 @@ public class MySQLRoomDAO implements RoomDAO {
     }
 
     @Override
-    public boolean insert(String nameRoom, int capacity, Equipment[] eq) {
+    public boolean insert(String nameRoom, int capacity, ArrayList<Pair<String,Integer>> equipments) {
         boolean result1 = false;
         boolean result2 = false;
         result1 = insertRoom(nameRoom, capacity);
-        for (int i=0; i<eq.length; i++){
-            result2 = insertEquipmentRoom(nameRoom, eq[i].getName(), eq[i].getDescription());
+        for (int i=0; i<equipments.size(); i++){
+            result2 = insertEquipmentForRoom(nameRoom, equipments.get(i).getKey(), equipments.get(i).getValue());
         }
         if (result1 & result2){
             return true;
@@ -57,14 +58,14 @@ public class MySQLRoomDAO implements RoomDAO {
     }
 
     @Override
-    public boolean update(String name, int capacity, Equipment[] eq) {
+    public boolean update(String name, int capacity, ArrayList<Pair<String,Integer>> equipments) {
         boolean result1 = false;
         boolean result2 = false;
         try{
             Statement stmt = connection.createStatement();
             stmt.executeUpdate("UPDATE rooms SET capacity = '" + capacity + "' WHERE nameRoom = '" + name + "';");
             result1 = true;
-            result2 = updateEquipmentsForRoom(name, eq);
+            result2 = updateEquipmentsForRoom(name, equipments);
         } catch (SQLException ex){
             System.out.println(ex);
         }
@@ -75,7 +76,7 @@ public class MySQLRoomDAO implements RoomDAO {
         }
     }
 
-    private boolean updateEquipmentsForRoom (String name, Equipment[] eq){
+    private boolean updateEquipmentsForRoom (String name, ArrayList<Pair<String,Integer>> equipments){
         boolean result1 = false;
         boolean result2 = false;
 
@@ -83,8 +84,8 @@ public class MySQLRoomDAO implements RoomDAO {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate("DELETE FROM roomEquipments WHERE nameRoom = '" + name + "';");
             result1 = true;
-            for (int i=0; i<eq.length; i++){
-                result2 = insertEquipmentRoom(name, eq[i].getName(), eq[i].getDescription());
+            for (int i=0; i<equipments.size(); i++){
+                result2 = insertEquipmentForRoom(name, equipments.get(i).getKey(), equipments.get(i).getValue());
             }
         } catch (SQLException ex){
             System.out.println(ex);

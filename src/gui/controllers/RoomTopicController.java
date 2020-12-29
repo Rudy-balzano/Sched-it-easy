@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class RoomTopicController {
@@ -59,6 +60,13 @@ public class RoomTopicController {
     @FXML
     private Button deleteButton2;
 
+    @FXML
+    private void initialize(){
+        RoomTopicFacade roomTopicFacade = new RoomTopicFacade();
+
+        Collection<Equipment> equipments;
+    }
+/*
     public void addRoom(ActionEvent actionEvent) {
         Window owner = addButton.getScene().getWindow();
 
@@ -68,11 +76,17 @@ public class RoomTopicController {
         if (capacity.getText().isEmpty()) {
             System.out.println("Please enter a capacity");
         }
+
         RoomTopicFacade roomTopic = new RoomTopicFacade();
+
         String name = nameRoom.getText();
+
         int cap = Integer.parseInt(capacity.getText());
+
         ArrayList<Equipment> eq = equipment.getValue();
+
         Boolean added = false;
+
         added = roomTopic.addRoom(name, cap, eq);
         if (added) {
             System.out.println("Room added !");
@@ -80,6 +94,7 @@ public class RoomTopicController {
             System.out.println("impossible to add the room ");
         }
     }
+
     public void addTopic(ActionEvent actionEvent) {
         Window owner = addButton2.getScene().getWindow();
 
@@ -100,6 +115,7 @@ public class RoomTopicController {
             System.out.println("impossible to add the topic ");
         }
     }
+
     public void deleteRoom(ActionEvent actionEvent) {
         Window owner = deleteButton.getScene().getWindow();
 
@@ -191,7 +207,7 @@ public class RoomTopicController {
         //dès qu'on appuie sur le bouton on supprime l'equipement (autant de fois que nbr2 ) de eqList
         return eqList;
     }
-
+*/
 }
 
 // Gérer l'erreur si il rentre un faux nom de room topic pour update et delete !
