@@ -27,7 +27,7 @@ public class ReservationFacade {
         String creatorUsername = creator.getUserName();
         boolean check = false;
         if (creator.getIsManager()){
-            check = meetingDAO.insert(topic,date,time,duration,creatorUsername);
+            //check = meetingDAO.insert(topic,date,time,duration,creatorUsername);
         }
         else {
             // check = meetingDAO.insertWaitingMeeting(topic,date,time,duration,creatorUsername);
@@ -35,6 +35,8 @@ public class ReservationFacade {
 
         return check;
     }
+
+
 
 
 }

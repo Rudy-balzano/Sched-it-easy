@@ -20,7 +20,7 @@ public class HomeController {
             Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.createMeetingRoot))));
         }
         else {
-            Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.createMeetingRoot))));
+            Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.askCreateMeetingRoot))));
         }
     }
 }
