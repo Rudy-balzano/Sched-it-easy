@@ -149,13 +149,13 @@ public class MySQLRoomDAO implements RoomDAO {
     }
 
     @Override
-    public ArrayList<Room> findAll() {
-        ArrayList<Room> rooms = new ArrayList<>();
+    public ArrayList<String> findAll() {
+        ArrayList<String> rooms = new ArrayList<>();
         try{
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM rooms");
             while(rs.next()){
-                Room room = findBy(rs.getString(1));
+                String room = rs.getString(1);
                 rooms.add(room);
             }
         } catch (SQLException ex){

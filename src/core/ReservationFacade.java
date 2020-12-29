@@ -25,7 +25,15 @@ public class ReservationFacade {
     public boolean createMeeting(String topic, LocalDate date, String time, String duration){
         User creator = SessionFacade.getConnectedUser();
         String creatorUsername = creator.getUserName();
-        return meetingDAO.insert(topic,date,time,duration,creatorUsername);
+        boolean check = false;
+        if (creator.getIsManager()){
+            check = meetingDAO.insert(topic,date,time,duration,creatorUsername);
+        }
+        else {
+            // check = meetingDAO.insertWaitingMeeting(topic,date,time,duration,creatorUsername);
+        }
+
+        return check;
     }
 
 

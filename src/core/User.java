@@ -6,18 +6,19 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
+    private Boolean isManager;
 
     //private String verified;
 
     //private Schedule schedule;
 
-    // private TypeRole role;
 
-    public User(String username, String password, String firstName, String lastName) {
+    public User(String username, String password, String firstName, String lastName, Boolean isManager) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.isManager = isManager;
     }
 
     public User() {
@@ -25,6 +26,7 @@ public class User {
         this.password = null;
         this.firstName = null;
         this.lastName = null;
+        this.isManager = null;
 
     }
     //private void seeAccount() {
@@ -90,13 +92,12 @@ public class User {
     //  }
 
 
-   /* public TypeRole getRole() {
-        return null;
+    public Boolean getIsManager() {
+        return this.isManager;
     }
 
- /*  public void setRole(void role TypeRole) {
+   public void setIsManager(Boolean isManager ) {
+        this.isManager = isManager;
     }
 
-}
-*/
 }

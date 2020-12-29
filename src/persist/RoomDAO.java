@@ -14,5 +14,5 @@ public interface RoomDAO {
 
     public Room findBy(String name);
 
-    public ArrayList<Room> findAll();
+    public ArrayList<String> findAll();
 }

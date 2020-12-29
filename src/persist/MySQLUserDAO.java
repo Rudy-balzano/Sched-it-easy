@@ -22,10 +22,11 @@ public class MySQLUserDAO implements UserDAO {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from users where username = '" + username + "';");
             if(rs.next()){
-                u.setUserName(rs.getString(2));
-                u.setPassword(rs.getString(3));
-                u.setFirstName(rs.getString(4));
-                u.setLastName(rs.getString(5));
+                u.setUserName(rs.getString(1));
+                u.setPassword(rs.getString(2));
+                u.setFirstName(rs.getString(3));
+                u.setLastName(rs.getString(4));
+                u.setIsManager(rs.getBoolean(5));
             }
         } catch (SQLException ex){
             System.out.println("SQL request error");
