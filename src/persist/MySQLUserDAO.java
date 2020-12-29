@@ -1,6 +1,10 @@
 package persist;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import core.User;
 
 public class MySQLUserDAO implements UserDAO {
@@ -11,6 +15,25 @@ public class MySQLUserDAO implements UserDAO {
     public MySQLUserDAO(){
         this.instanceConnection = ConnectionDBMySQL.getInstance();
         this.connection = instanceConnection.getConnection();
+    }
+
+    @Override
+    public Map<String,Boolean> findAllNames() {
+        Map<String,Boolean> res = new HashMap<>();
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select first_name,last_name,isManager from users;");
+            while(rs.next()){
+                //Concatenate first and last names
+                String name = rs.getString(1) + " " + rs.getString(2);
+                //Boolean indicates if the user is a manager
+                Boolean isManager = rs.getBoolean(3);
+                res.put(name,isManager);
+            }
+        } catch (SQLException ex){
+            System.out.println("SQL request error");
+        }
+        return res;
     }
 
     @Override
@@ -48,6 +71,36 @@ public class MySQLUserDAO implements UserDAO {
             } catch (SQLException ex){
                 System.out.println(ex);
             }
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean makeManager(String username) {
+        boolean result = false;
+
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("UPDATE users SET isManager = 1 WHERE username = '" + username + "';");
+            result = true;
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean deleteUser(String username) {
+        boolean result = false;
+
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeQuery("DELETE FROM users WHERE username = '" + username + "';");
+            result = true;
+        } catch (SQLException ex){
+            System.out.println(ex);
         }
 
         return result;
