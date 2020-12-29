@@ -6,18 +6,22 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
+    private Boolean isManager;
+    private ArrayList<Meeting> listMeetings;
 
     //private String verified;
 
     //private Schedule schedule;
 
-    // private TypeRole role;
 
-    public User(String username, String password, String firstName, String lastName) {
+    public User(String username, String password, String firstName, String lastName, Boolean isManager, ArrayList<Meeting> listMeetings) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.isManager = isManager;
+        this.listMeetings = listMeetings;
+
     }
 
     public User() {
@@ -25,6 +29,8 @@ public class User {
         this.password = null;
         this.firstName = null;
         this.lastName = null;
+        this.isManager = null;
+        this.listMeetings = null;
 
     }
     //private void seeAccount() {
@@ -44,7 +50,7 @@ public class User {
         return username;
     }
 
-    public void setUserName( String username) {
+    public void setUserName(String username) {
         this.username = username;
     }
 
@@ -72,6 +78,22 @@ public class User {
         this.lastName = lastName;
     }
 
+    public Boolean getIsManager() {
+        return this.isManager;
+    }
+
+    public void setIsManager(Boolean isManager ) {
+        this.isManager = isManager;
+    }
+
+    public ArrayList<Meeting> getListMeetings() {
+        return listMeetings;
+    }
+
+    public void setListMeetings(ArrayList<Meeting> listMeetings) {
+        this.listMeetings = listMeetings;
+    }
+
 
     // public Boolean getVerified() {
 
@@ -89,14 +111,4 @@ public class User {
     //     return null;
     //  }
 
-
-   /* public TypeRole getRole() {
-        return null;
-    }
-
- /*  public void setRole(void role TypeRole) {
-    }
-
-}
-*/
 }
