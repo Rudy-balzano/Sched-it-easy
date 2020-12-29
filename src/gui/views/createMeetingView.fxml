@@ -1,119 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.collections.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.collections.FXCollections?>
+<?import com.calendarfx.view.page.DayPage?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CreateMeetingController">
+<AnchorPane prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CreateMeetingController">
    <children>
-      <GridPane layoutX="151.0" layoutY="83.0" prefHeight="164.0" prefWidth="284.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="80.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="277.0" minWidth="10.0" prefWidth="190.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <TextField fx:id="topic" prefHeight="27.0" prefWidth="201.0" promptText="topic name" GridPane.columnIndex="1" />
-            <DatePicker fx:id="date" prefHeight="27.0" prefWidth="201.0" promptText="select a date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Topic" />
-            <Label text="Date" GridPane.rowIndex="1" />
-            <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="48.0" text="Time" GridPane.rowIndex="2" />
-            <Label prefHeight="17.0" prefWidth="48.0" text="Duration" GridPane.rowIndex="3" />
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-                  <ChoiceBox fx:id="hour_meeting" opacity="0.7" prefHeight="27.0" prefWidth="85.0">
-                      <items>
-                          <FXCollections fx:factory="observableArrayList">
-                              <Integer fx:value="8" />
-                              <Integer fx:value="9" />
-                              <Integer fx:value="10" />
-                              <Integer fx:value="11" />
-                              <Integer fx:value="12" />
-                              <Integer fx:value="13" />
-                              <Integer fx:value="14" />
-                              <Integer fx:value="15" />
-                              <Integer fx:value="16" />
-                              <Integer fx:value="17" />
-                              <Integer fx:value="18" />
-                              <Integer fx:value="19" />
-                              <Integer fx:value="20" />
-                          </FXCollections>
-                      </items>
-                  </ChoiceBox>
-                  <Label prefHeight="27.0" prefWidth="17.0" text="  :" />
-                  <ChoiceBox fx:id="minute_meeting" opacity="0.7" prefHeight="27.0" prefWidth="82.0">
-                      <items>
-                          <FXCollections fx:factory="observableArrayList">
-                              <Integer fx:value="00" />
-                              <Integer fx:value="05" />
-                              <Integer fx:value="10" />
-                              <Integer fx:value="15" />
-                              <Integer fx:value="20" />
-                              <Integer fx:value="25" />
-                              <Integer fx:value="30" />
-                              <Integer fx:value="35" />
-                              <Integer fx:value="40" />
-                              <Integer fx:value="45" />
-                              <Integer fx:value="50" />
-                              <Integer fx:value="55" />
-                          </FXCollections>
-                      </items>
-                  </ChoiceBox>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <children>
-                  <ChoiceBox fx:id="hour_duration" opacity="0.7" prefHeight="27.0" prefWidth="85.0">
-                      <items>
-                          <FXCollections fx:factory="observableArrayList">
-                              <Integer fx:value="00" />
-                              <Integer fx:value="01" />
-                              <Integer fx:value="02" />
-                              <Integer fx:value="03" />
-                              <Integer fx:value="04" />
-                              <Integer fx:value="05" />
-                              <Integer fx:value="06" />
-                              <Integer fx:value="07" />
-                              <Integer fx:value="08" />
-                              <Integer fx:value="09" />
-                              <Integer fx:value="10" />
-                          </FXCollections>
-                      </items>
-                  </ChoiceBox>
-                  <Label prefHeight="17.0" prefWidth="16.0" text="  :" />
-                  <ChoiceBox fx:id="minute_duration" opacity="0.7" prefHeight="27.0" prefWidth="84.0">
-                      <items>
-                          <FXCollections fx:factory="observableArrayList">
-                              <Integer fx:value="00" />
-                              <Integer fx:value="05" />
-                              <Integer fx:value="10" />
-                              <Integer fx:value="15" />
-                              <Integer fx:value="20" />
-                              <Integer fx:value="25" />
-                              <Integer fx:value="30" />
-                              <Integer fx:value="35" />
-                              <Integer fx:value="40" />
-                              <Integer fx:value="45" />
-                              <Integer fx:value="50" />
-                              <Integer fx:value="55" />
-                          </FXCollections>
-                      </items>
-                  </ChoiceBox>
-               </children>
-            </HBox>
-         </children>
-      </GridPane>
-      <Button fx:id="createMeetingButton" layoutX="235.0" layoutY="301.0" mnemonicParsing="false" onAction="#handleCreateMeeting" text="Create meeting" />
-      <Button fx:id="cancelButton" layoutX="151.0" layoutY="301.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
-      <Button fx:id="bookRoomButton" layoutX="358.0" layoutY="301.0" mnemonicParsing="false" onAction="#handleBookRoom" text="Book room" />
+      <Button fx:id="createMeetingButton" layoutX="122.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleCreateMeeting" text="Create meeting" />
+      <Button fx:id="cancelButton" layoutX="36.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+      <Button fx:id="bookRoomButton" layoutX="276.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleBookRoom" text="Book room" />
+      <DayPage prefHeight="369.0" prefWidth="934.0" />
    </children>
 </AnchorPane>
