@@ -1,11 +1,14 @@
 package persist;
 
+import java.util.Collection;
 import java.util.Map;
 
 import core.User;
 
 public interface UserDAO {
-    Map<String,Boolean> findAllNames();
+    Collection<String> findAllRegUsersNames();
+
+    Collection<String> findAllManagersNames();
 
     User findByUsername(String username);
 

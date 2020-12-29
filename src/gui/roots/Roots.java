@@ -7,4 +7,6 @@ public class Roots {
     public static final String askCreateMeetingRoot = "../views/askCreateMeetingView.fxml";
     public static final String homeRoot = "../views/homeView.fxml";
     public static final String roomTopicRoot = "../views/RoomTopicView.fxml";
+    public static final String adminUserManagementRoot = "../views/adminUsersManagementView.fxml";
+    public static final String adminRegisterRoot = "../views/adminRegisterView.fwml";
 }

@@ -4,11 +4,11 @@ import persist.AdminDAO;
 import persist.FactoryDAOImpl;
 import persist.UserDAO;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 public class AdminAccountManagementFacade {
-    private static Admin connectedAdmin;
+    private static Admin connectedAdmin; //Maybe useless
     private FactoryDAOImpl factoryDAO;
     private UserDAO userDAO;
     private AdminDAO adminDAO;
@@ -19,9 +19,14 @@ public class AdminAccountManagementFacade {
         this.adminDAO = factoryDAO.createAdminDAO();
     }
 
-    public void getAllUsers(){
-        //Used to display all users (managers & clients) in the "Users accounts" tab
-        Map<String,Boolean> usersNames = userDAO.findAllNames();
+    public Collection<String> getAllRegUserNames(){
+        //Used to display all regular users in the "Users accounts" tab
+        return userDAO.findAllRegUsersNames();
+    }
+
+    public Collection<String> getAllManagersNames(){
+        //Used to display all managers in the "Users accounts" tab
+        return userDAO.findAllManagersNames();
     }
 
     public User seeInfos(String name){
@@ -39,7 +44,7 @@ public class AdminAccountManagementFacade {
         return userDAO.deleteUser(name);
     }
 
-    public boolean addNewAdmin(String username, String firstName,String lastName, String password){
+    public boolean registerNewAdmin(String username, String firstName,String lastName, String password){
         //Used to create a new admin account
         return adminDAO.insertAdmin(username,firstName,lastName,password);
     }

@@ -2,6 +2,7 @@ package persist;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,23 +19,39 @@ public class MySQLUserDAO implements UserDAO {
     }
 
     @Override
-    public Map<String,Boolean> findAllNames() {
-        Map<String,Boolean> res = new HashMap<>();
+    public Collection<String> findAllRegUsersNames() {
+        Collection<String> res = new ArrayList<String>();
         try{
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select first_name,last_name,isManager from users;");
             while(rs.next()){
                 //Concatenate first and last names
                 String name = rs.getString(1) + " " + rs.getString(2);
-                //Boolean indicates if the user is a manager
-                Boolean isManager = rs.getBoolean(3);
-                res.put(name,isManager);
+                res.add(name);
             }
         } catch (SQLException ex){
             System.out.println("SQL request error");
         }
         return res;
     }
+
+    @Override
+    public Collection<String> findAllManagersNames() {
+        Collection<String> res = new ArrayList<String>();
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT first_name,last_name,isManager FROM users WHERE isManager = 1;");
+            while(rs.next()){
+                //Concatenate first and last names
+                String name = rs.getString(1) + " " + rs.getString(2);
+                res.add(name);
+            }
+        } catch (SQLException ex){
+            System.out.println("SQL request error");
+        }
+        return res;
+    }
+
 
     @Override
     public User findByUsername(String username){
