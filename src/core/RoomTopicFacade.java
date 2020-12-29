@@ -39,19 +39,19 @@ public class RoomTopicFacade {
         return roomDAO.insert(name,capacity,equipment);
     }
 
-    public Boolean UpdateRoom(String name,int cap, Equipment[] eq){
+    public Boolean updateRoom(String name,int cap, Equipment[] eq){
         return roomDAO.update(name,cap,eq);
     }
-    public Boolean DeleteRoom(String name){
+    public Boolean deleteRoom(String name){
         return roomDAO.delete(name);
     }
     public Boolean addTopic(String name, String desc) {
         return topicDAO.insert(name,desc);
     }
-    public Boolean UpdateTopic(String name, String desc) {
+    public Boolean updateTopic(String name, String desc) {
         return topicDAO.update(name,desc);
     }
-    public Boolean DeleteTopic(String name){
+    public Boolean deleteTopic(String name){
         return topicDAO.delete(name);
     }
 

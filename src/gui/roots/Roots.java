@@ -5,4 +5,5 @@ public class Roots {
     public static final String registerRoot = "../views/registerView.fxml";
     public static final String createMeetingRoot = "../views/createMeetingView.fxml";
     public static final String homeRoot = "../views/homeView.fxml";
+    public static final String roomTopicRoot = "../views/RoomTopicView.fxml";
 }
