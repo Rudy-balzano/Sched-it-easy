@@ -1,18 +1,17 @@
 package persist;
 
-import core.Equipment;
 import core.PayableEquipment;
-import core.Room;
 import core.RoomEquipment;
 
 import java.util.ArrayList;
 
 public interface EquipmentDAO {
+    RoomEquipment findRoomEquipmentBy(String name);
 
-    public RoomEquipment findRoomEquipmentBy(String name);
-    public PayableEquipment findPayableEquipmentBy(String name);
+    PayableEquipment findPayableEquipmentBy(String name);
 
-    public ArrayList<RoomEquipment> findAllRoomEquipment();
-    public ArrayList<PayableEquipment> findAllPayableEquipment();
+    ArrayList<RoomEquipment> findAllRoomEquipment();
+
+    ArrayList<PayableEquipment> findAllPayableEquipment();
 
 }

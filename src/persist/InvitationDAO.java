@@ -5,6 +5,5 @@ import core.User;
 
 public interface InvitationDAO {
 
-
-    public boolean insert(User invitedUser, int state, Meeting meetingInvitation);
+    boolean insert(User invitedUser, int state, Meeting meetingInvitation);
 }

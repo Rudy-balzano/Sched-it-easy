@@ -1,22 +1,19 @@
 package persist;
 
-import core.Topic;
-
 public interface FactoryDAO {
     /**
      *
      */
-    public UserDAO createUserDAO();
+    UserDAO createUserDAO();
 
-    public MeetingDAO createMeetingDAO();
+    MeetingDAO createMeetingDAO();
 
-    public InvitationDAO createInvitationDAO();
+    InvitationDAO createInvitationDAO();
 
-    public RoomDAO createRoomDAO();
+    RoomDAO createRoomDAO();
 
-    public TopicDAO createTopicDAO();
+    TopicDAO createTopicDAO();
 
-    public AdminDAO createAdminDAO();
-
+    AdminDAO createAdminDAO();
 
 }
