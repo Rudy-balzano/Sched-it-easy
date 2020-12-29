@@ -4,44 +4,57 @@ import java.util.Date;
 import java.util.ArrayList;
 
 public class Meeting {
-    private int id;
-    private Date date;
-    private int duration;
+    private Integer id;
+    private Date dateDebut;
+    private Date dateFin;
     private User clientMeeting;
     private ArrayList<Invitation> listInvitation;
     private Topic meetingTopic;
 
-    public Meeting(Date date,int duration,User clientMeeting, ArrayList<Invitation> listInvitation, Topic meetingTopic, int id) {
+    public Meeting(Date dateDebut,Date dateFin,User clientMeeting, ArrayList<Invitation> listInvitation, Topic meetingTopic, Integer id) {
 
         this.clientMeeting = clientMeeting;
-        this.date = date;
-        this.duration = duration;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
         this.listInvitation = listInvitation;
         this.meetingTopic = meetingTopic;
         this.id = id;
 
     }
 
-    //Getters and setters
-
-    public Date getDate() {
-        return date;
+    public Meeting(){
+        this.clientMeeting = null;
+        this.dateDebut = null;
+        this.dateFin = null;
+        this.listInvitation = null;
+        this.meetingTopic = null;
+        this.id = null;
     }
 
-    public int getDuration() {
-        return duration;
+    //Getters and setters
+
+    public Date getDateDebut() {
+        return dateDebut;
+    }
+
+    public Date getDateFin() {
+        return dateFin;
     }
 
     public User getClientMeeting() {
         return clientMeeting;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateDebut(Date date) {
+        this.dateDebut = date;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setDateFin(Date date){
+        this.dateFin = date;
+    }
+
+    public void setDuration(Date dateFin) {
+        this.dateFin = dateFin;
     }
 
     public void setClientMeeting(User clientMeeting) {
