@@ -7,6 +7,7 @@ public class User {
     private String firstName;
     private String lastName;
     private Boolean isManager;
+    private ArrayList<Meeting> listMeetings;
 
     //private String verified;
 
@@ -46,7 +47,7 @@ public class User {
         return username;
     }
 
-    public void setUserName( String username) {
+    public void setUserName(String username) {
         this.username = username;
     }
 
@@ -74,6 +75,22 @@ public class User {
         this.lastName = lastName;
     }
 
+    public Boolean getIsManager() {
+        return this.isManager;
+    }
+
+    public void setIsManager(Boolean isManager ) {
+        this.isManager = isManager;
+    }
+
+    public ArrayList<Meeting> getListMeetings() {
+        return listMeetings;
+    }
+
+    public void setListMeetings(ArrayList<Meeting> listMeetings) {
+        this.listMeetings = listMeetings;
+    }
+
 
     // public Boolean getVerified() {
 
@@ -90,14 +107,5 @@ public class User {
 
     //     return null;
     //  }
-
-
-    public Boolean getIsManager() {
-        return this.isManager;
-    }
-
-   public void setIsManager(Boolean isManager ) {
-        this.isManager = isManager;
-    }
 
 }
