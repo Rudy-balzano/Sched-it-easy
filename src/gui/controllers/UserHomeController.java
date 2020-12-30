@@ -8,19 +8,12 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 
-import core.SessionFacade;
-import core.User;
 
-public class HomeController {
+public class UserHomeController {
 
-    User u = SessionFacade.getConnectedUser();
 
     public void handleReservation(ActionEvent actionEvent) throws IOException {
-        if (u.getIsManager()) {
-            Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.createMeetingRoot))));
-        }
-        else {
             Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.askCreateMeetingRoot))));
-        }
+
     }
 }
