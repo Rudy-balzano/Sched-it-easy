@@ -52,6 +52,23 @@ public class MySQLUserDAO implements UserDAO {
         return res;
     }
 
+    @Override
+    public Collection<String> findAllWaitingUsers() {
+
+        Collection<String> res = new ArrayList<String>();
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT username FROM waiting_users;");
+            while(rs.next()){
+                res.add(rs.getString(1));
+            }
+        } catch (SQLException ex){
+            System.out.println("SQL request error");
+        }
+        return res;
+    }
+
 
     @Override
     public User findByUsername(String username){
@@ -121,6 +138,47 @@ public class MySQLUserDAO implements UserDAO {
         }
 
         return result;
+    }
+
+    @Override
+    public boolean validateAccount(String username) {
+        boolean result1 = false;
+        boolean result2 = false;
+
+        User u = new User();
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from waiting_users where username = '" + username + "';");
+            if(rs.next()){
+                u.setUserName(rs.getString(1));
+                u.setPassword(rs.getString(2));
+                u.setFirstName(rs.getString(3));
+                u.setLastName(rs.getString(4));
+                u.setIsManager(false);
+            }
+        } catch (SQLException ex){
+            System.out.println("SQL request error");
+        }
+
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("insert into users (username,password,first_name,last_name) values('" + u.getUserName() + "','" + u.getPassword() + "','" + u.getFirstName() + "','" + u.getLastName() + "','" + u.getIsManager() +"');");
+            result1 = true;
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeQuery("DELETE FROM waiting_users WHERE username = '" + username + "';");
+            result2 = true;
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+
+
+
+        return result1 && result2;
     }
 
     private boolean verify(String username){
