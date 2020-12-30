@@ -20,7 +20,7 @@ public class Main extends Application {
         scheditWindow.centerOnScreen();
 
         //Login
-        Parent loginRoot = FXMLLoader.load(getClass().getResource("views/loginView.fxml"));
+        Parent loginRoot = FXMLLoader.load(getClass().getResource("views/LoginView.fxml"));
         Scene loginView = new Scene(loginRoot);
 
         primaryStage.setScene(loginView);
