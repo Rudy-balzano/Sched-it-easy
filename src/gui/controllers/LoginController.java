@@ -82,12 +82,17 @@ public class LoginController {
     }
 
     private void switchToHomeView () throws IOException {
-        Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.homeRoot))));
-        /*
-        Parent homeRoot = FXMLLoader.load(getClass().getResource(Roots.homeRoot));
-        Scene homeView = new Scene(homeRoot);
-        Main.scheditWindow.setScene(homeView);
-         */
+        if (SessionFacade.getConnectedUser() != null) {
+            if(SessionFacade.getConnectedUser().getIsManager()) {
+                Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerHomeRoot))));
+            }
+            else {
+                Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.userHomeRoot))));
+            }
+        }
+        else if (SessionFacade.getConnectedAdmin() != null){
+            Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.adminHomeRoot))));
+        }
 
     }
 
