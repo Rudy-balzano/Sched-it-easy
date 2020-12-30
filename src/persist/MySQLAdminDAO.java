@@ -44,7 +44,7 @@ public class MySQLAdminDAO implements AdminDAO {
 
         try{
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into admins (username,password,first_name,last_name) values('" + username + "','" + mdp + "','" + first + "','" + last +"');");
+            stmt.executeUpdate("insert into admins (username,password,firstname,lastname) values('" + username + "','" + mdp + "','" + first + "','" + last +"');");
             result = true;
         } catch (SQLException ex){
             System.out.println(ex);
