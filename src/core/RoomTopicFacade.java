@@ -19,14 +19,14 @@ public class RoomTopicFacade {
         this.equipmentDAO = factoryDAO.createEquipmentDAO();
     }
 
-    public ArrayList<String> displayRooms(){
+    public ArrayList<String> getRooms(){
         //TODO
         return new ArrayList<>();
     }
     public void displayRoomsByName(String name){
         //TODO
     }
-    public ArrayList<Topic> displayTopics(){
+    public ArrayList<Topic> getTopics(){
         return topicDAO.findAll();
     }
 
@@ -40,7 +40,7 @@ public class RoomTopicFacade {
         }
     }
 
-    public ArrayList<Equipment> displayEquipments() {
+    public ArrayList<Equipment> getEquipments() {
         return equipmentDAO.findAll();
     }
 

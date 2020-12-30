@@ -2,6 +2,8 @@ package gui.controllers;
 
 import core.RoomTopicFacade;
 import core.Equipment;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Window;
@@ -10,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 
 public class RoomTopicController {
@@ -18,7 +21,7 @@ public class RoomTopicController {
     @FXML
     private TextField capacity;
     @FXML
-    private ChoiceBox equipment;
+    private ChoiceBox cbAddEquipment;
     @FXML
     private TextField nbr;
     @FXML
@@ -30,7 +33,7 @@ public class RoomTopicController {
     @FXML
     private TextField capacity2;
     @FXML
-    private ChoiceBox equipment2;
+    private ChoiceBox cbUpdateEquipment;
     @FXML
     private TextField nbr2;
     @FXML
@@ -62,9 +65,20 @@ public class RoomTopicController {
 
     @FXML
     private void initialize(){
+
         RoomTopicFacade roomTopicFacade = new RoomTopicFacade();
 
-        Collection<Equipment> equipments;
+        Collection<Equipment> equipments = roomTopicFacade.getEquipments();
+
+        ObservableList<Equipment> listEquipment = FXCollections.observableArrayList();
+
+        Iterator<Equipment> iterator = listEquipment.iterator();
+        while (iterator.hasNext()){
+            listEquipment.add(iterator.next());
+        }
+
+        cbAddEquipment.setItems(listEquipment);
+
     }
 /*
     public void addRoom(ActionEvent actionEvent) {
