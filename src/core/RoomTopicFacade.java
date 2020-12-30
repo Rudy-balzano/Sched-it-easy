@@ -44,9 +44,8 @@ public class RoomTopicFacade {
         return equipmentDAO.findAll();
     }
 
-    public void displayEquipmentByName(String name){
-        Equipment equipment = equipmentDAO.findBy(name);
-
+    public Equipment displayEquipmentByName(String name){
+        return equipmentDAO.findBy(name);
     }
 
     public Boolean addRoom(String name, int capacity, ArrayList<Pair<String,Integer>> equipments){

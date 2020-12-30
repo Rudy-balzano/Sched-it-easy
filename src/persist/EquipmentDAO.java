@@ -1,8 +1,6 @@
 package persist;
 
 import core.Equipment;
-import core.PayableEquipment;
-import core.RoomEquipment;
 
 import java.util.ArrayList;
 
