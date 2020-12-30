@@ -23,10 +23,10 @@ public class MySQLUserDAO implements UserDAO {
         Collection<String> res = new ArrayList<String>();
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select firstname,lastname,isManager from users;");
+            ResultSet rs = stmt.executeQuery("SELECT firstname,lastname,username FROM users WHERE isManager = 0;");
             while(rs.next()){
                 //Concatenate first and last names
-                String name = rs.getString(1) + " " + rs.getString(2);
+                String name = rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3);
                 res.add(name);
             }
         } catch (SQLException ex){
@@ -40,10 +40,10 @@ public class MySQLUserDAO implements UserDAO {
         Collection<String> res = new ArrayList<String>();
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT firstname,lastname,isManager FROM users WHERE isManager = 1;");
+            ResultSet rs = stmt.executeQuery("SELECT firstname,lastname,username FROM users WHERE isManager = 1;");
             while(rs.next()){
                 //Concatenate first and last names
-                String name = rs.getString(1) + " " + rs.getString(2);
+                String name = rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3);
                 res.add(name);
             }
         } catch (SQLException ex){
@@ -131,7 +131,7 @@ public class MySQLUserDAO implements UserDAO {
 
         try{
             Statement stmt = connection.createStatement();
-            stmt.executeQuery("DELETE FROM users WHERE username = '" + username + "';");
+            stmt.executeUpdate("DELETE FROM users WHERE username = '" + username + "';");
             result = true;
         } catch (SQLException ex){
             System.out.println(ex);

@@ -41,6 +41,10 @@ public class AdminRegisterController implements AlertShower{
             e.printStackTrace();
         }
     }
+
+    public void handleCancel(){
+        switchToAdminUsersManagementView();
+    }
     public void handleRegister(ActionEvent actionEvent) {
         AdminAccountManagementFacade facade = new AdminAccountManagementFacade();
 

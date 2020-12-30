@@ -1,18 +1,25 @@
 package gui.controllers;
 
 import core.AdminAccountManagementFacade;
+import core.User;
 import gui.Main;
 import gui.roots.Roots;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -22,12 +29,43 @@ public class AdminUsersManagementController {
     private ListView<HBoxCell> listViewU;
     @FXML
     private ListView<HBoxCell> listViewM;
-    @FXML
-    private Button addAdminButton;
 
-    public static class HBoxCell extends HBox {
+    static AdminAccountManagementFacade facade = new AdminAccountManagementFacade();
+    //TODO : See if we let it as a static attribute or if we change it
+
+    public void displayPopupUserInfo(User usr){
+        //Popup that displays information about the selected user
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.setTitle("User information");
+
+        Label fname = new Label("First name : " + usr.getFirstName());
+        Label lname = new Label("Last name : " + usr.getLastName());
+        Label isManager = new Label("Is Manager : " + usr.getIsManager().toString());
+
+        Button b = new Button("Close");
+        b.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                popup.close();
+            }
+        });
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(fname,lname,isManager,b);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout,200,150);
+        popup.setScene(scene);
+        popup.showAndWait();
+
+    }
+
+    public class HBoxCell extends HBox {
+        //HboxCell allows us to store several things in the same row of the listView
+
         Label label = new Label();
-        Button button = new Button("See information");
+        Button infoButton = new Button("Details");
+        Button delButton = new Button("Delete");
 
         HBoxCell(String labelText) {
             super();
@@ -36,20 +74,39 @@ public class AdminUsersManagementController {
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
 
-            this.getChildren().addAll(label, button);
+            infoButton.setOnAction(new EventHandler<ActionEvent>() {
+                //The infoButton is used to display some more information about the selected user
+                @Override public void handle(ActionEvent e) {
+                    System.out.println("Selected item: " + label.getText());
+                    String username = label.getText().split(" ")[2];
+                    User usr = facade.seeInfos(username);
+                    displayPopupUserInfo(usr);
+                }
+            });
+
+            delButton.setOnAction(new EventHandler<ActionEvent>() {
+                //The del button is used to delete a user from the DB
+                @Override public void handle(ActionEvent e) {
+                    System.out.println("Selected item: " + label.getText().split(" ")[2]);
+                    String username = label.getText().split(" ")[2];
+                    facade.deleteUser(username);
+                    refresh();
+
+                }
+            });
+
+            this.getChildren().addAll(label, infoButton,delButton);
         }
     }
 
-    @FXML
-    public void initialize(){
-        //TODO Link row button to the row and to a method
-
-        AdminAccountManagementFacade facade = new AdminAccountManagementFacade();
+    public void refresh(){
+        //This method refreshes the listViews' content
 
         //Load users data from persistent layer to display it on the view
         Collection<String> regUsers = facade.getAllRegUserNames();
         Collection<String> managUsers = facade.getAllManagersNames();
 
+        //Load data into the right format
         ObservableList<HBoxCell> itemsU = FXCollections.observableArrayList();
         for (String name : regUsers){
             //Consider using iterator
@@ -63,8 +120,16 @@ public class AdminUsersManagementController {
             itemsM.add(hbc);
         }
 
+        //Update listViews
         listViewU.setItems(itemsU);
         listViewM.setItems(itemsM);
+    }
+
+    @FXML
+    public void initialize(){
+        //Set up the view's components, called when we load the view
+        AdminAccountManagementFacade facade = new AdminAccountManagementFacade();
+        refresh();
     }
 
     public void switchToAdminRegisterView(){
