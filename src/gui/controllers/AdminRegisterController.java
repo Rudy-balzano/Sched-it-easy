@@ -68,7 +68,7 @@ public class AdminRegisterController implements AlertShower{
                 switchToAdminUsersManagementView();
             }
             else {
-                System.out.println("Username already exist !");
+                System.out.println("Username already exists !");
                 this.showAlert(Alert.AlertType.ERROR,owner,"Error","Impossible to register, username already exists...");
             }
         }
