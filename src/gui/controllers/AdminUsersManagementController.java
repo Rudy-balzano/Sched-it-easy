@@ -33,7 +33,7 @@ public class AdminUsersManagementController {
     static AdminAccountManagementFacade facade = new AdminAccountManagementFacade();
     //TODO : See if we let it as a static attribute or if we change it
 
-    public void displayPopupUserInfo(User usr){
+    private void displayPopupUserInfo(User usr){
         //Popup that displays information about the selected user
         Stage popup = new Stage();
         popup.initModality(Modality.APPLICATION_MODAL);
@@ -60,7 +60,7 @@ public class AdminUsersManagementController {
 
     }
 
-    public class HBoxCell extends HBox {
+    private class HBoxCell extends HBox {
         //HboxCell allows us to store several things in the same row of the listView
 
         Label label = new Label();
