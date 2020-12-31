@@ -3,16 +3,22 @@ package gui.controllers;
 import core.ManagerFacade;
 import core.Meeting;
 import core.RoomTopicFacade;
+import core.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Pair;
 
@@ -46,17 +52,43 @@ public class MeetingValidationController {
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
 
+            Integer id = waitingMeetings.get(label.getText());
+
             this.getChildren().addAll(label, button, button2);
             button.setOnAction(actionEvent -> {
-                Integer id = waitingMeetings.get(label.getText());
                 facade.validationMeeting(id);
                 refresh();
             });
             button2.setOnAction(actionEvent -> {
-
+                //TODO : jsp comment vous l'implémenterez mais ce sera un truc comme ca pour afficher le popup
+                //displayPopupMeetingInfo(facade.getMeetingById(id));
             });
 
-        }}
+        }
+    }
+
+    private void displayPopupMeetingInfo(Meeting m){
+        //Popup that displays information about the selected meeting
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.setTitle("Meeting information");
+
+        Label dateD = new Label("Begins : " + m.getDateDebut().toString());
+        Label dateF = new Label("Ends : " + m.getDateFin().toString());
+        Label user = new Label("Created by  : " + m.getClientMeeting().getFirstName() + " " + m.getClientMeeting().getLastName() + " (" + m.getClientMeeting().getUserName() + ")");
+
+        Button b = new Button("Close");
+        b.setOnAction(actionEvent -> popup.close());
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(dateD,dateF,user,b);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout,200,150);
+        popup.setScene(scene);
+        popup.showAndWait();
+
+    }
+
     private void refresh(){
 
         ObservableList<HBoxCell> itemsMe = FXCollections.observableArrayList();
