@@ -1,11 +1,14 @@
 package persist;
 
 import core.Meeting;
+import core.User;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 
 public class MySQLMeetingDAO implements MeetingDAO{
 
@@ -94,5 +97,58 @@ public class MySQLMeetingDAO implements MeetingDAO{
             throwables.printStackTrace();
         }
         return listMeetings;
+    }
+
+    public HashMap<String, Integer> findAllWaitingMeetings() {
+
+        HashMap<String,Integer> res = new HashMap<String,Integer>();
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT meetingCreator,date_begin,date_end FROM waiting_meetings,id;");
+            while(rs.next()){
+                String str = rs.getString(1)+" : " + "la date de debut du meeting est :" + rs.getDate(3)+ " : "+ "La date de fin est"+ rs.getDate(4);
+                res.put(str, rs.getInt(2));
+            }
+        } catch (SQLException ex){
+            System.out.println("SQL request error");
+        }
+        return res;
+    }
+    public boolean validateMeeting(Integer id) {
+        boolean result1 = false;
+        boolean result2 = false;
+
+        Meeting m = new Meeting();
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from waiting_meetings where id = '" + id + "';");
+            if(rs.next()) {
+                m.setId(rs.getInt(5));
+                m.setDateDebut(rs.getDate(1));
+                m.setDateFin(rs.getDate(2));
+                m.setMeetingTopic(topicDAO.findBy(rs.getString(4)));
+                m.setClientMeeting(userDAO.findByUsername(rs.getString(3)));
+            }
+
+            try{
+                Statement stmt1 = connection.createStatement();
+                stmt1.executeUpdate("insert into meetings (dateDebut,dateFin,clientMeeting, meetingTopic,id) values('" + m.getDateDebut() + "','" + m.getDateFin() + "','" + m.getClientMeeting()  + "','" + m.getMeetingTopic() +"','"+ m.getId() + "');");
+                result1 = true;
+
+                try{
+                    Statement stmt2 = connection.createStatement();
+                    stmt2.executeUpdate("DELETE FROM waiting_meetings WHERE id = '" + id + "';");
+                    result2 = true;
+                } catch (SQLException ex){
+                    System.out.println(ex);
+                }
+            } catch (SQLException ex){
+                System.out.println(ex);
+            }
+        } catch (SQLException ex){
+            System.out.println("SQL request error");
+        }
+        return result1 && result2;
     }
 }

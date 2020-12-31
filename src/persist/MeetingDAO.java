@@ -3,7 +3,9 @@ package persist;
 import core.Meeting;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 
 public interface MeetingDAO {
 
@@ -14,4 +16,9 @@ public interface MeetingDAO {
     ArrayList<Meeting> findAllForUsername(String username);
 
     Meeting findByID(Integer id);
+
+    HashMap<String,Integer> findAllWaitingMeetings();
+
+    boolean validateMeeting(Integer id);
+
 }
