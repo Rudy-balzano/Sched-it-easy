@@ -6,8 +6,6 @@ import gui.Main;
 import gui.roots.Roots;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -30,8 +28,7 @@ public class AdminUsersManagementController {
     @FXML
     private ListView<HBoxCell> listViewM;
 
-    static AdminAccountManagementFacade facade = new AdminAccountManagementFacade();
-    //TODO : See if we let it as a static attribute or if we change it
+    final static AdminAccountManagementFacade facade = new AdminAccountManagementFacade();
 
     private void displayPopupUserInfo(User usr){
         //Popup that displays information about the selected user
@@ -44,12 +41,7 @@ public class AdminUsersManagementController {
         Label isManager = new Label("Is Manager : " + usr.getIsManager().toString());
 
         Button b = new Button("Close");
-        b.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                popup.close();
-            }
-        });
+        b.setOnAction(actionEvent -> popup.close());
         VBox layout = new VBox(10);
         layout.getChildren().addAll(fname,lname,isManager,b);
         layout.setAlignment(Pos.CENTER);
@@ -74,25 +66,21 @@ public class AdminUsersManagementController {
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
 
-            infoButton.setOnAction(new EventHandler<ActionEvent>() {
-                //The infoButton is used to display some more information about the selected user
-                @Override public void handle(ActionEvent e) {
-                    System.out.println("Selected item: " + label.getText());
-                    String username = label.getText().split(" ")[2];
-                    User usr = facade.seeInfos(username);
-                    displayPopupUserInfo(usr);
-                }
+            //The infoButton is used to display some more information about the selected user
+            infoButton.setOnAction(e -> {
+                System.out.println("Selected item: " + label.getText());
+                String username = label.getText().split(" ")[2];
+                User usr = facade.seeInfos(username);
+                displayPopupUserInfo(usr);
             });
 
-            delButton.setOnAction(new EventHandler<ActionEvent>() {
-                //The del button is used to delete a user from the DB
-                @Override public void handle(ActionEvent e) {
-                    System.out.println("Selected item: " + label.getText().split(" ")[2]);
-                    String username = label.getText().split(" ")[2];
-                    facade.deleteUser(username);
-                    refresh();
+            //The del button is used to delete a user from the DB
+            delButton.setOnAction(e -> {
+                System.out.println("Selected item: " + label.getText().split(" ")[2]);
+                String username = label.getText().split(" ")[2];
+                facade.deleteUser(username);
+                refresh();
 
-                }
             });
 
             this.getChildren().addAll(label, infoButton,delButton);
@@ -128,7 +116,6 @@ public class AdminUsersManagementController {
     @FXML
     public void initialize(){
         //Set up the view's components, called when we load the view
-        AdminAccountManagementFacade facade = new AdminAccountManagementFacade();
         refresh();
     }
 

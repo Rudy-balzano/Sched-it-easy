@@ -1,10 +1,8 @@
 package gui.controllers;
 
 import core.AdminAccountManagementFacade;
-import core.SessionFacade;
 import gui.Main;
 import gui.roots.Roots;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -45,7 +43,7 @@ public class AdminRegisterController implements AlertShower{
     public void handleCancel(){
         switchToAdminUsersManagementView();
     }
-    public void handleRegister(ActionEvent actionEvent) {
+    public void handleRegister() {
         AdminAccountManagementFacade facade = new AdminAccountManagementFacade();
 
         String Username = username.getText();
@@ -60,14 +58,14 @@ public class AdminRegisterController implements AlertShower{
             confirmPassword.setText("");
         }
         else {
-            Boolean register = false;
+            boolean register;
             Window owner = registerButton.getScene().getWindow();
 
             register = facade.registerNewAdmin(Username, Firstname, Lastname, Password);
 
             if (register){
                 System.out.println("New administrator registered");
-                this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Succes","Admin successfully registered !");
+                this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Admin successfully registered !");
                 //brings the admin back to users management page + success message?
                 switchToAdminUsersManagementView();
             }
