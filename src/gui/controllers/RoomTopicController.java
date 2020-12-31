@@ -3,8 +3,6 @@ package gui.controllers;
 import core.RoomTopicFacade;
 import core.Equipment;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +16,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Window;
 import javafx.util.Callback;
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -91,12 +90,27 @@ public class RoomTopicController {
                 public void handle(ActionEvent actionEvent) {
 
                     // TODO : verifier si l'equipement est deja dans la tableView est incrementer la quantité si c'est le cas
-                    Pair<String, Integer> pair = new Pair<>(labelText, 1);
 
+                    Pair<String, Integer> pair = new MutablePair<>(labelText, 1);
 
+                    boolean pairAlreadyExist = false;
+
+                    ObservableList<Pair<String,Integer>> listTabView = tableViewEquipmentAdded.getItems();
+
+                    for (int i=0 ; i<listTabView.size(); i++){
+                        if (listTabView.get(i).getKey().equals(pair.getKey())){
+                            int val = listTabView.get(i).getValue()+1;
+                            listTabView.get(i).setValue(val);
+                            pairAlreadyExist = true;
+                        }
+                    }
+
+                    if (!pairAlreadyExist){
+                        tableViewEquipmentAdded.getItems().add(pair);
+                    }
 
                     System.out.println("equipment added : "+ labelText);
-                    tableViewEquipmentAdded.getItems().add(new Pair<>(labelText, 1));
+
                 }
             });
 
@@ -140,6 +154,7 @@ public class RoomTopicController {
                 return new ReadOnlyObjectWrapper(p.getValue().getValue());
             }
         });
+        quantityColumn.onEditStartProperty();
 
         tableViewEquipmentAdded.setItems(listEquipmentAdded);
 
