@@ -1,6 +1,5 @@
 package persist;
 
-import java.util.*;
 import java.sql.*;
 
 public class ConnectionDBMySQL implements ConnectionDB {
@@ -16,7 +15,7 @@ public class ConnectionDBMySQL implements ConnectionDB {
      */
     private ConnectionDBMySQL() {
         connectionToDB();
-        this.connectionDBMySQL = this;
+        connectionDBMySQL = this;
     }
 
     /**
@@ -24,7 +23,7 @@ public class ConnectionDBMySQL implements ConnectionDB {
      */
     public boolean connectionToDB() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         }catch(ClassNotFoundException e) {
             System.out.println("No MySQL driver found...");
             e.printStackTrace();
