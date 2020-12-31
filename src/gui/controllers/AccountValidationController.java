@@ -1,6 +1,5 @@
 package gui.controllers;
 
-import core.AdminAccountManagementFacade;
 import core.ManagerFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -73,7 +72,7 @@ public class AccountValidationController {
             HBoxCell hbc = new HBoxCell(name);
             itemsU.add(hbc);
         }
-        ObservableList<AdminUsersManagementController.HBoxCell> itemsM = FXCollections.observableArrayList();
+        ObservableList<HBoxCell> itemsM = FXCollections.observableArrayList();
 
         listViewWaitingUsers.setItems(itemsU);
     }
