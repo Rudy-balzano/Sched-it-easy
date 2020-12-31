@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ManagerManageGroupController">
+   <children>
+      <fx:include source="ManagerMenu.fxml" />
+      <ListView layoutX="104.0" layoutY="38.0" prefHeight="285.0" prefWidth="392.0" fx:id="listViewGroups"/>
+      <Button layoutX="231.0" layoutY="347.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="138.0" text="Add a new group" fx:id="addNewGroup" onAction="#switchToAddGroup"/>
+   </children>
+</AnchorPane>

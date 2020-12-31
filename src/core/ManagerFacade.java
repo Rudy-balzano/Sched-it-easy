@@ -1,39 +1,65 @@
 package core;
 
 import persist.FactoryDAOImpl;
+import persist.GroupDAO;
 import persist.MeetingDAO;
 import persist.UserDAO;
-
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 
 public class ManagerFacade {
 
-    private FactoryDAOImpl factoryDAO;
-    private UserDAO userDAO;
-    private MeetingDAO meetingDAO;
+    private final UserDAO userDAO;
+    private final MeetingDAO meetingDAO;
+    private final GroupDAO groupDAO;
 
     public ManagerFacade(){
-        this.factoryDAO = FactoryDAOImpl.getInstance();
+        FactoryDAOImpl factoryDAO = FactoryDAOImpl.getInstance();
         this.userDAO = factoryDAO.createUserDAO();
         this.meetingDAO = factoryDAO.createMeetingDAO();
+        this.groupDAO = factoryDAO.createGroupDAO();
     }
 
-    public boolean validateAccount(String username){
+    public void validateAccount(String username){
 
-        return userDAO.validateAccount(username);
+        userDAO.validateAccount(username);
 
     }
-    public boolean validationMeeting(Integer id){
-        return meetingDAO.validateMeeting(id);
+    public void validationMeeting(Integer id){
+
+        meetingDAO.validateMeeting(id);
     }
 
     public Collection<String> getAllWaitingUsers(){
+
         return userDAO.findAllWaitingUsers();
     }
+
     public HashMap<String,Integer> getAllWaitingMeetings(){
-        return meetingDAO.findAllWaitingMeetings();}
+
+        return meetingDAO.findAllWaitingMeetings();
+    }
+
+    public Collection<String> getAllGroups(){
+
+        return groupDAO.getAllGroups();
+    }
+
+    public void deleteGroup(String name){
+
+        groupDAO.delete(name);
+    }
+
+    public Group findGroupByName(String name){
+
+        return groupDAO.findByName(name);
+    }
+
+    public void deleteFromGroup(String groupName, String username){
+
+        groupDAO.deleteMember(username,groupName);
+    }
+
+
 }
 //decline account and decline meeting ??

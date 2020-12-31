@@ -14,43 +14,29 @@ public class FactoryDAOImpl implements FactoryDAO{
 
 
     @Override
-    public UserDAO createUserDAO() {
-
-        return new MySQLUserDAO();
-
-    }
-
+    public UserDAO createUserDAO() { return new MySQLUserDAO(); }
     @Override
-    public MeetingDAO createMeetingDAO() {
-
-        return new MySQLMeetingDAO();
-    }
-
+    public MeetingDAO createMeetingDAO() { return new MySQLMeetingDAO(); }
     @Override
-    public InvitationDAO createInvitationDAO() {
-
-        return new MySQLInvitationDAO();
-    }
-
+    public InvitationDAO createInvitationDAO() { return new MySQLInvitationDAO(); }
     @Override
     public RoomDAO createRoomDAO() {
         return new MySQLRoomDAO();
     }
+    @Override
     public TopicDAO createTopicDAO() {
         return new MySQLTopicDAO();
     }
-
     @Override
     public EquipmentDAO createEquipmentDAO() {
         return new MySQLEquipmentDAO();
     }
-
     @Override
     public AdminDAO createAdminDAO(){
         return new MySQLAdminDAO();
     }
-
-
+    @Override
+    public GroupDAO createGroupDAO() { return new MySQLGroupDAO();}
 
 
     /**

@@ -1,10 +1,21 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Group {
     private String nameGroup;
-    private ArrayList<String> users;
+    private Collection<String> users;
+
+    public Group(String nameGroup, Collection<String> users){
+        this.nameGroup = nameGroup;
+        this.users = users;
+    }
+
+    public Group(){
+        this.nameGroup = null;
+        this.users = new ArrayList<>();
+    }
 
     public String getNameGroup() {
         return nameGroup;
@@ -14,11 +25,11 @@ public class Group {
         this.nameGroup = nameGroup;
     }
 
-    public ArrayList<String> getUsers() {
+    public Collection<String> getUsers() {
         return users;
     }
 
-    public void setUsers(ArrayList<String> users) {
+    public void setUsers(Collection<String> users) {
         this.users = users;
     }
 }

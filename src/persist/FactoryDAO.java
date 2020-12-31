@@ -18,4 +18,6 @@ public interface FactoryDAO {
 
     AdminDAO createAdminDAO();
 
+    GroupDAO createGroupDAO();
+
 }
