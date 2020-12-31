@@ -59,9 +59,10 @@ public class MySQLUserDAO implements UserDAO {
 
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT username FROM waiting_users;");
+            ResultSet rs = stmt.executeQuery("SELECT username,first_name,last_name FROM waiting_users;");
             while(rs.next()){
-                res.add(rs.getString(1));
+                String name = rs.getString(1) + " : " + rs.getString(2) + " " + rs.getString(3);
+                res.add(name);
             }
         } catch (SQLException ex){
             System.out.println("SQL request error");
@@ -150,31 +151,35 @@ public class MySQLUserDAO implements UserDAO {
         try{
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from waiting_users where username = '" + username + "';");
-            if(rs.next()){
-                u.setUserName(rs.getString(1));
-                u.setPassword(rs.getString(2));
-                u.setFirstName(rs.getString(3));
-                u.setLastName(rs.getString(4));
+            if(rs.next()) {
+                u.setUserName(rs.getString(2));
+                u.setPassword(rs.getString(3));
+                u.setFirstName(rs.getString(4));
+                u.setLastName(rs.getString(5));
                 u.setIsManager(false);
             }
+
+                try{
+                    Statement stmt1 = connection.createStatement();
+                    stmt1.executeUpdate("insert into users (username,password,firstname,lastname,isManager) values('" + u.getUserName() + "','" + u.getPassword() + "','" + u.getFirstName() + "','" + u.getLastName() + "','" + 0 +"');");
+                    result1 = true;
+
+                    try{
+                        Statement stmt2 = connection.createStatement();
+                        stmt2.executeUpdate("DELETE FROM waiting_users WHERE username = '" + username + "';");
+                        result2 = true;
+                    } catch (SQLException ex){
+                        System.out.println(ex);
+                    }
+                } catch (SQLException ex){
+                    System.out.println(ex);
+                }
         } catch (SQLException ex){
             System.out.println("SQL request error");
         }
 
-        try{
-            Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into users (username,password,first_name,last_name) values('" + u.getUserName() + "','" + u.getPassword() + "','" + u.getFirstName() + "','" + u.getLastName() + "','" + u.getIsManager() +"');");
-            result1 = true;
-        } catch (SQLException ex){
-            System.out.println(ex);
-        }
-        try{
-            Statement stmt = connection.createStatement();
-            stmt.executeQuery("DELETE FROM waiting_users WHERE username = '" + username + "';");
-            result2 = true;
-        } catch (SQLException ex){
-            System.out.println(ex);
-        }
+
+
 
 
 

@@ -11,6 +11,7 @@ import java.io.IOException;
 public class ManagerMenuController {
 
     public void handleAccountValidation(ActionEvent actionEvent) throws IOException {
+
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerAccountValidationRoot))));
 
     }
