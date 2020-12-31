@@ -60,6 +60,11 @@ public class ManagerFacade {
         groupDAO.deleteMember(username,groupName);
     }
 
+    public boolean addGroup(String name){
+
+        return groupDAO.insert(name);
+    }
+
 
 }
 //decline account and decline meeting ??
