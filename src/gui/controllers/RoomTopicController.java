@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import core.Room;
 import core.RoomTopicFacade;
 import core.Equipment;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -9,9 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Window;
@@ -21,42 +20,42 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-
 
 public class RoomTopicController {
     @FXML
-    private TextField nameRoom;
+    private TextField nameAddRoom;
     @FXML
-    private TextField capacity;
+    private TextField capacityAddRoom;
     @FXML
-    private Button addButton;
+    private Button addRoomButton;
     @FXML
-    private TextField nameRoom2;
+    private TextField nameUpdateRoom;
     @FXML
-    private TextField capacity2;
+    private TextField capacityUpdateRoom;
     @FXML
-    private Button updateButton;
+    private Button loadButton;
     @FXML
-    private Button deleteButton;
+    private Button updateRoomButton;
     @FXML
-    private TextField nameRoom3;
+    private Button deleteRoomButton;
     @FXML
-    private TextField nameTopic;
+    private TextField nameDeleteRoom;
     @FXML
-    private TextField description;
+    private TextField nameAddTopic;
     @FXML
-    private Button addButton2;
+    private TextField descriptionAddTopic;
     @FXML
-    private TextField nameTopic2;
+    private Button addTopicButton;
     @FXML
-    private TextField description2;
+    private TextField nameUpdateTopic;
     @FXML
-    private Button updateButton2;
+    private TextField descriptionUpdateTopic;
     @FXML
-    private TextField nameTopic3;
+    private Button updateTopicButton;
     @FXML
-    private Button deleteButton2;
+    private TextField nameDeleteTopic;
+    @FXML
+    private Button deleteTopicButton;
     @FXML
     private ListView<HBoxCell> listViewEquipments;
     @FXML
@@ -65,10 +64,20 @@ public class RoomTopicController {
     private TableColumn<Pair<String, Integer>,String> equipmentColumn;
     @FXML
     private TableColumn<Pair<String, Integer>,Integer> quantityColumn;
-
+    @FXML
+    private ListView<HBoxCell> listViewEquipments2;
+    @FXML
+    private TableView<Pair<String, Integer>> tableViewEquipmentAdded2;
+    @FXML
+    private TableColumn<Pair<String, Integer>,String> equipmentColumn2;
+    @FXML
+    private TableColumn<Pair<String, Integer>,Integer> quantityColumn2;
 
 
     RoomTopicFacade roomTopicFacade = new RoomTopicFacade();
+
+    ObservableList<Pair<String,Integer>> listTabView = FXCollections.observableArrayList();
+
 
 
     private class HBoxCell extends HBox {
@@ -77,13 +86,15 @@ public class RoomTopicController {
         Button infoButton = new Button("description");
         Button addButton = new Button("Add");
 
-        HBoxCell(String labelText) {
+        HBoxCell(String labelText, TableView tableView) {
 
             super();
 
             label.setText(labelText);
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
+
+            listTabView = tableView.getItems();
 
             addButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -95,13 +106,12 @@ public class RoomTopicController {
 
                     boolean pairAlreadyExist = false;
 
-                    ObservableList<Pair<String,Integer>> listTabView = tableViewEquipmentAdded.getItems();
-
                     for (int i=0 ; i<listTabView.size(); i++){
                         if (listTabView.get(i).getKey().equals(pair.getKey())){
                             int val = listTabView.get(i).getValue()+1;
                             listTabView.get(i).setValue(val);
                             pairAlreadyExist = true;
+//                            tableViewEquipmentAdded.setItems(listTabView);
                         }
                     }
 
@@ -121,21 +131,11 @@ public class RoomTopicController {
 
     }
 
+
     @FXML
     private void initialize(){
 
-        Collection<Equipment> equipments = roomTopicFacade.getEquipments();
-
-        ObservableList<HBoxCell> listEquipment = FXCollections.observableArrayList();
-
-        ObservableList<Pair<String, Integer>> listEquipmentAdded = FXCollections.observableArrayList();
-
-        for (Equipment equipment : equipments ){
-            HBoxCell hbc = new HBoxCell(equipment.getName());
-            listEquipment.add(hbc);
-        }
-
-        listViewEquipments.setItems(listEquipment);
+        loadAllEquipmentFromDB(listViewEquipments, tableViewEquipmentAdded);
 
         tableViewEquipmentAdded.setPlaceholder(new Label("No equipments selected"));
 
@@ -154,33 +154,57 @@ public class RoomTopicController {
                 return new ReadOnlyObjectWrapper(p.getValue().getValue());
             }
         });
-        quantityColumn.onEditStartProperty();
+        /*
+        quantityColumn.setOnEditStart(
+                new EventHandler<TableColumn.CellEditEvent<Pair<String, Integer>, Integer>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Pair<String, Integer>, Integer> pairIntegerCellEditEvent) {
+                        (pairIntegerCellEditEvent.getTableView().getItems().get(pairIntegerCellEditEvent.getTablePosition().getRow())).setValue(pairIntegerCellEditEvent.getNewValue());
+                    }
+                }
+        );
 
-        tableViewEquipmentAdded.setItems(listEquipmentAdded);
+         */
+
+        tableViewEquipmentAdded.setItems(listTabView);
+
 
     }
 
-    public void addRoom(ActionEvent actionEvent) {
-        Window owner = addButton.getScene().getWindow();
+    private void loadAllEquipmentFromDB (ListView listEqu, TableView tableView){
 
-        if (nameRoom.getText().isEmpty()) {
+        Collection<Equipment> equipments = roomTopicFacade.getEquipments();
+
+        ObservableList<HBoxCell> listEquipment = FXCollections.observableArrayList();
+
+        for (Equipment equipment : equipments ){
+            HBoxCell hbc = new HBoxCell(equipment.getName(), tableView);
+            listEquipment.add(hbc);
+        }
+
+        listEqu.setItems(listEquipment);
+    }
+
+    public void addRoom(ActionEvent actionEvent) {
+        Window owner = addRoomButton.getScene().getWindow();
+
+        if (nameAddRoom.getText().isEmpty()) {
             System.out.println("Please enter a name of room");
         }
-        if (capacity.getText().isEmpty()) {
+        if (capacityAddRoom.getText().isEmpty()) {
             System.out.println("Please enter a capacity");
         }
 
-        RoomTopicFacade roomTopic = new RoomTopicFacade();
 
-        String name = nameRoom.getText();
+        String name = nameAddRoom.getText();
+        int cap = Integer.parseInt(capacityAddRoom.getText());
+        ArrayList<Pair<String, Integer>> equipments = new ArrayList<>();
 
-        int cap = Integer.parseInt(capacity.getText());
-
-   //     ArrayList<Equipment> eq = equipment.getValue();
+        equipments.addAll(listTabView);
 
         Boolean added = false;
 
-  //      added = roomTopic.addRoom(name, cap, eq);
+        added = roomTopicFacade.addRoom(name, cap, equipments);
         if (added) {
             System.out.println("Room added !");
         } else {
@@ -189,19 +213,19 @@ public class RoomTopicController {
     }
 
     public void addTopic(ActionEvent actionEvent) {
-        Window owner = addButton2.getScene().getWindow();
+        Window owner = addTopicButton.getScene().getWindow();
 
-        if (nameTopic.getText().isEmpty()) {
+        if (nameAddTopic.getText().isEmpty()) {
             System.out.println("Please enter a name of topic");
         }
-        if (description.getText().isEmpty()) {
+        if (descriptionAddTopic.getText().isEmpty()) {
             System.out.println("Please enter a description");
         }
-        RoomTopicFacade roomTopic2 = new RoomTopicFacade();
-        String name = nameTopic.getText();
-        String desc = description.getText();
+
+        String name = nameAddTopic.getText();
+        String desc = descriptionAddTopic.getText();
         Boolean added = false;
-        added = roomTopic2.addTopic(name,desc);
+        added = roomTopicFacade.addTopic(name,desc);
         if (added){
             System.out.println("Topic added !"); }
         else {
@@ -210,14 +234,14 @@ public class RoomTopicController {
     }
 
     public void deleteRoom(ActionEvent actionEvent) {
-        Window owner = deleteButton.getScene().getWindow();
+        Window owner = deleteRoomButton.getScene().getWindow();
 
-        if (nameRoom3.getText().isEmpty()) {
+        if (nameDeleteRoom.getText().isEmpty()) {
             System.out.println("Please enter a name of room");
 
         }
         RoomTopicFacade roomTopic3 = new RoomTopicFacade();
-        String name = nameRoom3.getText();
+        String name = nameDeleteRoom.getText();
         Boolean deleted = false;
         deleted = roomTopic3.deleteRoom(name);
         if (deleted){
@@ -228,14 +252,14 @@ public class RoomTopicController {
     }
 
     public void deleteTopic(ActionEvent actionEvent) {
-        Window owner = deleteButton2.getScene().getWindow();
+        Window owner = deleteTopicButton.getScene().getWindow();
 
-        if (nameTopic3.getText().isEmpty()) {
+        if (nameDeleteTopic.getText().isEmpty()) {
             System.out.println("Please enter a name of topic");
         }
 
         RoomTopicFacade roomTopic4 = new RoomTopicFacade();
-        String name = nameTopic3.getText();
+        String name = nameDeleteTopic.getText();
         Boolean deleted = false;
         deleted = roomTopic4.deleteTopic(name);
         if (deleted){
@@ -245,14 +269,15 @@ public class RoomTopicController {
         }
     }
     public void updateRoom(ActionEvent actionEvent) {
-        Window owner = updateButton.getScene().getWindow();
 
-        if (nameRoom2.getText().isEmpty()) {
-            System.out.println("Please enter a name of room");
+        Window owner = updateRoomButton.getScene().getWindow();
+
+        if (nameDeleteTopic.getText().isEmpty()) {
+            System.out.println("Please enter a name of topic");
         }
-        RoomTopicFacade roomTopic5 = new RoomTopicFacade();
-        String name = nameRoom2.getText();
-        int cap = Integer.parseInt(capacity2.getText());
+
+        String name = nameUpdateRoom.getText();
+        int cap = Integer.parseInt(capacityUpdateRoom.getText());
         //       Equipment[] eq = equipment2.getValue();
         Boolean updated = false;
   //      updated = roomTopic5.updateRoom(name, cap, eq);
@@ -262,15 +287,55 @@ public class RoomTopicController {
             System.out.println("impossible to update the room ");
         }
     }
-    public void updateTopic(ActionEvent actionEvent) {
-        Window owner = updateButton2.getScene().getWindow();
 
-        if (nameTopic2.getText().isEmpty()) {
+    public void loadRoom(ActionEvent actionEvent) {
+
+        Window owner = loadButton.getScene().getWindow();
+
+        if (nameUpdateRoom.getText().isEmpty()) {
+            System.out.println("Please enter a name of room");
+        }
+
+        String name = nameUpdateRoom.getText();
+
+        Room room = roomTopicFacade.displayRoomByName(name);
+
+        capacityUpdateRoom.setText(""+room.getCapacity());
+
+        loadAllEquipmentFromDB(listViewEquipments2, tableViewEquipmentAdded2);
+
+        ObservableList<Pair<String,Integer>> listTabViewLoaded = FXCollections.observableArrayList();
+
+        listTabViewLoaded.addAll(roomTopicFacade.getEquipmentsForRoom(name));
+
+        equipmentColumn2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Pair<String, Integer>, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Pair<String, Integer>, String> p) {
+                return new ReadOnlyObjectWrapper(p.getValue().getKey());
+            }
+        });
+
+
+        quantityColumn2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Pair<String, Integer>, Integer>, ObservableValue<Integer>>() {
+            public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Pair<String, Integer>, Integer> p) {
+                return new ReadOnlyObjectWrapper(p.getValue().getValue());
+            }
+        });
+
+//        listTabView = tableViewEquipmentAdded2.getItems();
+
+        tableViewEquipmentAdded2.setItems(listTabViewLoaded);
+
+    }
+
+    public void updateTopic(ActionEvent actionEvent) {
+        Window owner = updateTopicButton.getScene().getWindow();
+
+        if (nameUpdateTopic.getText().isEmpty()) {
             System.out.println("Please enter a name of topic");
         }
         RoomTopicFacade roomTopic6 = new RoomTopicFacade();
-        String name = nameTopic2.getText();
-        String desc = description2.getText();
+        String name = nameUpdateTopic.getText();
+        String desc = descriptionUpdateTopic.getText();
         Boolean updated = false;
         updated = roomTopic6.updateTopic(name, desc); //equipment
         if (updated){

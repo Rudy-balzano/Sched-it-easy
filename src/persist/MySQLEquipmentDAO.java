@@ -1,12 +1,15 @@
 package persist;
 
 import core.Equipment;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MySQLEquipmentDAO implements EquipmentDAO{
 
@@ -56,38 +59,7 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
     }
 
 
-    @Override
-    public String findRoomEquipmentBy(String nameRoom, String nameEquipment) {
-
-        String equipment = null;
-
-        try{
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from roomEquipments where nameRoom = '" + nameRoom + "' and nameEquipment = '"+ nameEquipment +"';");
-            if(rs.next()){
-                equipment = rs.getString(2);
-            }
-        } catch (SQLException ex){
-            System.out.println("SQL request error");
-        }
-
-        return equipment;
-    }
 
 
-    @Override
-    public ArrayList<String> findAllRoomEquipment(String nameRoom) {
-        ArrayList<String> equipments = new ArrayList<>();
-        try{
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from roomEquipments where nameRoom = '" + nameRoom + "';");
-            while(rs.next()){
-                equipments.add(rs.getString(2));
-            }
-        } catch (SQLException ex){
-            System.out.println(ex);
-        }
-        return equipments;
-    }
 
 }

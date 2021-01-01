@@ -3,7 +3,8 @@ import java.sql.Connection;
 import core.Room;
 import core.Equipment;
 import core.Topic;
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -131,24 +132,6 @@ public class MySQLRoomDAO implements RoomDAO {
         return room;
     }
 
-    private ArrayList<Pair<String, Integer>> findEquipmentsForRoom(String roomName){
-        ArrayList<Pair<String, Integer>> listEquipments = new ArrayList<>();
-
-        try{
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from roomEquipments where nameRoom = '" + roomName + "';");
-
-            while(rs.next()){
-                listEquipments.add(new Pair<>(rs.getString(2), rs.getInt(3)));
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return listEquipments;
-
-    }
-
     @Override
     public ArrayList<String> findAll() {
         ArrayList<String> rooms = new ArrayList<>();
@@ -163,6 +146,43 @@ public class MySQLRoomDAO implements RoomDAO {
             System.out.println(ex);
         }
         return rooms;
+    }
+
+    @Override
+    public ArrayList<Pair<String, Integer>> findEquipmentsForRoom(String roomName){
+        ArrayList<Pair<String, Integer>> listEquipments = new ArrayList<>();
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from roomEquipments where nameRoom = '" + roomName + "';");
+
+            while(rs.next()){
+                listEquipments.add(new MutablePair<>(rs.getString(2), rs.getInt(3)));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return listEquipments;
+
+    }
+
+    @Override
+    public String findRoomEquipmentBy(String nameRoom, String nameEquipment) {
+
+        String equipment = null;
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from roomEquipments where nameRoom = '" + nameRoom + "' and nameEquipment = '"+ nameEquipment +"';");
+            if(rs.next()){
+                equipment = rs.getString(2);
+            }
+        } catch (SQLException ex){
+            System.out.println("SQL request error");
+        }
+
+        return equipment;
     }
 
 

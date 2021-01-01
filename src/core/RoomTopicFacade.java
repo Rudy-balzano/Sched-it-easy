@@ -1,8 +1,10 @@
 package core;
-import javafx.util.Pair;
+
+import org.apache.commons.lang3.tuple.Pair;
 import persist.EquipmentDAO;
 import persist.FactoryDAOImpl;
 import java.util.ArrayList;
+
 import persist.RoomDAO;
 import persist.TopicDAO;
 
@@ -23,8 +25,8 @@ public class RoomTopicFacade {
         //TODO
         return new ArrayList<>();
     }
-    public void displayRoomsByName(String name){
-        //TODO
+    public Room displayRoomByName(String name){
+        return roomDAO.findBy(name);
     }
     public ArrayList<Topic> getTopics(){
         return topicDAO.findAll();
@@ -48,6 +50,10 @@ public class RoomTopicFacade {
         return equipmentDAO.findBy(name);
     }
 
+    public ArrayList<Pair<String, Integer>> getEquipmentsForRoom(String nameRoom) {
+        return roomDAO.findEquipmentsForRoom(nameRoom);
+    }
+
     public Boolean addRoom(String name, int capacity, ArrayList<Pair<String,Integer>> equipments){
         return roomDAO.insert(name,capacity,equipments);
     }
@@ -55,9 +61,11 @@ public class RoomTopicFacade {
     public Boolean updateRoom(String name,int cap, ArrayList<Pair<String,Integer>> equipments){
         return roomDAO.update(name,cap,equipments);
     }
+
     public Boolean deleteRoom(String name){
         return roomDAO.delete(name);
     }
+
     public Boolean addTopic(String name, String desc) {
         return topicDAO.insert(name,desc);
     }

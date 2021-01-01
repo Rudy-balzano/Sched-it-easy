@@ -1,8 +1,10 @@
 package persist;
 
 import core.Equipment;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface EquipmentDAO {
 
@@ -10,9 +12,6 @@ public interface EquipmentDAO {
 
     ArrayList<Equipment> findAll();
 
-    String findRoomEquipmentBy(String nameRoom, String nameEquipment);
-
-    ArrayList<String> findAllRoomEquipment(String nameRoom);
 
 
 }

@@ -2,7 +2,7 @@ package persist;
 
 import core.Equipment;
 import core.Room;
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 
@@ -16,4 +16,8 @@ public interface RoomDAO {
     Room findBy(String name);
 
     ArrayList<String> findAll();
+
+    ArrayList<Pair<String, Integer>> findEquipmentsForRoom(String roomName);
+
+    String findRoomEquipmentBy(String nameRoom, String nameEquipment);
 }
