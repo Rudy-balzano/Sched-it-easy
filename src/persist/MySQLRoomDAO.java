@@ -100,10 +100,28 @@ public class MySQLRoomDAO implements RoomDAO {
 
     @Override
     public boolean delete(String name) {
-        boolean result = false;
+        boolean result1 = false;
+        boolean result2 = false;
         try{
             Statement stmt = connection.createStatement();
             stmt.executeUpdate("DELETE FROM rooms WHERE nameRoom = '" + name + "';");
+            result1 = true;
+            result2 = deleteEquipmentForRoom(name);
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+        if (result1 & result2){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    private boolean deleteEquipmentForRoom (String name){
+        boolean result = false;
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("DELETE FROM roomEquipments WHERE nameRoom = '" + name + "';");
             result = true;
         } catch (SQLException ex){
             System.out.println(ex);

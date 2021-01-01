@@ -76,17 +76,19 @@ public class RoomTopicController {
 
     RoomTopicFacade roomTopicFacade = new RoomTopicFacade();
 
-    ObservableList<Pair<String,Integer>> listTabView = FXCollections.observableArrayList();
+    private static ObservableList<Pair<String,Integer>> listTabViewAddRoom = FXCollections.observableArrayList();
+
+    private static ObservableList<Pair<String,Integer>> listTabViewUpdateRoom = FXCollections.observableArrayList();
 
 
 
-    private class HBoxCell extends HBox {
+    private static class HBoxCell extends HBox {
 
         Label label = new Label();
         Button infoButton = new Button("description");
         Button addButton = new Button("Add");
 
-        HBoxCell(String labelText, TableView tableView) {
+        HBoxCell(String labelText, TableView tableView, ObservableList<Pair<String,Integer>> listTabView) {
 
             super();
 
@@ -94,13 +96,10 @@ public class RoomTopicController {
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
 
-            listTabView = tableView.getItems();
-
             addButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
 
-                    // TODO : verifier si l'equipement est deja dans la tableView est incrementer la quantité si c'est le cas
 
                     Pair<String, Integer> pair = new MutablePair<>(labelText, 1);
 
@@ -111,12 +110,12 @@ public class RoomTopicController {
                             int val = listTabView.get(i).getValue()+1;
                             listTabView.get(i).setValue(val);
                             pairAlreadyExist = true;
-//                            tableViewEquipmentAdded.setItems(listTabView);
+                            tableView.setItems(listTabView);
                         }
                     }
 
                     if (!pairAlreadyExist){
-                        tableViewEquipmentAdded.getItems().add(pair);
+                        tableView.getItems().add(pair);
                     }
 
                     System.out.println("equipment added : "+ labelText);
@@ -135,7 +134,7 @@ public class RoomTopicController {
     @FXML
     private void initialize(){
 
-        loadAllEquipmentFromDB(listViewEquipments, tableViewEquipmentAdded);
+        loadAllEquipmentFromDB(listViewEquipments, tableViewEquipmentAdded, listTabViewAddRoom);
 
         tableViewEquipmentAdded.setPlaceholder(new Label("No equipments selected"));
 
@@ -166,19 +165,19 @@ public class RoomTopicController {
 
          */
 
-        tableViewEquipmentAdded.setItems(listTabView);
+        tableViewEquipmentAdded.setItems(listTabViewAddRoom);
 
 
     }
 
-    private void loadAllEquipmentFromDB (ListView listEqu, TableView tableView){
+    private void loadAllEquipmentFromDB (ListView listEqu, TableView tableView, ObservableList<Pair<String, Integer>> listTabView){
 
         Collection<Equipment> equipments = roomTopicFacade.getEquipments();
 
         ObservableList<HBoxCell> listEquipment = FXCollections.observableArrayList();
 
         for (Equipment equipment : equipments ){
-            HBoxCell hbc = new HBoxCell(equipment.getName(), tableView);
+            HBoxCell hbc = new HBoxCell(equipment.getName(), tableView, listTabView);
             listEquipment.add(hbc);
         }
 
@@ -200,13 +199,17 @@ public class RoomTopicController {
         int cap = Integer.parseInt(capacityAddRoom.getText());
         ArrayList<Pair<String, Integer>> equipments = new ArrayList<>();
 
-        equipments.addAll(listTabView);
+        equipments.addAll(listTabViewAddRoom);
 
         Boolean added = false;
 
         added = roomTopicFacade.addRoom(name, cap, equipments);
         if (added) {
             System.out.println("Room added !");
+            nameAddRoom.setText("");
+            capacityAddRoom.setText("");
+            listTabViewAddRoom.removeAll();
+
         } else {
             System.out.println("impossible to add the room ");
         }
@@ -227,7 +230,10 @@ public class RoomTopicController {
         Boolean added = false;
         added = roomTopicFacade.addTopic(name,desc);
         if (added){
-            System.out.println("Topic added !"); }
+            System.out.println("Topic added !");
+            nameAddTopic.setText("");
+            descriptionAddTopic.setText("");
+        }
         else {
             System.out.println("impossible to add the topic ");
         }
@@ -240,12 +246,16 @@ public class RoomTopicController {
             System.out.println("Please enter a name of room");
 
         }
-        RoomTopicFacade roomTopic3 = new RoomTopicFacade();
+
         String name = nameDeleteRoom.getText();
         Boolean deleted = false;
-        deleted = roomTopic3.deleteRoom(name);
+        deleted = roomTopicFacade.deleteRoom(name);
+
         if (deleted){
-            System.out.println("Room deleted !"); }
+            System.out.println("Room deleted !");
+            nameDeleteRoom.setText("");
+
+        }
         else {
             System.out.println("impossible to delete the room ");
         }
@@ -258,12 +268,13 @@ public class RoomTopicController {
             System.out.println("Please enter a name of topic");
         }
 
-        RoomTopicFacade roomTopic4 = new RoomTopicFacade();
         String name = nameDeleteTopic.getText();
         Boolean deleted = false;
-        deleted = roomTopic4.deleteTopic(name);
+        deleted = roomTopicFacade.deleteTopic(name);
         if (deleted){
-            System.out.println("Topic deleted !"); }
+            System.out.println("Topic deleted !");
+            nameDeleteTopic.setText("");
+        }
         else {
             System.out.println("impossible to delete the topic ");
         }
@@ -278,11 +289,21 @@ public class RoomTopicController {
 
         String name = nameUpdateRoom.getText();
         int cap = Integer.parseInt(capacityUpdateRoom.getText());
-        //       Equipment[] eq = equipment2.getValue();
+
+        ArrayList<Pair<String, Integer>> equipment = new ArrayList<>();
+
+        equipment.addAll(listTabViewUpdateRoom);
+
         Boolean updated = false;
-  //      updated = roomTopic5.updateRoom(name, cap, eq);
+        updated = roomTopicFacade.updateRoom(name, cap, equipment);
         if (updated){
-            System.out.println("Room updated !"); }
+            System.out.println("Room updated !");
+            nameUpdateRoom.setText("");
+            capacityUpdateRoom.setText("");
+            listViewEquipments2.setItems(null);
+            listTabViewUpdateRoom.removeAll();
+
+        }
         else {
             System.out.println("impossible to update the room ");
         }
@@ -302,11 +323,10 @@ public class RoomTopicController {
 
         capacityUpdateRoom.setText(""+room.getCapacity());
 
-        loadAllEquipmentFromDB(listViewEquipments2, tableViewEquipmentAdded2);
+        loadAllEquipmentFromDB(listViewEquipments2, tableViewEquipmentAdded2, listTabViewUpdateRoom);
 
-        ObservableList<Pair<String,Integer>> listTabViewLoaded = FXCollections.observableArrayList();
 
-        listTabViewLoaded.addAll(roomTopicFacade.getEquipmentsForRoom(name));
+        listTabViewUpdateRoom.addAll(roomTopicFacade.getEquipmentsForRoom(name));
 
         equipmentColumn2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Pair<String, Integer>, String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Pair<String, Integer>, String> p) {
@@ -321,9 +341,8 @@ public class RoomTopicController {
             }
         });
 
-//        listTabView = tableViewEquipmentAdded2.getItems();
 
-        tableViewEquipmentAdded2.setItems(listTabViewLoaded);
+        tableViewEquipmentAdded2.setItems(listTabViewUpdateRoom);
 
     }
 
@@ -333,34 +352,20 @@ public class RoomTopicController {
         if (nameUpdateTopic.getText().isEmpty()) {
             System.out.println("Please enter a name of topic");
         }
-        RoomTopicFacade roomTopic6 = new RoomTopicFacade();
+
+        if (descriptionUpdateTopic.getText().isEmpty()) {
+            System.out.println("Please enter a descritpion for the topic");
+        }
+
         String name = nameUpdateTopic.getText();
         String desc = descriptionUpdateTopic.getText();
         Boolean updated = false;
-        updated = roomTopic6.updateTopic(name, desc); //equipment
+        updated = roomTopicFacade.updateTopic(name, desc);
         if (updated){
             System.out.println("topic updated !"); }
         else {
             System.out.println("impossible to update the topic ");
         }
-    }
-    public ArrayList<Equipment> addEquipment(ActionEvent actionEvent){
-        ArrayList<Equipment> eqList = null;
-//        int number = Integer.parseInt(nbr.getText());
-//        Equipment eq = equipment.getValue();
-        //dès qu'on appuie sur le bouton on rajoute l'equipement (autant de fois que nbr ) dans eqList
-        return eqList;
-    }
-    public ArrayList<Equipment> addEquipment2(){
-        ArrayList<Equipment> eqList = null;
-//        int number = Integer.parseInt(nbr2.getText());
-//        Equipment eq = equipment2.getValue();
-        //dès qu'on appuie sur le bouton on rajoute l'equipement (autant de fois que nbr2 ) dans eqList
-        return eqList;
-    }
-    public ArrayList<Equipment> deleteEquipment(){
-        ArrayList<Equipment> eqList = null;
-        return eqList;
     }
 
 }

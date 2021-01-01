@@ -13,11 +13,12 @@ public class MySQLTopicDAO implements TopicDAO {
         this.connection = instanceConnection.getConnection();
     }
 
-    public boolean insertTopic(String nameTopic, String descriptionTopic){
+    @Override
+    public boolean insert(String nameTopic, String descriptionTopic){
         boolean result = false;
         try{
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into topics (nameTopic,descriptionTopic) values('" + nameTopic + "','" + descriptionTopic + "');");
+            stmt.executeUpdate("insert into topics (nameTopic,description) values('" + nameTopic + "','" + descriptionTopic + "');");
             result = true;
         } catch (SQLException ex){
             System.out.println(ex);
@@ -25,20 +26,13 @@ public class MySQLTopicDAO implements TopicDAO {
         return result;
     }
 
-    @Override
-    public boolean insert(String nameTopic, String descriptionTopic) {
-        boolean result = false;
-        insertTopic(nameTopic, descriptionTopic);
-        result = true;
-        return result;
-    }
 
     @Override
     public boolean update(String name, String description) {
         boolean result = false;
         try{
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("UPDATE topics SET descriptionTopic = " + description + "WHERE nameTopic = " + name);
+            stmt.executeUpdate("UPDATE topics SET description = '" + description + "' WHERE nameTopic = '" + name + "';");
             result = true;
         } catch (SQLException ex){
             System.out.println(ex);
@@ -51,7 +45,7 @@ public class MySQLTopicDAO implements TopicDAO {
         boolean result = false;
         try{
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("DELETE FROM topics WHERE nameTopic = " + name);
+            stmt.executeUpdate("DELETE FROM topics WHERE nameTopic = '" + name+ "';");
             result = true;
         } catch (SQLException ex){
             System.out.println(ex);
