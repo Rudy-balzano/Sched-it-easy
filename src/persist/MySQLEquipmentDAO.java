@@ -25,7 +25,7 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
     @Override
     public Equipment findBy(String name) {
 
-        Equipment equipment = null;
+        Equipment equipment = new Equipment();
 
         try{
             Statement stmt = connection.createStatement();

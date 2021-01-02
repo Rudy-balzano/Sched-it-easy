@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import core.Meeting;
 import core.Room;
 import core.RoomTopicFacade;
 import core.Equipment;
@@ -10,9 +11,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Callback;
 import org.apache.commons.lang3.tuple.MutablePair;
@@ -74,7 +80,7 @@ public class RoomTopicController {
     private TableColumn<Pair<String, Integer>,Integer> quantityColumn2;
 
 
-    RoomTopicFacade roomTopicFacade = new RoomTopicFacade();
+    private static final RoomTopicFacade roomTopicFacade = new RoomTopicFacade();
 
     private static ObservableList<Pair<String,Integer>> listTabViewAddRoom = FXCollections.observableArrayList();
 
@@ -125,13 +131,36 @@ public class RoomTopicController {
             });
 
             this.getChildren().addAll(label, infoButton, addButton);
-
+            infoButton.setOnAction(actionEvent -> {
+                String name = labelText;
+               displayPopupEquipmentInfo(roomTopicFacade.displayEquipmentByName(name));
+            });
         }
 
 
     }
 
+    private static void displayPopupEquipmentInfo(Equipment e){
+        //Popup that displays information about the selected equipment
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.setTitle("Equipment information");
 
+        Label name = new Label("Name : " + e.getName());
+        Label description = new Label("this equipment is : " + e.getDescription());
+        Label price = new Label("price : " + e.getPrice());
+
+        Button b = new Button("Close");
+        b.setOnAction(actionEvent -> popup.close());
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(name,description,price);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout,200,150);
+        popup.setScene(scene);
+        popup.showAndWait();
+
+    }
     @FXML
     private void initialize(){
 
