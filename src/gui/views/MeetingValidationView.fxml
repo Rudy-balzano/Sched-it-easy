@@ -8,7 +8,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.views.MeetingValidationView">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.MeetingValidationController">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -31,7 +31,7 @@
                 </Menu>
                   <Menu mnemonicParsing="false" text="Validation">
                      <items>
-                        <MenuItem fx:id="AccountValidation" mnemonicParsing="false" onAction="#handleAccountValidation" text="Validate Account" />
+
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="My account">
@@ -41,9 +41,9 @@
                   </Menu>
               </menus>
             </MenuBar>
-            <ListView layoutX="111.0" layoutY="111.0" prefHeight="105.0" prefWidth="200.0" />
+            <ListView fx:id="listwaitingMeetings" layoutX="111.0" layoutY="111.0" prefHeight="105.0" prefWidth="200.0" />
             <Label layoutX="111.0" layoutY="71.0" text="Meetings" />
-            <Button layoutX="124.0" layoutY="240.0" mnemonicParsing="false" text="ValidateMeeting" />
+            <Button fx:id="validateMeetingButton" layoutX="124.0" layoutY="240.0" mnemonicParsing="false" text="ValidateMeeting" />
             <Button fx:id="declineMeetingButton" layoutX="256.0" layoutY="240.0" mnemonicParsing="false" text="DeclineMeeting" />
          </children>
       </AnchorPane>

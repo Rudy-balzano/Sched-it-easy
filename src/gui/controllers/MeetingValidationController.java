@@ -35,6 +35,8 @@ public class MeetingValidationController {
     private ListView<HBoxCell>  listwaitingMeetings;
     @FXML
     private Button validateMeetingButton;
+    @FXML
+    private Button declineMeetingButton;
 
 
 

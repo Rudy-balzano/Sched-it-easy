@@ -50,7 +50,7 @@ public class MySQLMeetingDAO implements MeetingDAO{
 
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into waitingMeetings (topic,date_begin,date_end,meetingCreator) values('" + topicName + "','" + dateDebut + "','" + dateFin + "','" + meetingCreator +"');");
+            stmt.executeUpdate("insert into waiting_meetings (topic,date_begin,date_end,meetingCreator) values('" + topicName + "','" + dateDebut + "','" + dateFin + "','" + meetingCreator +"');");
             result = true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -64,7 +64,7 @@ public class MySQLMeetingDAO implements MeetingDAO{
 
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from waitingMeetings where id = '" + id + "';");
+            ResultSet rs = stmt.executeQuery("select * from waiting_meetings where id = '" + id + "';");
 
             if(rs.next()){
                 m.setId(rs.getInt(1));
