@@ -51,7 +51,7 @@ public class MySQLMeetingDAO implements MeetingDAO{
 
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into meetings (dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + dateBegin + "','" + hourBegin + "','" + dateEnd + "','" + hourEnd +"','"+ clientMeeting +"', '"+ meetingTopic +"');");
+            stmt.executeUpdate("insert into waiting_meetings (dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + dateBegin + "','" + hourBegin + "','" + dateEnd + "','" + hourEnd +"','"+ clientMeeting +"', '"+ meetingTopic +"');");
             result = true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();

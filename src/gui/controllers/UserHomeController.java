@@ -13,7 +13,7 @@ public class UserHomeController {
 
 
     public void handleReservation(ActionEvent actionEvent) throws IOException {
-            Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.askCreateMeetingRoot))));
+            Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.createMeetingRoot))));
 
     }
 }

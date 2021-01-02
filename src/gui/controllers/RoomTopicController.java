@@ -87,7 +87,6 @@ public class RoomTopicController {
     private static ObservableList<Pair<String,Integer>> listTabViewUpdateRoom = FXCollections.observableArrayList();
 
 
-
     private static class HBoxCell extends HBox {
 
         Label label = new Label();
