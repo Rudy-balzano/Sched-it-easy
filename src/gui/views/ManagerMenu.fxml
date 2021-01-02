@@ -5,41 +5,45 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ManagerMenuController">
-   <children>
-      <MenuBar prefHeight="29.0" prefWidth="600.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Schedule">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Reservation">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Auto schedule">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Validation">
-               <items>
-                  <MenuItem fx:id="AccountValidation" mnemonicParsing="false" onAction="#handleAccountValidation" text="Validate Account" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Groups">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#switchToManageGroups" text="Manage Groups"/>
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="My account">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
-            </Menu>
-        </menus>
-      </MenuBar>
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ManagerMenuController">
+  <MenuBar prefHeight="29.0" prefWidth="600.0">
+    <menus>
+      <Menu mnemonicParsing="false" text="Schedule">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Close"/>
+        </items>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Reservation">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Delete"/>
+        </items>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Auto schedule">
+        <items>
+          <MenuItem mnemonicParsing="false" text="About"/>
+        </items>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Validation">
+        <items>
+          <MenuItem fx:id="AccountValidation" mnemonicParsing="false" onAction="#switchToAccountValidation"
+                    text="Validate Account"/>
+        </items>
+        <items>
+          <MenuItem fx:id="MeetingValidation" mnemonicParsing="false" onAction="#switchToMeetingValidation"
+                    text="Validate Meetings"/>
+        </items>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Groups">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#switchToManageGroups" text="Manage Groups"/>
+        </items>
+      </Menu>
+      <Menu mnemonicParsing="false" text="My account">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1"/>
+        </items>
+      </Menu>
+    </menus>
+  </MenuBar>
 </AnchorPane>
