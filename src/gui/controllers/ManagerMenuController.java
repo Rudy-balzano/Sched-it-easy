@@ -3,7 +3,6 @@ package gui.controllers;
 import core.SessionFacade;
 import gui.Main;
 import gui.roots.Roots;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 

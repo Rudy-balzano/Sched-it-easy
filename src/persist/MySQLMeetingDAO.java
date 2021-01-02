@@ -143,10 +143,9 @@ public class MySQLMeetingDAO implements MeetingDAO{
 
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT meetingCreator,id,date_begin,date_end FROM waiting_meetings;");
+            ResultSet rs = stmt.executeQuery("SELECT id,userCreator FROM waiting_meetings;");
             while(rs.next()){
-                String str = rs.getString(1)+" : " + "la date de debut du meeting est :" + rs.getDate(3)+ " : "+ "La date de fin est"+ rs.getDate(4);
-                res.put(str, rs.getInt(2));
+                res.put(rs.getString(2), rs.getInt(1));
             }
         } catch (SQLException throwables){
             throwables.printStackTrace();
