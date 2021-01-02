@@ -2,12 +2,9 @@ package gui.controllers;
 
 import core.ManagerFacade;
 import core.Meeting;
-import core.RoomTopicFacade;
-import core.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,25 +16,16 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.util.Pair;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 public class MeetingValidationController {
 
     private static final ManagerFacade facade = new ManagerFacade();
+
     private HashMap<String,Integer> waitingMeetings = facade.getAllWaitingMeetings();
 
     @FXML
     private ListView<HBoxCell>  listwaitingMeetings;
-    @FXML
-    private Button validateMeetingButton;
-    @FXML
-    private Button declineMeetingButton;
-
 
 
     private class HBoxCell extends HBox {
@@ -62,12 +50,8 @@ public class MeetingValidationController {
                 facade.validationMeeting(id);
                 refresh();
             });
-            button2.setOnAction(actionEvent -> {
-                displayPopupMeetingInfo(facade.getWaitingMeetingById(id));
-            });
-            button1.setOnAction(actionEvent -> {
-                facade.declineMeeting(id);
-            });
+            button2.setOnAction((ActionEvent actionEvent) -> displayPopupMeetingInfo(facade.getWaitingMeetingById(id)));
+            button1.setOnAction(actionEvent -> facade.declineMeeting(id));
 
         }
     }

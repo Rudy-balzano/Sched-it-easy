@@ -22,4 +22,5 @@ public class Roots {
     public static final String createMeetingRoot = "../views/createMeetingView.fxml";
     public static final String managerInfoGroupRoot = "../views/ManagerInfoGroupView.fxml";
     public static final String managerAddUserToGroupRoot = "../views/ManagerAddUserToGroupView.fxml";
+    public static final String managerMeetingValidationRoot = "../views/MeetingValidationView.fxml";
 }
