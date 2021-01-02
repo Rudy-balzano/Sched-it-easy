@@ -79,7 +79,7 @@ public class AdminUsersManagementController {
                 System.out.println("Selected item: " + label.getText().split(" ")[2]);
                 String username = label.getText().split(" ")[2];
                 facade.deleteUser(username);
-                refresh();
+                reload();
 
             });
 
@@ -87,7 +87,7 @@ public class AdminUsersManagementController {
         }
     }
 
-    public void refresh(){
+    public void reload(){
         //This method refreshes the listViews' content
 
         //Load users data from persistent layer to display it on the view
@@ -116,7 +116,7 @@ public class AdminUsersManagementController {
     @FXML
     public void initialize(){
         //Set up the view's components, called when we load the view
-        refresh();
+        reload();
     }
 
     public void switchToAdminRegisterView(){

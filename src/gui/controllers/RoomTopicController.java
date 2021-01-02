@@ -111,6 +111,7 @@ public class RoomTopicController {
                             listTabView.get(i).setValue(val);
                             pairAlreadyExist = true;
                             tableView.setItems(listTabView);
+                            tableView.refresh();
                         }
                     }
 
