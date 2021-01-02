@@ -107,8 +107,6 @@ public class MeetingValidationController {
     }
         public void initialize(){
 
-
-
             ObservableList<HBoxCell> itemsMe = FXCollections.observableArrayList();
             for (String name : waitingMeetings.keySet()) {
                 //Consider using iterator
