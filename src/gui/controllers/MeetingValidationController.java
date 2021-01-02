@@ -60,8 +60,7 @@ public class MeetingValidationController {
                 refresh();
             });
             button2.setOnAction(actionEvent -> {
-                //TODO : jsp comment vous l'implémenterez mais ce sera un truc comme ca pour afficher le popup
-                //displayPopupMeetingInfo(facade.getMeetingById(id));
+                //displayPopupMeetingInfo(facade.getWaitingMeetingById(id));
             });
 
         }

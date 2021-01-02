@@ -15,6 +15,8 @@ public interface MeetingDAO {
 
     ArrayList<Meeting> findAllForUsername(String username);
 
+    Meeting findWaitingMeetingByID(Integer id);
+
     Meeting findByID(Integer id);
 
     HashMap<String,Integer> findAllWaitingMeetings();

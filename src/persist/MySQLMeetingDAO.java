@@ -59,6 +59,29 @@ public class MySQLMeetingDAO implements MeetingDAO{
     }
 
     @Override
+    public Meeting findWaitingMeetingByID(Integer id){
+        Meeting m = new Meeting();
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from waitingMeetings where id = '" + id + "';");
+
+            if(rs.next()){
+                m.setId(rs.getInt(1));
+                m.setMeetingTopic(topicDAO.findBy(rs.getString(2)));
+                m.setDateDebut(rs.getDate(3));
+                m.setDateFin(rs.getDate(4));
+                m.setClientMeeting(userDAO.findByUsername((rs.getString(5))));
+            }
+
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+
+        return m;
+    }
+
+    @Override
     public Meeting findByID(Integer id){
         Meeting m = new Meeting();
 

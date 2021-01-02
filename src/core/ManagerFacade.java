@@ -40,6 +40,10 @@ public class ManagerFacade {
         return meetingDAO.findAllWaitingMeetings();
     }
 
+    public Meeting getWaitingMeetingById(int id){
+        return meetingDAO.findWaitingMeetingByID(id);
+    }
+
     public Collection<String> getAllGroups(){
 
         return groupDAO.getAllGroups();
