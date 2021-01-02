@@ -51,4 +51,19 @@ public class MySQLAdminDAO implements AdminDAO {
         }
         return result;
     }
+
+    @Override
+    public boolean deleteAdmin(String username){
+        boolean result = false;
+
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("DELETE FROM admins WHERE username = '" + username + "';");
+            result = true;
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+
+        return result;
+    }
 }

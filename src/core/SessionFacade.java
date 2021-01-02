@@ -1,9 +1,9 @@
 package core;
 
-import javafx.scene.control.TextField;
+
 import persist.*;
 
-import java.util.*;
+
 
 /**
  *
@@ -66,6 +66,11 @@ public class SessionFacade {
 
     }
 
+    public static void logout(){
+        connectedAdmin = null;
+        connectedUser = null;
+    }
+
     /**
      * fonction qui vérifie le mot de passe de l'utilisateur
      * @param userPassword
@@ -107,4 +112,7 @@ public class SessionFacade {
 
     public static Admin getConnectedAdmin() { return connectedAdmin;}
 
+    public static void setConnectedAdmin() { SessionFacade.connectedAdmin = null;}
+
+    public static void setConnectedUser() { SessionFacade.connectedUser = null;}
 }

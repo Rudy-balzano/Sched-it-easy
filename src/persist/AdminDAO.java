@@ -6,4 +6,6 @@ public interface AdminDAO {
     Admin findByUsername(String username);
 
     boolean insertAdmin(String username, String first, String last, String mdp);
+
+    boolean deleteAdmin(String username);
 }

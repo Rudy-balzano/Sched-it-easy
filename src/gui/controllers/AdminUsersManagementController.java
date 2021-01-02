@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -20,13 +21,18 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AdminUsersManagementController {
     @FXML
     private ListView<HBoxCell> listViewU;
     @FXML
     private ListView<HBoxCell> listViewM;
+    @FXML
+    private TextField searchBar;
 
     final static AdminAccountManagementFacade facade = new AdminAccountManagementFacade();
 
@@ -117,6 +123,46 @@ public class AdminUsersManagementController {
     public void initialize(){
         //Set up the view's components, called when we load the view
         reload();
+        searchBar.setOnKeyPressed(keyEvent -> handleSearch());
+
+    }
+
+    @FXML
+    public void handleSearch(){
+        ArrayList<String> searchedU = new ArrayList<>();
+        ArrayList<String> searchedM = new ArrayList<>();
+        Pattern pattern = Pattern.compile(searchBar.getText());
+
+        Collection<String> regUsers = facade.getAllRegUserNames();
+        Collection<String> managUsers = facade.getAllManagersNames();
+
+        for (String i : regUsers){
+            Matcher matcher = pattern.matcher(i);
+            if(matcher.find()){
+                searchedU.add(i);
+            }
+        }
+        for (String i : managUsers){
+            Matcher matcher = pattern.matcher(i);
+            if(matcher.find()){
+                searchedM.add(i);
+            }
+        }
+
+        ObservableList<HBoxCell> itemsU = FXCollections.observableArrayList();
+        for (String name : searchedU){
+            HBoxCell hbc = new HBoxCell(name);
+            itemsU.add(hbc);
+        }
+
+        ObservableList<HBoxCell> itemsM = FXCollections.observableArrayList();
+        for (String name : searchedM){
+            HBoxCell hbc = new HBoxCell(name);
+            itemsM.add(hbc);
+        }
+
+        listViewU.setItems(itemsU);
+        listViewM.setItems(itemsM);
     }
 
     public void switchToAdminRegisterView(){

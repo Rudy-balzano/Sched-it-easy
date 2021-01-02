@@ -78,12 +78,12 @@ public class ManagerAddUserToGroupController {
 
         listViewUsers.setItems(itemsU);
 
-        searchButton.setOnKeyPressed(keyEvent -> handleSearchByLast());
+        searchButton.setOnKeyPressed(keyEvent -> handleSearch());
     }
 
 
     @FXML
-    public void handleSearchByLast(){
+    public void handleSearch(){
         ArrayList<String> searched = new ArrayList<>();
         Pattern pattern = Pattern.compile(searchButton.getText());
 

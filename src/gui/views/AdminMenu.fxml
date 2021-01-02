@@ -12,22 +12,22 @@
         <menus>
           <Menu mnemonicParsing="false" text="My account">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" text="Close" onAction="#switchToHome"/>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Room / Topic">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="About" onAction="#switchToRoomTopic"/>
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="See acounts">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" text="Close" onAction="#switchToSeeAccounts"/>
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Logout">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" text="Logout" onAction="#logout"/>
                </items>
             </Menu>
         </menus>

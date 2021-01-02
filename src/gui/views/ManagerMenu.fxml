@@ -41,6 +41,11 @@
           <MenuItem mnemonicParsing="false" text="Action 1" />
         </items>
       </Menu>
+      <Menu mnemonicParsing="false" text="Logout">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Logout" onAction="#logout"/>
+        </items>
+      </Menu>
     </menus>
   </MenuBar>
 </AnchorPane>

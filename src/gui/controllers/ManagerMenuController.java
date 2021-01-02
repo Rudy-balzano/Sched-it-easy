@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import core.SessionFacade;
 import gui.Main;
 import gui.roots.Roots;
 import javafx.event.ActionEvent;
@@ -22,7 +23,12 @@ public class ManagerMenuController {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerMeetingValidationRoot))));
     }
 
-    public void handleReservation(ActionEvent actionEvent) throws IOException {
+    public void handleReservation() throws IOException {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.createMeetingRoot))));
+    }
+
+    public void logout() throws IOException {
+        SessionFacade.logout();
+        Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.loginRoot))));
     }
 }

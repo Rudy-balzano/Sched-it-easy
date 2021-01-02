@@ -9,10 +9,11 @@ public class Roots {
     public static final String userHomeRoot = "../views/userHomeView.fxml";
 
     //ADMIN ROOTS
-    public static final String adminHomeRoot = "../views/adminMyAccountView.fxml";
+    public static final String adminHomeRoot = "../views/adminSeeAccountView.fxml";
     public static final String adminRoomTopicManagementRoot = "../views/RoomTopicView.fxml";
     public static final String adminUserManagementRoot = "../views/adminUsersManagementView.fxml";
     public static final String adminRegisterRoot = "../views/adminRegisterView.fxml";
+    public static final String roomTopicRoot = "../views/RoomTopicView.fxml";
 
     //MANAGER ROOTS
     public static final String managerAccountValidationRoot = "../views/AccountValidationView.fxml";

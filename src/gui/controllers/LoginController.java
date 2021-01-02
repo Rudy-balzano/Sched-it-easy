@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import core.SessionFacade;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -54,15 +53,17 @@ public class LoginController {
         check = session.login(userN, pass);
 
         if (check == 0){
-            try {
-                switchToHomeView();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             System.out.println("L'utilisateur " + session.getUserFirstName() + " " + session.getUserLastName() + " est connecté!");
+            SessionFacade.setConnectedAdmin();
         }
         else if (check == 1){
             System.out.println("L'admin " +session.getAdminFirstName() + " " + session.getAdminLastName() + " est connceté!");
+            SessionFacade.setConnectedUser();
+        }
+        try {
+            switchToHomeView();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         username.setText("");
         password.setText("");
