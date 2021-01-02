@@ -31,8 +31,8 @@ public class MeetingValidationController {
     private class HBoxCell extends HBox {
 
         Label label = new Label();
-        Button button = new Button("Validate Meeting");
-        Button button1 = new Button("Decline Meeting");
+        Button button = new Button("Validate");
+        Button button1 = new Button("Decline");
         Button button2 = new Button("Infos");
 
         HBoxCell(String labelText) {

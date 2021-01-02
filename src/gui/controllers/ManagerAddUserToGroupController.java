@@ -12,14 +12,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class ManagerAddUserTGroupController {
+public class ManagerAddUserToGroupController {
 
     Group currentGroup = ManagerManageGroupController.currentGroup;
 
@@ -29,8 +32,12 @@ public class ManagerAddUserTGroupController {
 
     Collection<String> selectedUsers = new ArrayList<>();
 
+
     @FXML
     private ListView<HBoxCell> listViewUsers;
+
+    @FXML
+    private TextField searchButton;
 
     private class HBoxCell extends HBox {
         Label label = new Label();
@@ -59,6 +66,7 @@ public class ManagerAddUserTGroupController {
 
 
 
+
     @FXML
     public void initialize(){
 
@@ -69,13 +77,36 @@ public class ManagerAddUserTGroupController {
         }
 
         listViewUsers.setItems(itemsU);
+
+        searchButton.setOnKeyPressed(keyEvent -> handleSearchByLast());
     }
 
 
     @FXML
     public void handleSearchByLast(){
+        ArrayList<String> searched = new ArrayList<>();
+        Pattern pattern = Pattern.compile(searchButton.getText());
+
+        for (String i : users){
+            Matcher matcher = pattern.matcher(i);
+            if(matcher.find()){
+                searched.add(i);
+            }
+        }
+
+        ObservableList<HBoxCell> itemsU = FXCollections.observableArrayList();
+
+
+        for (String name : searched){
+            HBoxCell hbc = new HBoxCell(name);
+            itemsU.add(hbc);
+        }
+
+        listViewUsers.setItems(itemsU);
 
     }
+
+
 
     @FXML
     public void handleAddUsers() throws IOException{
