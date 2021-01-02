@@ -112,7 +112,7 @@ public class MySQLGroupDAO implements GroupDAO{
 
         boolean result = false;
 
-        if(verifyUsername(username, groupName)){
+        if(!verifyUsername(username, groupName)){
             try{
                 Statement stmt = connection.createStatement();
                 stmt.executeUpdate("insert into groupMembers (groupname,username) values('" +groupName+"','"+username+"');");
@@ -129,11 +129,10 @@ public class MySQLGroupDAO implements GroupDAO{
     public boolean deleteMember(String username, String groupName) {
 
         boolean result = false;
-
         if(verifyUsername(username, groupName)){
             try{
                 Statement stmt = connection.createStatement();
-                stmt.executeUpdate("DELETE FROM users WHERE groupname = '" +groupName+"' and username = '"+username+"');");
+                stmt.executeUpdate("DELETE FROM groupMembers where username = '" + username + "' and groupname = '"+groupName+"';");
                 result = true;
             } catch (SQLException throwables){
                 throwables.printStackTrace();
@@ -157,6 +156,6 @@ public class MySQLGroupDAO implements GroupDAO{
             throwables.printStackTrace();
         }
 
-        return !exist;
+        return exist;
     }
 }

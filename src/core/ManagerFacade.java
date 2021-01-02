@@ -4,7 +4,10 @@ import persist.FactoryDAOImpl;
 import persist.GroupDAO;
 import persist.MeetingDAO;
 import persist.UserDAO;
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class ManagerFacade {
@@ -64,6 +67,11 @@ public class ManagerFacade {
         groupDAO.deleteMember(username,groupName);
     }
 
+    public void addToGroup(String groupName, String username){
+
+        groupDAO.addMember(username,groupName);
+    }
+
     public boolean addGroup(String name){
 
         return groupDAO.insert(name);
@@ -74,5 +82,16 @@ public class ManagerFacade {
     public void declineMeeting(Integer id){
         meetingDAO.declineWaitingMeeting(id);
     }
+
+    public ArrayList<String> getAllUsers(){
+        Collection<String> u = userDAO.findAllRegUsersNames();
+        Collection<String> m = userDAO.findAllManagersNames();
+
+        u.addAll(m);
+        Collections.sort((ArrayList<String>) u);
+
+        return (ArrayList<String>) u;
+    }
+
 
 }

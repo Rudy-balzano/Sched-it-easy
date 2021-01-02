@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ManagerAddUserTGroupController">
+   <children>
+      <ListView fx:id="listViewUsers" layoutX="120.0" layoutY="84.0" prefHeight="232.0" prefWidth="360.0" />
+      <Button layoutX="180.0" layoutY="333.0" mnemonicParsing="false" onAction="#cancel" prefHeight="39.0" prefWidth="86.0" text="Cancel" />
+      <Button layoutX="344.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleAddUsers" prefHeight="39.0" prefWidth="98.0" text="Add users" />
+      <TextField fx:id="searchButton" layoutX="284.0" layoutY="47.0" onAction="#handleSearchByLast" prefHeight="26.0" prefWidth="188.0" />
+      <Text layoutX="151.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search by last name : " wrappingWidth="141.0" />
+   </children>
+</AnchorPane>

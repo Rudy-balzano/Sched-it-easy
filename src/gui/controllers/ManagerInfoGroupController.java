@@ -16,13 +16,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 import java.io.IOException;
-import java.util.Collection;
 
 public class ManagerInfoGroupController {
 
-    Group currentGroup = ManagerManageGroupController.currentGroup;
 
     private static final ManagerFacade facade = new ManagerFacade();
+
+    Group currentGroup = ManagerManageGroupController.currentGroup;
 
 
     @FXML
@@ -54,7 +54,9 @@ public class ManagerInfoGroupController {
 
         ObservableList<HBoxCell> itemsU = FXCollections.observableArrayList();
 
-        for (String name : currentGroup.getUsers()){
+        Group refreshedGroup = facade.findGroupByName(currentGroup.getNameGroup());
+
+        for (String name : refreshedGroup.getUsers()){
             HBoxCell hbc = new HBoxCell(name);
             itemsU.add(hbc);
         }
@@ -65,6 +67,8 @@ public class ManagerInfoGroupController {
 
     @FXML
     public void initialize(){
+
+        currentGroup = facade.findGroupByName(currentGroup.getNameGroup());
 
         ObservableList<HBoxCell> itemsU = FXCollections.observableArrayList();
         for (String name : currentGroup.getUsers()){
