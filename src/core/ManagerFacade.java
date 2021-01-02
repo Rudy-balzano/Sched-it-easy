@@ -68,7 +68,11 @@ public class ManagerFacade {
 
         return groupDAO.insert(name);
     }
-
+    public void declineAccount(String username){
+        userDAO.declineWaitingUser(username);
+    }
+    public void declineMeeting(Integer id){
+        meetingDAO.declineWaitingMeeting(id);
+    }
 
 }
-//decline account and decline meeting ??

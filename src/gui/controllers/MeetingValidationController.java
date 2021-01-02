@@ -42,6 +42,7 @@ public class MeetingValidationController {
 
         Label label = new Label();
         Button button = new Button("Validate Meeting");
+        Button button1 = new Button("Decline Meeting");
         Button button2 = new Button("Infos");
 
         HBoxCell(String labelText) {
@@ -54,13 +55,16 @@ public class MeetingValidationController {
 
             Integer id = waitingMeetings.get(label.getText());
 
-            this.getChildren().addAll(label, button, button2);
+            this.getChildren().addAll(label, button, button1, button2);
             button.setOnAction(actionEvent -> {
                 facade.validationMeeting(id);
                 refresh();
             });
             button2.setOnAction(actionEvent -> {
-                //displayPopupMeetingInfo(facade.getWaitingMeetingById(id));
+                displayPopupMeetingInfo(facade.getWaitingMeetingById(id));
+            });
+            button1.setOnAction(actionEvent -> {
+                facade.declineMeeting(id);
             });
 
         }

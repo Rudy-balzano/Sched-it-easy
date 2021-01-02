@@ -140,6 +140,19 @@ public class MySQLUserDAO implements UserDAO {
 
         return result;
     }
+    public boolean declineWaitingUser(String username) {
+        boolean result = false;
+
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("DELETE FROM waiting_users WHERE username = '" + username + "';");
+            result = true;
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+
+        return result;
+    }
 
     @Override
     public boolean validateAccount(String username) {

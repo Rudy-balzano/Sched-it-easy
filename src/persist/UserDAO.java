@@ -21,4 +21,6 @@ public interface UserDAO {
 
     boolean validateAccount(String username);
 
+    boolean declineWaitingUser(String username);
+
 }

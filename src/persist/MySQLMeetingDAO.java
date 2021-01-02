@@ -174,4 +174,17 @@ public class MySQLMeetingDAO implements MeetingDAO{
         }
         return result1 && result2;
     }
+    public boolean declineWaitingMeeting(Integer id) {
+        boolean result = false;
+
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("DELETE FROM waiting_meetings WHERE id = '" + id + "';");
+            result = true;
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+
+        return result;
+    }
 }

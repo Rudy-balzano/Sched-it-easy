@@ -23,4 +23,6 @@ public interface MeetingDAO {
 
     boolean validateMeeting(Integer id);
 
+    boolean declineWaitingMeeting(Integer id);
+
 }

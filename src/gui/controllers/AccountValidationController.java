@@ -22,6 +22,7 @@ public class AccountValidationController {
     private class HBoxCell extends HBox {
         Label label = new Label();
         Button button = new Button("Validate account");
+        Button button2 = new Button("Decline account");
 
         HBoxCell(String labelText) {
             super();
@@ -35,6 +36,11 @@ public class AccountValidationController {
             button.setOnAction(actionEvent -> {
                 String username = label.getText().split(" ")[0];
                 facade.validateAccount(username);
+                refresh();
+            });
+            button2.setOnAction(actionEvent -> {
+                String username = label.getText().split(" ")[0];
+                facade.declineAccount(username);
                 refresh();
             });
         }
