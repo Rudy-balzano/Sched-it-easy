@@ -1,7 +1,10 @@
 package persist;
 
+import core.Invitation;
 import core.Meeting;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -9,9 +12,9 @@ import java.util.HashMap;
 
 public interface MeetingDAO {
 
-    boolean insert(String topicName, Date dateDebut, Date dateFin, String meetingCreator);
+    boolean insert(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String clientMeeting, String meetingTopic);
 
-    boolean insertWaitingMeeting(String topicName, Date dateDebut, Date dateFin, String meetingCreator);
+    boolean insertWaitingMeeting(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String clientMeeting, String meetingTopic);
 
     ArrayList<Meeting> findAllForUsername(String username);
 
@@ -21,8 +24,8 @@ public interface MeetingDAO {
 
     HashMap<String,Integer> findAllWaitingMeetings();
 
-    boolean validateMeeting(Integer id);
+    boolean validateMeeting(int id);
 
-    boolean declineWaitingMeeting(Integer id);
+    boolean declineWaitingMeeting(int id);
 
 }

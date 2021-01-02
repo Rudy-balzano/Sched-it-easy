@@ -6,6 +6,8 @@ import persist.InvitationDAO;
 import core.SessionFacade;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ReservationFacade {
@@ -22,15 +24,15 @@ public class ReservationFacade {
         this.meetingDAO = factoryDAO.createMeetingDAO();
     }
 
-    public boolean createMeeting(String topic, LocalDate date, String time, String duration){
+    public boolean createMeeting(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String meetingTopic){
         User creator = SessionFacade.getConnectedUser();
         String creatorUsername = creator.getUserName();
         boolean check = false;
         if (creator.getIsManager()){
-            //check = meetingDAO.insert(topic,date,time,duration,creatorUsername);
+            check = meetingDAO.insert(dateBegin,hourBegin,dateEnd,hourEnd,creatorUsername,meetingTopic);
         }
         else {
-            // check = meetingDAO.insertWaitingMeeting(topic,date,time,duration,creatorUsername);
+            check = meetingDAO.insertWaitingMeeting(dateBegin,hourBegin,dateEnd,hourEnd,"creatorUsername",meetingTopic);
         }
 
         return check;

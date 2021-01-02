@@ -62,9 +62,9 @@ public class MeetingValidationController {
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.setTitle("Meeting information");
 
-        Label dateD = new Label("Begins : " + m.getDateDebut().toString());
-        Label dateF = new Label("Ends : " + m.getDateFin().toString());
-        Label user = new Label("Created by  : " + m.getClientMeeting().getFirstName() + " " + m.getClientMeeting().getLastName() + " (" + m.getClientMeeting().getUserName() + ")");
+        Label dateD = new Label("Begins : " + m.getDateBegin().toString()+"   "+m.getHourBegin());
+        Label dateF = new Label("Ends : " + m.getDateEnd().toString()+"   "+m.getHourEnd());
+        Label user = new Label("Created by  : " + m.getClientMeeting());
 
         Button b = new Button("Close");
         b.setOnAction(actionEvent -> popup.close());

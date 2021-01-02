@@ -1,72 +1,92 @@
 package core;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.ArrayList;
 
 public class Meeting {
-    private Integer id;
-    private Date dateDebut;
-    private Date dateFin;
-    private User clientMeeting;
-    private ArrayList<Invitation> listInvitation;
+    private int id;
+    private LocalDate dateBegin;
+    private LocalTime hourBegin;
+    private LocalDate dateEnd;
+    private LocalTime hourEnd;
+    private String clientMeeting;
     private Topic meetingTopic;
+    private ArrayList<Invitation> listInvitation;
 
-    public Meeting(Date dateDebut,Date dateFin,User clientMeeting, ArrayList<Invitation> listInvitation, Topic meetingTopic, Integer id) {
+    public Meeting(int id, LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String clientMeeting, Topic meetingTopic, ArrayList<Invitation> listInvitation) {
 
-        this.clientMeeting = clientMeeting;
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
-        this.listInvitation = listInvitation;
-        this.meetingTopic = meetingTopic;
         this.id = id;
+        this.dateBegin = dateBegin;
+        this.hourBegin = hourBegin;
+        this.dateEnd = dateEnd;
+        this.hourEnd = hourEnd;
+        this.clientMeeting = clientMeeting;
+        this.meetingTopic = meetingTopic;
+        this.listInvitation = listInvitation;
 
     }
 
     public Meeting(){
+        this.dateBegin = null;
+        this.hourBegin = null;
+        this.dateEnd = null;
+        this.hourEnd = null;
         this.clientMeeting = null;
-        this.dateDebut = null;
-        this.dateFin = null;
-        this.listInvitation = null;
         this.meetingTopic = null;
-        this.id = null;
+        this.listInvitation = null;
     }
 
     //Getters and setters
 
-    public Date getDateDebut() {
-        return dateDebut;
+
+    public int getId() {
+        return id;
     }
 
-    public Date getDateFin() {
-        return dateFin;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public User getClientMeeting() {
+    public LocalDate getDateBegin() {
+        return dateBegin;
+    }
+
+    public void setDateBegin(LocalDate dateBegin) {
+        this.dateBegin = dateBegin;
+    }
+
+    public LocalTime getHourBegin() {
+        return hourBegin;
+    }
+
+    public void setHourBegin(LocalTime hourBegin) {
+        this.hourBegin = hourBegin;
+    }
+
+    public LocalDate getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    public LocalTime getHourEnd() {
+        return hourEnd;
+    }
+
+    public void setHourEnd(LocalTime hourEnd) {
+        this.hourEnd = hourEnd;
+    }
+
+    public String getClientMeeting() {
         return clientMeeting;
     }
 
-    public void setDateDebut(Date date) {
-        this.dateDebut = date;
-    }
-
-    public void setDateFin(Date date){
-        this.dateFin = date;
-    }
-
-    public void setDuration(Date dateFin) {
-        this.dateFin = dateFin;
-    }
-
-    public void setClientMeeting(User clientMeeting) {
+    public void setClientMeeting(String clientMeeting) {
         this.clientMeeting = clientMeeting;
-    }
-
-    public ArrayList<Invitation> getListInvitation() {
-        return listInvitation;
-    }
-
-    public void setListInvitation(ArrayList<Invitation> listInvitation) {
-        this.listInvitation = listInvitation;
     }
 
     public Topic getMeetingTopic() {
@@ -77,11 +97,11 @@ public class Meeting {
         this.meetingTopic = meetingTopic;
     }
 
-    public int getId() {
-        return id;
+    public ArrayList<Invitation> getListInvitation() {
+        return listInvitation;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setListInvitation(ArrayList<Invitation> listInvitation) {
+        this.listInvitation = listInvitation;
     }
 }
