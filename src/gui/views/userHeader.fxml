@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.controllers.UserHeaderController"
+            prefHeight="400.0" prefWidth="600.0">
+<children>
+    <MenuBar prefHeight="29.0" prefWidth="600.0">
+        <menus>
+            <Menu mnemonicParsing="false" text="Schedule">
+                <items>
+                    <MenuItem mnemonicParsing="false" text="See" onAction="#switchToHome" />
+                </items></Menu>
+            <Menu mnemonicParsing="false" text="Reservation">
+                <items>
+                    <MenuItem fx:id="reservationButton" mnemonicParsing="false" onAction="#handleReservation" text="create a meeting" />
+                </items></Menu>
+            <Menu mnemonicParsing="false" text="My account">
+                <items>
+                    <MenuItem mnemonicParsing="false" text="See" onAction="#switchToSeeAccount" />
+                </items></Menu>
+        </menus>
+    </MenuBar>
+</children>
+</AnchorPane>
