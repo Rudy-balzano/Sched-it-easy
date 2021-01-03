@@ -23,4 +23,6 @@ public interface UserDAO {
 
     boolean declineWaitingUser(String username);
 
+    boolean displaySchedule(String username);
+
 }

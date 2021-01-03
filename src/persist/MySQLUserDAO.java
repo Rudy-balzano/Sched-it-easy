@@ -154,6 +154,19 @@ public class MySQLUserDAO implements UserDAO {
         return result;
     }
 
+    public boolean displaySchedule(String username) {
+      boolean result = false;
+      try{
+          Statement stmt = connection.createStatement();
+          stmt.executeUpdate("SELECT * FROM meetingAttendence WHERE username = '" + username + "';");
+          result = true;
+
+      } catch(SQLException ex){
+          System.out.println(ex);
+      }
+      return result;
+    }
+
     @Override
     public boolean validateAccount(String username) {
         boolean result1 = false;
