@@ -66,7 +66,7 @@ public class MySQLMeetingDAO implements MeetingDAO{
         try{
 
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from waiting_meetings where id = '" + id + "';");
+            ResultSet rs = stmt.executeQuery("select * from waiting_meetings where id = " + id + ";");
 
             if(rs.next()){
                 m.setId(rs.getInt(1));
@@ -75,9 +75,10 @@ public class MySQLMeetingDAO implements MeetingDAO{
                 LocalTime hourBegin = rs.getTime(3).toLocalTime();
                 m.setHourBegin(hourBegin);
                 LocalDate dateEnd = rs.getDate(4).toLocalDate();
-                m.setDateBegin(dateEnd);
+                m.setDateEnd(dateEnd);
                 LocalTime hourEnd = rs.getTime(5).toLocalTime();
-                m.setHourBegin(hourEnd);
+                m.setHourEnd(hourEnd);
+                System.out.println(m.getId() + " " + m.getDateBegin() + " " + m.getHourBegin() + " " + m.getDateEnd() + " " + m.getHourEnd());
                 m.setClientMeeting(userDAO.findByUsername((rs.getString(6))).getUserName());
                 m.setMeetingTopic(topicDAO.findBy(rs.getString(7)));
             }
@@ -104,9 +105,9 @@ public class MySQLMeetingDAO implements MeetingDAO{
                 LocalTime hourBegin = rs.getTime(3).toLocalTime();
                 m.setHourBegin(hourBegin);
                 LocalDate dateEnd = rs.getDate(4).toLocalDate();
-                m.setDateBegin(dateEnd);
+                m.setDateEnd(dateEnd);
                 LocalTime hourEnd = rs.getTime(5).toLocalTime();
-                m.setHourBegin(hourEnd);
+                m.setHourEnd(hourEnd);
                 m.setClientMeeting(userDAO.findByUsername((rs.getString(6))).getUserName());
                 m.setMeetingTopic(topicDAO.findBy(rs.getString(7)));
             }

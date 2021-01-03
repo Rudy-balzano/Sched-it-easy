@@ -58,7 +58,7 @@ public class MySQLTopicDAO implements TopicDAO {
         Topic t = null;
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM topics WHERE nameTopic = " + name);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM topics WHERE nameTopic = '" + name + "';");
             if(rs.next()){
                 t = new Topic(rs.getString(1),rs.getString(2));
             }
