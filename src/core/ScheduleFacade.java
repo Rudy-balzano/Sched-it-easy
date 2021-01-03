@@ -10,7 +10,8 @@ public class ScheduleFacade {
         this.factoryDAO = FactoryDAOImpl.getInstance();
         this.userDAO = factoryDAO.createUserDAO();
     }
+    //Sûrement mettre en type de retour une liste de meeting
     public void checkSchedule(String username) {
-        userDAO.displaySchedule(username);
+        userDAO.findSchedule(username);
     }
 }

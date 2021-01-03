@@ -1,7 +1,7 @@
 package persist;
 
 import java.util.Collection;
-
+import core.Meeting;
 import core.User;
 
 public interface UserDAO {
@@ -23,6 +23,6 @@ public interface UserDAO {
 
     boolean declineWaitingUser(String username);
 
-    boolean displaySchedule(String username);
+    Collection<Meeting> findSchedule(String username);
 
 }

@@ -1,21 +1,28 @@
 package persist;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import core.Meeting;
 import core.User;
 
 public class MySQLUserDAO implements UserDAO {
 
     private ConnectionDBMySQL instanceConnection;
     private Connection connection;
+    private FactoryDAOImpl factoryDAO;
+    private TopicDAO topicDAO;
 
     public MySQLUserDAO(){
         this.instanceConnection = ConnectionDBMySQL.getInstance();
         this.connection = instanceConnection.getConnection();
+        this.factoryDAO = FactoryDAOImpl.getInstance();
+        this.topicDAO = factoryDAO.createTopicDAO();
     }
 
     @Override
@@ -34,8 +41,34 @@ public class MySQLUserDAO implements UserDAO {
         }
         return res;
     }
+    public Collection<Meeting> findSchedule(String username) {
+        Collection<Meeting> m = new ArrayList<Meeting>();
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT username, idMeeting FROM meetingAttendence WHERE username = '" + username + "';");
+            while (rs.next()) {
+                Integer idm = rs.getInt(2);
+                ResultSet me = stmt.executeQuery("SELECT * FROM meetings WHERE id = '" + idm + "';");
+                Meeting meeting = new Meeting();
+                meeting.setId(me.getInt(1));
+                LocalDate dateBegin = me.getDate(2).toLocalDate();
+                meeting.setDateBegin(dateBegin);
+                LocalTime hourBegin = me.getTime(3).toLocalTime();
+                meeting.setHourBegin(hourBegin);
+                LocalDate dateEnd = me.getDate(4).toLocalDate();
+                meeting.setDateBegin(dateEnd);
+                LocalTime hourEnd = me.getTime(5).toLocalTime();
+                meeting.setHourBegin(hourEnd);
+                meeting.setClientMeeting(findByUsername((me.getString(6))).getUserName());
+                meeting.setMeetingTopic(topicDAO.findBy(me.getString(7)));
+                m.add(meeting);}
+            } catch(SQLException ex){
+                System.out.println("SQL request error");
+            }
+            return m;
+        }
 
-    @Override
+        @Override
     public Collection<String> findAllManagersNames() {
         Collection<String> res = new ArrayList<String>();
         try{
@@ -154,18 +187,8 @@ public class MySQLUserDAO implements UserDAO {
         return result;
     }
 
-    public boolean displaySchedule(String username) {
-      boolean result = false;
-      try{
-          Statement stmt = connection.createStatement();
-          stmt.executeUpdate("SELECT * FROM meetingAttendence WHERE username = '" + username + "';");
-          result = true;
 
-      } catch(SQLException ex){
-          System.out.println(ex);
-      }
-      return result;
-    }
+
 
     @Override
     public boolean validateAccount(String username) {
