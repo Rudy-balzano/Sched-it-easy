@@ -1,14 +1,14 @@
 package persist;
 
 import core.Meeting;
-import core.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 
 public class MySQLMeetingDAO implements MeetingDAO{

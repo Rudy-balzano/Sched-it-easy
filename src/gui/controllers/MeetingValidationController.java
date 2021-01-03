@@ -51,9 +51,7 @@ public class MeetingValidationController {
                 refresh();
             });
 
-            button2.setOnAction((ActionEvent actionEvent) -> {
-                displayPopupMeetingInfo(facade.getWaitingMeetingById(id));
-            });
+            button2.setOnAction((ActionEvent actionEvent) -> displayPopupMeetingInfo(facade.getWaitingMeetingById(id)));
             button1.setOnAction(actionEvent -> facade.declineMeeting(id));
 
         }
