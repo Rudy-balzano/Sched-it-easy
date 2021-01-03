@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.UserProfileController">
    <children>
-      <fx:include source="userHeader.fxml" />
+      <fx:include source="userMenu.fxml" />
        <Text layoutX="78.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username : " wrappingWidth="108.21630859375">
            <font>
                <Font size="17.0" />
