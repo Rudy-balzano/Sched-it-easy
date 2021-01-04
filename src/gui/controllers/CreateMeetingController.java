@@ -5,25 +5,22 @@ import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.page.DayPage;
+import core.Meeting;
 import core.ReservationFacade;
+import gui.Main;
+import gui.roots.Roots;
+import gui.views.popover.MyCustomPopOverContentNode;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 public class CreateMeetingController {
 
@@ -35,16 +32,20 @@ public class CreateMeetingController {
 
     ArrayList<Entry> listEntries = new ArrayList<>();
 
-    ReservationFacade reservationfacade = new ReservationFacade();
+    public static Meeting meeting;
+
+    private static ReservationFacade reservationfacade = new ReservationFacade();
+
 
 
 
     @FXML
     private void initialize(){
 
+        dayPage.setEntryDetailsPopOverContentCallback(param -> new MyCustomPopOverContentNode());
+
         EventHandler<CalendarEvent> handler = evt -> handle(evt);
         calendar.addEventHandler(handler);
-
 
         calendar.setStyle(Calendar.Style.STYLE1);
 
@@ -83,6 +84,7 @@ public class CreateMeetingController {
         updateTimeThread.start();
     }
 
+
     private void handle(CalendarEvent evt) {
         if (evt.isEntryAdded()){
             listEntries.add(evt.getEntry());
@@ -103,7 +105,20 @@ public class CreateMeetingController {
 
 
     public void handleCreateMeeting(ActionEvent actionEvent) {
+        createMeeting();
+    }
 
+    public void handleCancel(ActionEvent actionEvent) {
+    }
+
+    public void handleBookRoom(ActionEvent actionEvent) throws IOException {
+
+        createMeeting();
+//        meeting = reservationfacade.findMeetingById();
+        Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.bookRoomRoot))));
+    }
+
+    private void createMeeting(){
         Boolean createMeeting = false;
 
         for ( int i = 0 ; i < listEntries.size() ; i++) {
@@ -117,13 +132,5 @@ public class CreateMeetingController {
                 System.out.println("Meeting not inserted ...");
             }
         }
-
-
-    }
-
-    public void handleCancel(ActionEvent actionEvent) {
-    }
-
-    public void handleBookRoom(ActionEvent actionEvent) {
     }
 }

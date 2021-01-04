@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.RoomReservationController">
+   <children>
+      <fx:include source="userMenu.fxml" />
+      <ListView fx:id="listView" layoutX="23.0" layoutY="100.0" prefHeight="179.0" prefWidth="171.0" />
+      <Label layoutX="27.0" layoutY="73.0" text="Equipment wanted" />
+      <Button fx:id="seeRoomsButton" layoutX="43.0" layoutY="309.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="136.0" text="See rooms available" />
+      <TableView fx:id="tableView" layoutX="282.0" layoutY="102.0" prefHeight="177.0" prefWidth="273.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="name" />
+          <TableColumn prefWidth="75.0" text="capacity" />
+            <TableColumn prefWidth="122.0" text="equipments" />
+        </columns>
+      </TableView>
+      <Button fx:id="createMeetingButton" layoutX="407.0" layoutY="309.0" mnemonicParsing="false" text="Ask  to create a meeting" />
+      <Button fx:id="cancelButton" layoutX="281.0" layoutY="308.0" mnemonicParsing="false" text="Cancel" />
+   </children>
+</AnchorPane>

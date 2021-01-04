@@ -38,6 +38,10 @@ public class ReservationFacade {
         return check;
     }
 
+    public Meeting findMeetingById(int id){
+        return meetingDAO.findByID(id);
+    }
+
 
 
 
