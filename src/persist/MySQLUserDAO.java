@@ -3,6 +3,7 @@ package persist;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -47,23 +48,30 @@ public class MySQLUserDAO implements UserDAO {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT username, idMeeting FROM meetingAttendence WHERE username = '" + username + "';");
             while (rs.next()) {
-                Integer idm = rs.getInt(2);
-                ResultSet me = stmt.executeQuery("SELECT * FROM meetings WHERE id = '" + idm + "';");
-                Meeting meeting = new Meeting();
-                meeting.setId(me.getInt(1));
-                LocalDate dateBegin = me.getDate(2).toLocalDate();
-                meeting.setDateBegin(dateBegin);
-                LocalTime hourBegin = me.getTime(3).toLocalTime();
-                meeting.setHourBegin(hourBegin);
-                LocalDate dateEnd = me.getDate(4).toLocalDate();
-                meeting.setDateBegin(dateEnd);
-                LocalTime hourEnd = me.getTime(5).toLocalTime();
-                meeting.setHourBegin(hourEnd);
-                meeting.setClientMeeting(findByUsername((me.getString(6))).getUserName());
-                meeting.setMeetingTopic(topicDAO.findBy(me.getString(7)));
-                m.add(meeting);}
+                int idm = rs.getInt(2);
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM meetings WHERE id = ?;");
+                ps.setInt(1,idm);
+                ResultSet me = ps.executeQuery();
+                while(me.next()) {
+                    Meeting meeting = new Meeting();
+
+                    meeting.setId(me.getInt(1));
+                    LocalDate dateBegin = me.getDate(2).toLocalDate();
+                    meeting.setDateBegin(dateBegin);
+                    LocalTime hourBegin = this.timeToLocalDate(me.getTime(3));
+                    meeting.setHourBegin(hourBegin);
+                    LocalDate dateEnd = me.getDate(4).toLocalDate();
+                    meeting.setDateEnd(dateEnd);
+                    LocalTime hourEnd = this.timeToLocalDate(me.getTime(5));
+                    meeting.setHourEnd(hourEnd);
+                    meeting.setClientMeeting(findByUsername((me.getString(6))).getUserName());
+                    meeting.setMeetingTopic(topicDAO.findBy(me.getString(7)));
+                    m.add(meeting);
+                }
+            }
             } catch(SQLException ex){
                 System.out.println("SQL request error");
+                ex.printStackTrace();
             }
             return m;
         }
@@ -268,6 +276,10 @@ public class MySQLUserDAO implements UserDAO {
         }
 
         return exist;
+    }
+
+    private LocalTime timeToLocalDate(Time time){
+        return time.toLocalTime().minusHours(1);
     }
 }
 
