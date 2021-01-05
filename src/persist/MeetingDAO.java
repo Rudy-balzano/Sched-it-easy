@@ -26,7 +26,7 @@ public interface MeetingDAO {
 
     Meeting findByID(Integer id);
 
-    HashMap<String,Integer> findAllWaitingMeetings();
+    HashMap<Integer,String> findAllWaitingMeetings();
 
     boolean validateMeeting(int id);
 

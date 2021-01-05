@@ -171,15 +171,16 @@ public class MySQLMeetingDAO implements MeetingDAO{
     }
 
     @Override
-    public HashMap<String, Integer> findAllWaitingMeetings() {
+    public HashMap<Integer, String> findAllWaitingMeetings() {
 
-        HashMap<String,Integer> res = new HashMap<String,Integer>();
+        HashMap<Integer,String> res = new HashMap<>();
 
         try{
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT id,userCreator FROM waiting_meetings;");
             while(rs.next()){
-                res.put(rs.getString(2), rs.getInt(1));
+                String str = rs.getString(2) + " " + rs.getInt(1);
+                res.put(rs.getInt(1), str);
             }
         } catch (SQLException throwables){
             throwables.printStackTrace();
@@ -203,9 +204,9 @@ public class MySQLMeetingDAO implements MeetingDAO{
                 LocalTime hourBegin = rs.getTime(3).toLocalTime();
                 m.setHourBegin(hourBegin);
                 LocalDate dateEnd = rs.getDate(4).toLocalDate();
-                m.setDateBegin(dateEnd);
+                m.setDateEnd(dateEnd);
                 LocalTime hourEnd = rs.getTime(5).toLocalTime();
-                m.setHourBegin(hourEnd);
+                m.setHourEnd(hourEnd);
                 m.setClientMeeting(userDAO.findByUsername((rs.getString(6))).getUserName());
                 m.setMeetingTopic(topicDAO.findBy(rs.getString(7)));
             }

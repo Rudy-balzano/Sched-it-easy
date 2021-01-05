@@ -38,7 +38,7 @@ public class ManagerFacade {
         return userDAO.findAllWaitingUsers();
     }
 
-    public HashMap<String,Integer> getAllWaitingMeetings(){
+    public HashMap<Integer,String> getAllWaitingMeetings(){
 
         return meetingDAO.findAllWaitingMeetings();
     }

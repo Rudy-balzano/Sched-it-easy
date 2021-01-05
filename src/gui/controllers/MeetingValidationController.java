@@ -22,7 +22,7 @@ public class MeetingValidationController {
 
     private static final ManagerFacade facade = new ManagerFacade();
 
-    private HashMap<String,Integer> waitingMeetings = facade.getAllWaitingMeetings();
+    private HashMap<Integer,String> waitingMeetings = facade.getAllWaitingMeetings();
 
     @FXML
     private ListView<HBoxCell>  listwaitingMeetings;
@@ -39,11 +39,14 @@ public class MeetingValidationController {
 
             super();
 
-            label.setText(labelText);
+
+            label.setText(labelText.split(" ")[0]);
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
 
-            Integer id = waitingMeetings.get(label.getText());
+            Integer id = Integer.parseInt(labelText.split(" ")[1]);
+
+            System.out.println(id);
 
             this.getChildren().addAll(label, button, button1, button2);
             button.setOnAction(actionEvent -> {
@@ -52,13 +55,15 @@ public class MeetingValidationController {
             });
 
             button2.setOnAction((ActionEvent actionEvent) -> displayPopupMeetingInfo(facade.getWaitingMeetingById(id)));
-            button1.setOnAction(actionEvent -> facade.declineMeeting(id));
+            button1.setOnAction(actionEvent -> {
+                facade.declineMeeting(id);
+                refresh();
+            });
 
         }
     }
 
     private void displayPopupMeetingInfo(Meeting m){
-        //Popup that displays information about the selected meeting
         Stage popup = new Stage();
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.setTitle("Meeting information");
@@ -80,11 +85,12 @@ public class MeetingValidationController {
     }
 
     private void refresh(){
+        HashMap<Integer,String> meetingsRefreshed = facade.getAllWaitingMeetings();
 
         ObservableList<HBoxCell> itemsMe = FXCollections.observableArrayList();
 
-        for (String name : waitingMeetings.keySet()){
-            HBoxCell hbc = new HBoxCell(name);
+        for (Integer id : meetingsRefreshed.keySet()){
+            HBoxCell hbc = new HBoxCell(meetingsRefreshed.get(id));
             itemsMe.add(hbc);
         }
 
@@ -93,9 +99,8 @@ public class MeetingValidationController {
         public void initialize(){
 
             ObservableList<HBoxCell> itemsMe = FXCollections.observableArrayList();
-            for (String name : waitingMeetings.keySet()) {
-                //Consider using iterator
-                HBoxCell hbc = new HBoxCell(name);
+            for (Integer id : waitingMeetings.keySet()) {
+                HBoxCell hbc = new HBoxCell(waitingMeetings.get(id));
                 itemsMe.add(hbc);
             }
             listwaitingMeetings.setItems(itemsMe);
