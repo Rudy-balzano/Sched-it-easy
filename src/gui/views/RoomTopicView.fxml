@@ -64,8 +64,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <Button fx:id="deleteRoomButton" layoutX="234.0" layoutY="72.0" mnemonicParsing="false" onAction="#deleteRoom" text="Delete" />
-                                          <TextField fx:id="nameDeleteRoom" layoutX="19.0" layoutY="72.0" promptText="Name Room" />
+                                          <ListView fx:id="listViewDeleteRooms" layoutX="40.0" layoutY="63.0" prefHeight="305.0" prefWidth="300.0" />
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -109,8 +108,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <Button fx:id="deleteTopicButton" layoutX="80.0" layoutY="183.0" mnemonicParsing="false" onAction="#deleteTopic" text="Delete" />
-                                          <TextField fx:id="nameDeleteTopic" layoutX="20.0" layoutY="32.0" text="Name Topic" />
+                                          <ListView fx:id="listViewDeleteTopics" layoutX="40.0" layoutY="63.0" prefHeight="305.0" prefWidth="300.0" />
                                        </children>
                                     </AnchorPane>
                                  </content>

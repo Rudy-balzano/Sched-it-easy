@@ -1,19 +1,18 @@
 package core;
 
 import persist.AdminDAO;
-import persist.FactoryDAO;
 import persist.FactoryDAOImpl;
 import persist.UserDAO;
 
 import java.util.Collection;
+import java.util.Map;
 
 public class AdminAccountManagementFacade {
-    private static Admin connectedAdmin; //Maybe useless
-    private UserDAO userDAO;
-    private AdminDAO adminDAO;
+    private final UserDAO userDAO;
+    private final AdminDAO adminDAO;
 
     public AdminAccountManagementFacade(){
-        FactoryDAO factoryDAO = FactoryDAOImpl.getInstance();
+        FactoryDAOImpl factoryDAO = FactoryDAOImpl.getInstance();
         this.userDAO = factoryDAO.createUserDAO();
         this.adminDAO = factoryDAO.createAdminDAO();
     }

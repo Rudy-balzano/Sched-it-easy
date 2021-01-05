@@ -22,8 +22,7 @@ public class RoomTopicFacade {
     }
 
     public ArrayList<String> getRooms(){
-        //TODO
-        return new ArrayList<>();
+        return roomDAO.findAll();
     }
     public Room displayRoomByName(String name){
         return roomDAO.findBy(name);

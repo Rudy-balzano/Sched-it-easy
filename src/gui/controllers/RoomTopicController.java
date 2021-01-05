@@ -1,9 +1,9 @@
 package gui.controllers;
 
-import core.Meeting;
 import core.Room;
 import core.RoomTopicFacade;
 import core.Equipment;
+import core.Topic;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -78,6 +78,10 @@ public class RoomTopicController {
     private TableColumn<Pair<String, Integer>,String> equipmentColumn2;
     @FXML
     private TableColumn<Pair<String, Integer>,Integer> quantityColumn2;
+    @FXML
+    private ListView<HBoxCell> listViewDeleteRooms;
+    @FXML
+    private ListView<HBoxCell> listViewDeleteTopics;
 
 
     private static final RoomTopicFacade roomTopicFacade = new RoomTopicFacade();
@@ -87,11 +91,15 @@ public class RoomTopicController {
     private static ObservableList<Pair<String,Integer>> listTabViewUpdateRoom = FXCollections.observableArrayList();
 
 
-    private static class HBoxCell extends HBox {
+    private class HBoxCell extends HBox {
 
         Label label = new Label();
         Button infoButton = new Button("description");
         Button addButton = new Button("Add");
+        Label deletedRoom = new Label();
+        Label deletedTopic = new Label();
+        Button deleteR = new Button("Delete");
+        Button deleteT = new Button("Delete");
 
         HBoxCell(String labelText, TableView tableView, ObservableList<Pair<String,Integer>> listTabView) {
 
@@ -100,6 +108,7 @@ public class RoomTopicController {
             label.setText(labelText);
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
+
 
             addButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -129,6 +138,8 @@ public class RoomTopicController {
                 }
             });
 
+
+
             this.getChildren().addAll(label, infoButton, addButton);
             infoButton.setOnAction(actionEvent -> {
                 String name = labelText;
@@ -136,7 +147,47 @@ public class RoomTopicController {
             });
         }
 
+        HBoxCell(String nameRoom){
+            super();
 
+            deletedRoom.setText(nameRoom);
+            deletedRoom.setMaxWidth(Double.MAX_VALUE);
+            HBox.setHgrow(deletedRoom, Priority.ALWAYS);
+
+            deletedTopic.setText(nameRoom);
+            deletedTopic.setMaxWidth(Double.MAX_VALUE);
+            HBox.setHgrow(deletedTopic, Priority.ALWAYS);
+
+            this.getChildren().addAll(deletedTopic, deleteT);
+
+            deleteT.setOnAction(actionEvent -> {
+                roomTopicFacade.deleteTopic(deletedTopic.getText());
+                refresh();
+            });
+        }
+
+
+    }
+
+    private void refresh(){
+        Collection<String> rooms = roomTopicFacade.getRooms();
+        Collection<Topic> topics = roomTopicFacade.getTopics();
+
+        ObservableList<HBoxCell> itemsR = FXCollections.observableArrayList();
+        ObservableList<HBoxCell> itemsT = FXCollections.observableArrayList();
+
+        for (String name : rooms){
+            HBoxCell hbc = new HBoxCell(name);
+            itemsR.add(hbc);
+        }
+        for (Topic t : topics){
+            HBoxCell hbc2 = new HBoxCell(t.getNameTopic());
+            itemsR.add(hbc2);
+        }
+
+
+        listViewDeleteRooms.setItems(itemsR);
+        listViewDeleteTopics.setItems(itemsT);
     }
 
     private static void displayPopupEquipmentInfo(Equipment e){
@@ -164,6 +215,7 @@ public class RoomTopicController {
     private void initialize(){
 
         loadAllEquipmentFromDB(listViewEquipments, tableViewEquipmentAdded, listTabViewAddRoom);
+
 
         tableViewEquipmentAdded.setPlaceholder(new Label("No equipments selected"));
 
@@ -195,6 +247,26 @@ public class RoomTopicController {
          */
 
         tableViewEquipmentAdded.setItems(listTabViewAddRoom);
+
+        Collection<String> rooms = roomTopicFacade.getRooms();
+
+        ObservableList<HBoxCell> itemsR = FXCollections.observableArrayList();
+        for (String name : rooms){
+            HBoxCell hbc2 = new HBoxCell(name);
+            itemsR.add(hbc2);
+        }
+
+        listViewDeleteRooms.setItems(itemsR);
+
+        Collection<Topic> topics = roomTopicFacade.getTopics();
+
+        ObservableList<HBoxCell> itemsT = FXCollections.observableArrayList();
+        for (Topic t : topics){
+            HBoxCell hbc2 = new HBoxCell(t.getNameTopic());
+            itemsT.add(hbc2);
+        }
+
+        listViewDeleteTopics.setItems(itemsT);
 
 
     }
