@@ -60,6 +60,39 @@ public class MySQLMeetingDAO implements MeetingDAO{
     }
 
     @Override
+    public int insertAndGetId(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String clientMeeting, String meetingTopic) {
+
+        int id = -1;
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("insert into meetings (dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + dateBegin + "','" + hourBegin + "','" + dateEnd + "','" + hourEnd +"','"+ clientMeeting +"', '"+ meetingTopic +"');", Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()){
+                id = rs.getInt(1);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return id;
+    }
+
+    @Override
+    public int insertWaitingMeetingAndGetId(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String clientMeeting, String meetingTopic) {
+        int id = -1;
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("insert into waiting_meetings (dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + dateBegin + "','" + hourBegin + "','" + dateEnd + "','" + hourEnd +"','"+ clientMeeting +"', '"+ meetingTopic +"');", Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()){
+                id = rs.getInt(1);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return id;
+    }
+
+    @Override
     public Meeting findWaitingMeetingByID(Integer id){
         Meeting m = new Meeting();
 

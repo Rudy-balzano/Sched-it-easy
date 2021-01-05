@@ -32,10 +32,9 @@ public class CreateMeetingController {
 
     ArrayList<Entry> listEntries = new ArrayList<>();
 
-    public static Meeting meeting;
+    public static Meeting meetings;
 
     private static ReservationFacade reservationfacade = new ReservationFacade();
-
 
 
 
@@ -105,7 +104,7 @@ public class CreateMeetingController {
 
 
     public void handleCreateMeeting(ActionEvent actionEvent) {
-        createMeeting();
+        saveMeeting();
     }
 
     public void handleCancel(ActionEvent actionEvent) {
@@ -113,12 +112,25 @@ public class CreateMeetingController {
 
     public void handleBookRoom(ActionEvent actionEvent) throws IOException {
 
-        createMeeting();
-//        meeting = reservationfacade.findMeetingById();
+        int idMeeting=-1;
+
+        for ( int i = 0 ; i < listEntries.size() ; i++) {
+
+            idMeeting = reservationfacade.createMeetingAndGetId(listEntries.get(i).getStartDate(), listEntries.get(i).getStartTime(), listEntries.get(i).getEndDate(), listEntries.get(i).getEndTime(), " ");
+            if (idMeeting!=-1){
+                System.out.println("Meeting inserted !");
+            }
+            else {
+                System.out.println("Meeting not inserted ...");
+            }
+        }
+        meetings = reservationfacade.findMeetingById(idMeeting);
+        System.out.println(idMeeting);
+
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.bookRoomRoot))));
     }
 
-    private void createMeeting(){
+    private void saveMeeting(){
         Boolean createMeeting = false;
 
         for ( int i = 0 ; i < listEntries.size() ; i++) {
