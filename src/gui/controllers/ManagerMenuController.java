@@ -22,6 +22,10 @@ public class ManagerMenuController {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerMeetingValidationRoot))));
     }
 
+    public void switchToSeeAccount() throws IOException{
+        Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerProfileRoot))));
+    }
+
     public void handleReservation() throws IOException {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.createMeetingRoot))));
     }

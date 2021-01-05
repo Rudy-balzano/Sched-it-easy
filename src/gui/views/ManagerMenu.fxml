@@ -38,7 +38,7 @@
       </Menu>
       <Menu mnemonicParsing="false" text="My account">
         <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="See" onAction = "#switchToSeeAccount"/>
         </items>
       </Menu>
       <Menu mnemonicParsing="false" text="Logout">

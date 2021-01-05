@@ -25,4 +25,6 @@ public interface UserDAO {
 
     Collection<Meeting> findSchedule(String username);
 
+    boolean modifyUser(String username,String firstName,String lastName);
+
 }

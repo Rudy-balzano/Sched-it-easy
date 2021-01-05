@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.UserProfileController">
+    <children>
+        <fx:include source="ManagerMenu.fxml" />
+        <Text layoutX="152.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First name : ">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </Text>
+        <Text layoutX="150.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name : ">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </Text>
+        <TextField fx:id="firstname" layoutX="266.0" layoutY="151.0" />
+        <TextField fx:id="lastname" layoutX="266.0" layoutY="197.0" />
+        <Text layoutX="227.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My account">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Text>
+        <Button layoutX="247.0" layoutY="303.0" mnemonicParsing="false" onAction="#submitChanges" text="Submit changes" />
+    </children>
+</AnchorPane>

@@ -68,7 +68,22 @@ public class MySQLUserDAO implements UserDAO {
             return m;
         }
 
-        @Override
+    @Override
+    public boolean modifyUser(String username,String firstName, String lastName) {
+        boolean result = false;
+
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("UPDATE users SET firstname = '" + firstName +"', lastname = '" + lastName +"' WHERE username = '" + username + "';");
+            result = true;
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+
+        return result;
+    }
+
+    @Override
     public Collection<String> findAllManagersNames() {
         Collection<String> res = new ArrayList<String>();
         try{
