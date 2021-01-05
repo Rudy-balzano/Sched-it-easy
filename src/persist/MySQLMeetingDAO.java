@@ -129,7 +129,7 @@ public class MySQLMeetingDAO implements MeetingDAO{
 
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from meetings where id = '" + id + "';");
+            ResultSet rs = stmt.executeQuery("select * from meetings where id = " + id + ";");
 
             if(rs.next()){
                 m.setId(rs.getInt(1));

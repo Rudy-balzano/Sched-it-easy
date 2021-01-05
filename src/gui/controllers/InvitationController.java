@@ -18,7 +18,7 @@ public class InvitationController {
     private ArrayList<Invitation> waitingInvitation = facade.getAllInvitation();
 
     @FXML
-    private ListView<HBoxCell> listwaitingInvitation;
+    private ListView<HBoxCell> listwaitingsInvitation;
     private class HBoxCell extends HBox {
 
         Label label = new Label();
@@ -28,15 +28,17 @@ public class InvitationController {
         HBoxCell(Invitation invit) {
 
             super();
-            String inv = invit.getMeetingInvitation().getClientMeeting() + " " + invit.getMeetingInvitation().getDateBegin() + " " +invit.getMeetingInvitation().getDateEnd() + " " +invit.getMeetingInvitation().getHourBegin() + "" + invit.getMeetingInvitation().getHourEnd() + " " + invit.getMeetingInvitation().getMeetingTopic();
+            String inv = invit.getMeetingInvitation().getClientMeeting() + " " + invit.getMeetingInvitation().getDateBegin() + " " +invit.getMeetingInvitation().getDateEnd() + " from " +invit.getMeetingInvitation().getHourBegin() + " to " + invit.getMeetingInvitation().getHourEnd() + " about " + invit.getMeetingInvitation().getMeetingTopic()/*.getNameTopic()*/;
+            //TODO : trouver un moyen de mieux présenter l'affichage ?
+            //TODO : décommenter le .getNameTopic de inv = quand on aura mis des invitations avec des topics dans la BDD
 
             label.setText(inv);
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
 
 
+            this.getChildren().addAll(label,button, button1);
 
-            this.getChildren().addAll(button, button1);
             button.setOnAction(actionEvent -> {
                 facade.acceptInvitation(invit.getMeetingInvitation().getClientMeeting(), invit.getMeetingInvitation().getId());
                 refresh();
@@ -61,17 +63,17 @@ public class InvitationController {
             itemsInv.add(hbc);
         }
 
-        listwaitingInvitation.setItems(itemsInv);
+        listwaitingsInvitation.setItems(itemsInv);
     }
     public void initialize(){
 
         ObservableList<HBoxCell> itemsInv = FXCollections.observableArrayList();
         for (Invitation i : waitingInvitation) {
-            int id = i.getMeetingInvitation().getId();
-            HBoxCell hbc = new HBoxCell(waitingInvitation.get(id));
+            System.out.println(i.getInvitedUser().getUserName());
+            HBoxCell hbc = new HBoxCell(i);
             itemsInv.add(hbc);
         }
-        listwaitingInvitation.setItems(itemsInv);
+        listwaitingsInvitation.setItems(itemsInv);
     }
 
 }

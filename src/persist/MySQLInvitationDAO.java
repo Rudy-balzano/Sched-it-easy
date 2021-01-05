@@ -56,7 +56,7 @@ public class MySQLInvitationDAO implements InvitationDAO{
         return i;
     }
     public ArrayList<Invitation> findAllInvitation(String username){
-        ArrayList<Invitation> res = new ArrayList<Invitation>();
+        ArrayList<Invitation> res = new ArrayList<>();
 
         try{
             Statement stmt = connection.createStatement();
@@ -66,6 +66,7 @@ public class MySQLInvitationDAO implements InvitationDAO{
                 i.setInvitedUser(userDAO.findByUsername(rs.getString(1)));
                 i.setState(rs.getInt(2));
                 i.setMeetingInvitation(meetingDAO.findByID(rs.getInt(3)));
+                System.out.println(i.getMeetingInvitation().getClientMeeting());
                 res.add(i);
             }
         } catch (SQLException throwables){

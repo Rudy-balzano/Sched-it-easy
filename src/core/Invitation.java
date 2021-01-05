@@ -20,6 +20,7 @@ public class Invitation {
     //Getters and setters
 
     public User getInvitedUser() {
+
         return invitedUser;
     }
 
