@@ -17,7 +17,7 @@ public class AdminSeeAccountController implements AlertShower{
     private TextField lastname;
 
     public void initialize(){
-        username.setText(SessionFacade.getConnectedAdmin().getUsername());
+       // username.setText(SessionFacade.getConnectedAdmin().getUsername());
         firstname.setText(SessionFacade.getConnectedAdmin().getFirstName());
         lastname.setText(SessionFacade.getConnectedAdmin().getLastName());
     }
