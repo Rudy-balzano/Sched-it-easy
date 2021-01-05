@@ -43,6 +43,7 @@ public class UserHomeController {
 
     @FXML
     private void initialize(){
+        calendar.setReadOnly(true);
         EventHandler<CalendarEvent> handler = calendarEvent -> handle(calendarEvent);
         calendar.setStyle(Calendar.Style.STYLE1);
 
