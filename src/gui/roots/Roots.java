@@ -8,6 +8,7 @@ public class Roots {
 //    public static final String askCreateMeetingRoot = "../views/askCreateMeetingView.fxml";
     public static final String userHomeRoot = "../views/userHomeView.fxml";
     public static final String userProfileRoot = "../views/userProfileView.fxml";
+    public static final String userInvitationRoot = "../views/userNotificationView.fxml";
 
     //ADMIN ROOTS
     public static final String adminHomeRoot = "../views/adminSeeAccountView.fxml";

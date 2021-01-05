@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import core.Invitation;
 import core.Meeting;
 import core.User;
 
@@ -210,6 +211,32 @@ public class MySQLUserDAO implements UserDAO {
         return result;
     }
 
+public boolean declineWaitingInvitation(String username, int id){
+    boolean result = false;
+
+    try{
+        Statement stmt = connection.createStatement();
+        stmt.executeUpdate("update invitations SET state = -1 WHERE invitedUsername = '" + username + "' and idMeetingInvitation = "+id+";");
+        result = true;
+    } catch (SQLException ex){
+        System.out.println(ex);
+    }
+
+    return result;
+}
+    public boolean acceptWaitingInvitation(String username, int id) {
+        boolean result = false;
+
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("update invitations SET state = 1 WHERE invitedUsername = '" + username + "' and idMeetingInvitation = "+id+";");
+            result = true;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return result;
+    }
 
 
 

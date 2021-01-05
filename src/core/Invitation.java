@@ -6,6 +6,9 @@ public class Invitation {
     private int state;
     private Meeting meetingInvitation;
 
+    public Invitation() {
+
+    }
     public Invitation(User invitedUser, int state, Meeting meetingInvitation){
 
         this.invitedUser = invitedUser;

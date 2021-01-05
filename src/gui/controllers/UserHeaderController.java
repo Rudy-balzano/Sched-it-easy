@@ -27,4 +27,7 @@ public class UserHeaderController {
         SessionFacade.logout();
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.loginRoot))));
     }
+    public void switchToSeeNotification() throws IOException {
+        Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.userInvitationRoot))));
+    }
 }
