@@ -38,6 +38,20 @@ public class ReservationFacade {
         return check;
     }
 
+    public int createMeetingAndGetId(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String meetingTopic){
+        User creator = SessionFacade.getConnectedUser();
+        String creatorUsername = creator.getUserName();
+        int idMeeting = -1;
+        if (creator.getIsManager()){
+            idMeeting = meetingDAO.insertAndGetId(dateBegin,hourBegin,dateEnd,hourEnd,creatorUsername,meetingTopic);
+        }
+        else {
+            idMeeting = meetingDAO.insertWaitingMeetingAndGetId(dateBegin,hourBegin,dateEnd,hourEnd,creatorUsername,meetingTopic);
+        }
+
+        return idMeeting;
+    }
+
     public Meeting findMeetingById(int id){
         return meetingDAO.findByID(id);
     }
