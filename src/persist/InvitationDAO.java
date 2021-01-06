@@ -14,5 +14,6 @@ public interface InvitationDAO {
     ArrayList<Invitation> findAllInvitation(String username);
     ArrayList<Invitation> findInvitation(String username);
     Invitation findBy(User invitedUser, Meeting meetingInvitation);
+    Collection<String> getInvitedUsers(int idMeeting);
 
 }

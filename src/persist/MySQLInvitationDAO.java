@@ -4,9 +4,11 @@ import core.Invitation;
 import core.Meeting;
 import core.User;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 
 public class MySQLInvitationDAO implements InvitationDAO{
@@ -55,6 +57,26 @@ public class MySQLInvitationDAO implements InvitationDAO{
         }
         return i;
     }
+
+    @Override
+    public Collection<String> getInvitedUsers(int idMeeting) {
+
+        Collection<String> invitedUsers = new ArrayList<>() ;
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select invitedUsername  from invitations where idMeetingInvitation = '" + idMeeting +"';");
+            while(rs.next()){
+                invitedUsers.add(rs.getString(1));
+            }
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+
+
+        return invitedUsers;
+    }
+
     public ArrayList<Invitation> findAllInvitation(String username){
         ArrayList<Invitation> res = new ArrayList<>();
 
@@ -94,4 +116,5 @@ public class MySQLInvitationDAO implements InvitationDAO{
         }
         return res;
     }
+
 }

@@ -8,6 +8,8 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 public class MySQLRoomDAO implements RoomDAO {
 
@@ -201,6 +203,24 @@ public class MySQLRoomDAO implements RoomDAO {
         }
 
         return equipment;
+    }
+
+    @Override
+    public HashMap<Integer,String> getAllTakenRooms() {
+
+        HashMap<Integer,String> res = new HashMap<>();
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from roomMeetings;");
+            while(rs.next()){
+                res.put(rs.getInt(2),rs.getString(1));
+            }
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+
+        return res;
     }
 
 

@@ -30,4 +30,8 @@ public class InvitationFacade {
 
         userDAO.acceptWaitingInvitation(username, id );
     }
+
+    public Collection<String> getAllInvitedUsers(int meetingId){
+        return invitationDAO.getInvitedUsers(meetingId);
+    }
 }

@@ -117,7 +117,9 @@ public class RoomReservationController {
     }
 
     private void loadAvailableRoom(){
-        Collection<String> rooms = roomTopicFacade.getRooms();
+        //TODO implementer capacity
+        int capacity = 0;
+        Collection<String> rooms = reservationFacade.getAvailableRooms(capacity,meeting);
 
         ObservableList<RoomHBoxCell> listRooms = FXCollections.observableArrayList();
 
