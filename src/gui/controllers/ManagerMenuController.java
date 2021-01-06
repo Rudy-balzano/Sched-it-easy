@@ -34,4 +34,7 @@ public class ManagerMenuController {
         SessionFacade.logout();
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.loginRoot))));
     }
+    public void switchToInvitation() throws IOException {
+        Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerInvitationRoot))));
+    }
 }
