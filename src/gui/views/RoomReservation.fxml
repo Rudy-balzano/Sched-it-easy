@@ -7,7 +7,6 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.RoomReservationController">
    <children>
-      <fx:include source="userMenu.fxml" />
       <ListView fx:id="listViewEquipment" layoutX="23.0" layoutY="100.0" prefHeight="179.0" prefWidth="200.0" />
       <Label layoutX="27.0" layoutY="73.0" text="Equipment wanted" />
       <Button fx:id="seeRoomsButton" layoutX="84.0" layoutY="309.0" mnemonicParsing="false" onAction="#rentEquipments" prefHeight="27.0" prefWidth="64.0" text="rent " />

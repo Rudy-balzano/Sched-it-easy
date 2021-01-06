@@ -1,15 +1,20 @@
 package gui.controllers;
 
 import core.*;
+import gui.Main;
+import gui.roots.Roots;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 
+import java.io.IOException;
 import java.util.Collection;
 
 public class RoomReservationController {
@@ -176,7 +181,16 @@ public class RoomReservationController {
     public void rentEquipments(ActionEvent actionEvent) {
     }
 
-    public void handleCancel(ActionEvent actionEvent) {
+    public void handleCancel() throws IOException {
+        reservationFacade.deleteMeeting(meeting.getId());
+
+        if(SessionFacade.getConnectedUser().getIsManager()){
+            Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerHomeRoot))));
+        }
+        else{
+            Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.userHomeRoot))));
+
+        }
     }
 
 

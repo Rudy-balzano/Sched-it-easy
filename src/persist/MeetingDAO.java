@@ -36,4 +36,6 @@ public interface MeetingDAO {
 
     boolean declineWaitingMeeting(int id);
 
+    void deleteMeeting(int id, boolean manager);
+
 }

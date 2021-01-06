@@ -78,6 +78,10 @@ public class ReservationFacade {
         return meetingDAO.findByID(id);
     }
 
+    public void deleteMeeting(int id){
+        meetingDAO.deleteMeeting(id,SessionFacade.getConnectedUser().getIsManager());
+    }
+
     public Collection<String> getAvailableRooms(int capacity, Meeting m){
 
         RoomTopicFacade rtfacade = new RoomTopicFacade();

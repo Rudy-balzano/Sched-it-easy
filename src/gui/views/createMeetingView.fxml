@@ -10,6 +10,5 @@
       <Button fx:id="createMeetingButton" layoutX="117.0" layoutY="425.0" mnemonicParsing="false" onAction="#handleCreateMeeting" text="Create meeting" />
       <Button fx:id="cancelButton" layoutX="42.0" layoutY="424.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
       <Button fx:id="bookRoomButton" layoutX="276.0" layoutY="423.0" mnemonicParsing="false" onAction="#handleBookRoom" text="Book room" />
-      <fx:include source="ManagerMenu.fxml" />
    </children>
 </AnchorPane>

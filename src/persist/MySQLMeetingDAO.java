@@ -274,4 +274,24 @@ public class MySQLMeetingDAO implements MeetingDAO{
 
         return result;
     }
+
+    @Override
+    public void deleteMeeting(int id, boolean manager) {
+
+        String str;
+
+        if(manager){
+            str = "meetings";
+        }
+        else {
+            str = "waiting_meetings";
+        }
+
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("DELETE FROM " + str +" where id = '"+id+"';");
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
 }

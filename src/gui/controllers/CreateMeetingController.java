@@ -7,6 +7,7 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.view.page.DayPage;
 import core.Meeting;
 import core.ReservationFacade;
+import core.SessionFacade;
 import gui.Main;
 import gui.roots.Roots;
 import gui.views.popover.MyCustomPopOverContentNode;
@@ -103,11 +104,19 @@ public class CreateMeetingController {
 
 
 
-    public void handleCreateMeeting(ActionEvent actionEvent) {
+    public void handleCreateMeeting() throws IOException {
         saveMeeting();
+        handleCancel();
     }
 
-    public void handleCancel(ActionEvent actionEvent) {
+    public void handleCancel() throws IOException {
+        if(SessionFacade.getConnectedUser().getIsManager()){
+            Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerHomeRoot))));
+        }
+        else{
+            Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.userHomeRoot))));
+
+        }
     }
 
     public void handleBookRoom(ActionEvent actionEvent) throws IOException {
