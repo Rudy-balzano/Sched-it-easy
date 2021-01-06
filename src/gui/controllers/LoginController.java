@@ -51,7 +51,6 @@ public class LoginController {
         int check = -1;
 
         check = session.login(userN, pass);
-
         if (check == 0){
             System.out.println("L'utilisateur " + session.getUserFirstName() + " " + session.getUserLastName() + " est connecté!");
             SessionFacade.setConnectedAdmin();
