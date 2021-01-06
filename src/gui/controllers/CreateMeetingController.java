@@ -10,7 +10,6 @@ import core.ReservationFacade;
 import core.SessionFacade;
 import gui.Main;
 import gui.roots.Roots;
-import gui.views.popover.MyCustomPopOverContentNode;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -41,8 +40,6 @@ public class CreateMeetingController {
 
     @FXML
     private void initialize(){
-
-        dayPage.setEntryDetailsPopOverContentCallback(param -> new MyCustomPopOverContentNode());
 
         EventHandler<CalendarEvent> handler = evt -> handle(evt);
         calendar.addEventHandler(handler);

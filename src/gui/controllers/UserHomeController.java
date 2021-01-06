@@ -9,7 +9,7 @@ import core.Invitation;
 import core.Meeting;
 import core.ScheduleFacade;
 import core.SessionFacade;
-import javafx.event.EventHandler;
+import gui.views.popover.MyCustomPopOverHomeView;
 import javafx.fxml.FXML;
 
 import java.util.ArrayList;
@@ -25,8 +25,15 @@ public class UserHomeController {
 
     private static ScheduleFacade facade = new ScheduleFacade();
 
+
+    private void handle(CalendarEvent evt) {
+    }
+
     @FXML
     private void initialize(){
+
+        weekPage.setEntryDetailsPopOverContentCallback(param -> new MyCustomPopOverHomeView(param.getEntry()));
+
         //Setting the ui readonly
         calendar.setReadOnly(true);
         weekPage.setContextMenuCallback(null);

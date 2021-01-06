@@ -3,8 +3,8 @@ package gui.roots;
 public class Roots {
     public static final String loginRoot = "../views/loginView.fxml";
     public static final String registerRoot = "../views/registerView.fxml";
-    public static final String invitePeopleRoot = "../views/InvitedPeopleView.fxml";
-    public static final String seeInvitedPeopleRoot = "../views/SeeInvitedPeopleView.fxml";
+    public static final String invitePeopleRoot = "../views/InvitePeopleView.fxml";
+    public static final String seeInvitedPeopleRoot = "../SeeInvitedPeopleView.fxml";
 
     //USER ROOTS
 //    public static final String askCreateMeetingRoot = "../views/askCreateMeetingView.fxml";
