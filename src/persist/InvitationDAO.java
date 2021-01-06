@@ -12,6 +12,7 @@ public interface InvitationDAO {
 
     boolean insert(User invitedUser, int state, Meeting meetingInvitation);
     ArrayList<Invitation> findAllInvitation(String username);
+    ArrayList<Invitation> findInvitation(String username);
     Invitation findBy(User invitedUser, Meeting meetingInvitation);
 
 }

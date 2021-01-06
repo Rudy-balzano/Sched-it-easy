@@ -74,4 +74,24 @@ public class MySQLInvitationDAO implements InvitationDAO{
         }
         return res;
     }
+    public ArrayList<Invitation> findInvitation(String username){
+        ArrayList<Invitation> res = new ArrayList<>() {
+        };
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM invitations WHERE invitedUsername = '"+ username+ "' and state <> -1;");
+            while(rs.next()){
+                Invitation i = new Invitation();
+                i.setInvitedUser(userDAO.findByUsername(rs.getString(1)));
+                i.setState(rs.getInt(2));
+                i.setMeetingInvitation(meetingDAO.findByID(rs.getInt(3)));
+                System.out.println(i.getMeetingInvitation().getClientMeeting());
+                res.add(i);
+            }
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return res;
+    }
 }
