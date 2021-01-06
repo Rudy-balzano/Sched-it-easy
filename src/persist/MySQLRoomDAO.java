@@ -155,7 +155,7 @@ public class MySQLRoomDAO implements RoomDAO {
         ArrayList<String> rooms = new ArrayList<>();
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM rooms");
+            ResultSet rs = stmt.executeQuery("select * from rooms ;");
             while(rs.next()){
                 String room = rs.getString(1);
                 rooms.add(room);

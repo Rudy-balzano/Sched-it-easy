@@ -109,11 +109,9 @@ public class RoomTopicController {
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
 
-
             addButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-
 
                     Pair<String, Integer> pair = new MutablePair<>(labelText, 1);
 

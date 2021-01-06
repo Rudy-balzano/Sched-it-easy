@@ -32,7 +32,7 @@ public class CreateMeetingController {
 
     ArrayList<Entry> listEntries = new ArrayList<>();
 
-    public static Meeting meetings;
+    public static Meeting meeting;
 
     private static ReservationFacade reservationfacade = new ReservationFacade();
 
@@ -124,7 +124,7 @@ public class CreateMeetingController {
                 System.out.println("Meeting not inserted ...");
             }
         }
-        meetings = reservationfacade.findMeetingById(idMeeting);
+        meeting = reservationfacade.findMeetingById(idMeeting);
         System.out.println(idMeeting);
 
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.bookRoomRoot))));

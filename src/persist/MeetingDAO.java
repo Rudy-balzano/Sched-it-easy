@@ -16,6 +16,10 @@ public interface MeetingDAO {
 
     boolean insertWaitingMeeting(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String clientMeeting, String meetingTopic);
 
+    boolean insertMeetingWithRoom(int idMeeting, String nameRoom);
+
+    boolean insertWaitingMeetingWithRoom(int idMeeting, String nameRoom);
+
     int insertAndGetId (LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String clientMeeting, String meetingTopic);
 
     int insertWaitingMeetingAndGetId(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String clientMeeting, String meetingTopic);

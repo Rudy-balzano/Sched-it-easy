@@ -60,6 +60,34 @@ public class MySQLMeetingDAO implements MeetingDAO{
     }
 
     @Override
+    public boolean insertMeetingWithRoom(int idMeeting, String nameRoom) {
+        boolean result = false;
+
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("insert into meetingWithRoom (idMeeting, nameRoom) values('" + idMeeting + "','" + nameRoom + "');");
+            result = true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean insertWaitingMeetingWithRoom(int idMeeting, String nameRoom) {
+        boolean result = false;
+
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("insert into waiting_meetingWithRoom (idMeeting, nameRoom) values('" + idMeeting + "','" + nameRoom + "');");
+            result = true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
     public int insertAndGetId(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String clientMeeting, String meetingTopic) {
 
         int id = -1;
