@@ -26,6 +26,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#switchToSeeNotification" text="See" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Logout">
+               <items>
+                  <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logout" text="Logout" />
+               </items>
+            </Menu>
         </menus>
     </MenuBar>
 </children>
