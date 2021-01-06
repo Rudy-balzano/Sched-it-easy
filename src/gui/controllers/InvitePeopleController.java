@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import core.InvitationFacade;
 import core.ManagerFacade;
 import core.SessionFacade;
 import gui.Main;
@@ -20,7 +21,7 @@ import java.util.Collection;
 
 public class InvitePeopleController {
 
-    private static final InvitationController facade = new InvitationController();
+    private static final InvitationFacade facade = new InvitationFacade();
 
     @FXML
     private ListView<HBoxCell> listViewInvitedUsers;
