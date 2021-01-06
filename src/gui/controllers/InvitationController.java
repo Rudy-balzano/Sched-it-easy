@@ -40,12 +40,14 @@ public class InvitationController {
             this.getChildren().addAll(label,button, button1);
 
             button.setOnAction(actionEvent -> {
-                facade.acceptInvitation(invit.getMeetingInvitation().getClientMeeting(), invit.getMeetingInvitation().getId());
+                System.out.println(invit.getInvitedUser()+" "+invit.getMeetingInvitation().getId());
+                //String x = invit.getInvitedUser2();
+                facade.acceptInvitation(invit.getInvitedUser2(), invit.getMeetingInvitation().getId());
                 refresh();
             });
 
             button1.setOnAction(actionEvent -> {
-                facade.declineInvitation(invit.getMeetingInvitation().getClientMeeting(), invit.getMeetingInvitation().getId());
+                facade.declineInvitation(invit.getInvitedUser2(),  invit.getMeetingInvitation().getId());
                 refresh();
             });
 
@@ -59,7 +61,7 @@ public class InvitationController {
 
         for (Invitation i : invitationsRefreshed){
             int id = i.getMeetingInvitation().getId();
-            HBoxCell hbc = new HBoxCell(invitationsRefreshed.get(id));
+            HBoxCell hbc = new HBoxCell(i);
             itemsInv.add(hbc);
         }
 
@@ -69,7 +71,7 @@ public class InvitationController {
 
         ObservableList<HBoxCell> itemsInv = FXCollections.observableArrayList();
         for (Invitation i : waitingInvitation) {
-            System.out.println(i.getInvitedUser().getUserName());
+            //System.out.println(i.getInvitedUser().getUserName());
             HBoxCell hbc = new HBoxCell(i);
             itemsInv.add(hbc);
         }

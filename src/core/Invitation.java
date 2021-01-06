@@ -19,9 +19,7 @@ public class Invitation {
 
     //Getters and setters
 
-    public User getInvitedUser() {
-
-        return invitedUser;
+    public User getInvitedUser() {  return invitedUser;
     }
 
     public void setInvitedUser(User invitedUser) {
@@ -51,5 +49,8 @@ public class Invitation {
         //TODO
 
         return true;
+    }
+    public String getInvitedUser2 (){
+        return invitedUser.getUserName();
     }
 }

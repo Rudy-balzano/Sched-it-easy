@@ -44,7 +44,7 @@ public class MySQLInvitationDAO implements InvitationDAO{
 
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from invitations where invitedUsername = '" + invitedUSer.getUserName() + "' and idMeetingInvitation =  '" + meetingInvitation.getId()+ "';");
+            ResultSet rs = stmt.executeQuery("select * from invitations where invitedUsername = '" + invitedUSer.getUserName() + "' and idMeetingInvitation =  '" + meetingInvitation.getId()+ "' and state = 0;");
             if(rs.next()){
                 i.setInvitedUser(userDAO.findByUsername(rs.getString(1)));
                 i.setState(rs.getInt(2));
@@ -60,7 +60,7 @@ public class MySQLInvitationDAO implements InvitationDAO{
 
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM invitations WHERE invitedUsername = '"+ username+ "';");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM invitations WHERE invitedUsername = '"+ username+ "' and state = 0;");
             while(rs.next()){
                 Invitation i = new Invitation();
                 i.setInvitedUser(userDAO.findByUsername(rs.getString(1)));
