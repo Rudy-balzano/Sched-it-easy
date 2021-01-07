@@ -7,6 +7,7 @@ import java.util.Collection;
 
 /**
  * Class that represent the facade for a schedule
+ * @see gui.controllers.UserHomeController
  */
 public class ScheduleFacade {
     /**

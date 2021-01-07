@@ -15,20 +15,37 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+/**
+ * Class Controller Login
+ * @author baptiste rudy pierre emilie
+ * @version 1.0
+ */
 public class LoginController {
-
+    /**
+     * Textfield for username
+     */
     @FXML
     private TextField username;
-
+    /**
+     * Textfield for password
+     */
     @FXML
     private TextField password;
-
+    /**
+     * Button for login
+     */
     @FXML
     private Button loginButton;
-
+    /**
+     * Button for register
+     */
     @FXML
     private Button registerButton;
 
+    /**
+     * Function used to login a user or an admin
+     * @param actionEvent
+     */
     @FXML
     public void handleLogin(ActionEvent actionEvent) {
         Window owner = loginButton.getScene().getWindow();
@@ -70,6 +87,11 @@ public class LoginController {
 
     }
 
+    /**
+     * function used to go to register page
+     * @param actionEvent
+     * @throws IOException
+     */
     @FXML
     public void switchToRegisterView (ActionEvent actionEvent) throws IOException {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.registerRoot))));
@@ -82,6 +104,10 @@ public class LoginController {
 
     }
 
+    /**
+     * Function used to go to home page of user or manager
+     * @throws IOException
+     */
     private void switchToHomeView () throws IOException {
         if (SessionFacade.getConnectedUser() != null) {
             if(SessionFacade.getConnectedUser().getIsManager()) {
@@ -98,7 +124,13 @@ public class LoginController {
     }
 
 
-
+    /**
+     * Function to show an alert
+     * @param alertType
+     * @param owner
+     * @param title
+     * @param message
+     */
     private static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

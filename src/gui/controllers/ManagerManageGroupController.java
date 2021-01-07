@@ -18,18 +18,31 @@ import javafx.scene.layout.Priority;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * Class Controller to manager a group for a manager
+ * @author emilie
+ * @version 1.0
+ */
 public class ManagerManageGroupController {
-
+    /**
+     * managerFacade
+     */
     private static final ManagerFacade facade = new ManagerFacade();
-
+    /**
+     * Collection of groups
+     */
     private final Collection<String> groups = facade.getAllGroups();
-
+    /**
+     * Current Group
+     */
     public static Group currentGroup;
 
     @FXML
     private ListView<HBoxCell> listViewGroups;
 
-
+    /**
+     * Class HBoxCell for the ListView
+     */
     private class HBoxCell extends HBox {
         Label label = new Label();
         Button infoButton = new Button("Info");
@@ -60,6 +73,9 @@ public class ManagerManageGroupController {
         }
     }
 
+    /**
+     * Function used to refresh the ListView
+     */
     private void refresh(){
 
         Collection<String> groupes = facade.getAllGroups();
@@ -74,7 +90,9 @@ public class ManagerManageGroupController {
         listViewGroups.setItems(itemsG);
     }
 
-
+    /**
+     * Function used to initialize the listView
+     */
     @FXML
     public void initialize(){
 
@@ -87,6 +105,10 @@ public class ManagerManageGroupController {
         listViewGroups.setItems(itemsG);
     }
 
+    /**
+     * Function used to go to the add group page
+     * @throws IOException
+     */
     @FXML
     public void switchToAddGroup() throws IOException {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerAddGroupRoot))));
