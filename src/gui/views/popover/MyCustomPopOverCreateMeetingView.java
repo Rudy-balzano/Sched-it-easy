@@ -7,16 +7,21 @@ import com.calendarfx.view.popover.EntryPopOverPane;
 import com.calendarfx.view.popover.PopOverTitledPane;
 import core.RoomTopicFacade;
 import core.Topic;
+import gui.Main;
+import gui.roots.Roots;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -33,14 +38,19 @@ public class MyCustomPopOverCreateMeetingView extends EntryPopOverPane {
     public MyCustomPopOverCreateMeetingView(Entry entry){
 
         this.entry = entry;
+        entry.setTitle("No topics");
         loadTopic(listTopics);
         ChoiceBox choiceBox = new ChoiceBox(listTopics);
+        choiceBox.setValue(listTopics.get(0));
 
         PopOverTitledPane popOverTitledPane = new PopOverTitledPane("detail", this);
         GridPane gridPane1 = new GridPane();
         VBox vBox = new VBox();
 
-//        Bindings.bindBidirectional(((String)choiceBox.getSelectionModel().getSelectedItem())(), entry.titleProperty());
+        choiceBox.setOnAction(actionEvent -> {
+            entry.setTitle((String)choiceBox.getSelectionModel().getSelectedItem());
+        });
+
         TextField descriptionField = new TextField(entry.getLocation());
         Bindings.bindBidirectional(descriptionField.textProperty(), entry.locationProperty());
         descriptionField.setEditable(true);
@@ -58,16 +68,20 @@ public class MyCustomPopOverCreateMeetingView extends EntryPopOverPane {
         TimeField startTimeField = new TimeField();
         startTimeField.setValue(entry.getStartTime());
 
+
         TimeField endTimeField = new TimeField();
         endTimeField.setValue(entry.getEndTime());
+
 
         DatePicker startDatePicker = new DatePicker();
         startDatePicker.setValue(entry.getStartDate());
         startDatePicker.disableProperty().bind(entry.getCalendar().readOnlyProperty());
 
+
         DatePicker endDatePicker = new DatePicker();
         endDatePicker.setValue(entry.getEndDate());
         endDatePicker.disableProperty().bind(entry.getCalendar().readOnlyProperty());
+
 
         entry.intervalProperty().addListener(it -> {
             startTimeField.setValue(entry.getStartTime());

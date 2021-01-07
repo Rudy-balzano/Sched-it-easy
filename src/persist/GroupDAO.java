@@ -3,11 +3,12 @@ package persist;
 import core.Group;
 import core.User;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public interface GroupDAO {
 
-    Collection<String> getAllGroups();
+    ArrayList<String> findAll();
 
     Group findByName(String name);
 

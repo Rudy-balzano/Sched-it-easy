@@ -49,7 +49,7 @@ public class ManagerFacade {
 
     public Collection<String> getAllGroups(){
 
-        return groupDAO.getAllGroups();
+        return groupDAO.findAll();
     }
 
     public void deleteGroup(String name){

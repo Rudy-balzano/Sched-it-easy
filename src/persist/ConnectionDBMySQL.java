@@ -2,7 +2,13 @@ package persist;
 
 import java.sql.*;
 
+/**
+ * This Singleton class constructs a connection to the MySQL database
+ */
 public class ConnectionDBMySQL implements ConnectionDB {
+    /**
+     * The connection to the database
+     */
     private Connection connection;
 
     /**
@@ -11,7 +17,7 @@ public class ConnectionDBMySQL implements ConnectionDB {
     private static ConnectionDBMySQL connectionDBMySQL;
 
     /**
-     * @return
+     * Constructs an instance of ConnectionDBMySQL
      */
     private ConnectionDBMySQL() {
         connectionToDB();
@@ -19,7 +25,8 @@ public class ConnectionDBMySQL implements ConnectionDB {
     }
 
     /**
-     * @return
+     * This method connects to the database and is called when an instance of the class is created.
+     * @return boolean Indicates if the connection is set or not
      */
     public boolean connectionToDB() {
         try {
@@ -45,12 +52,16 @@ public class ConnectionDBMySQL implements ConnectionDB {
         }
     }
 
+    /**
+     * Connection is the connection to the database
+     *  @return connection Connection to the database
+     */
     public Connection getConnection() {
         return this.connection;
     }
 
     /**
-     * Singleton getInstance()
+     * Singleton get instance method
      */
     public static ConnectionDBMySQL getInstance() {
         if(connectionDBMySQL != null){
@@ -58,10 +69,6 @@ public class ConnectionDBMySQL implements ConnectionDB {
         }else{
             return new ConnectionDBMySQL();
         }
-    }
-
-    public static void main(String[] args) {
-        ConnectionDBMySQL c = ConnectionDBMySQL.getInstance();
     }
 
 }
