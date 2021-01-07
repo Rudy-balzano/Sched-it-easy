@@ -127,6 +127,22 @@ public class MySQLUserDAO implements UserDAO {
         return res;
     }
 
+    @Override
+    public ArrayList<String> findAllByGroup(String groupeName) {
+        ArrayList<String> users = new ArrayList<>();
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT username FROM groupMembers where groupname = ='"+ groupeName +"';");
+            while(rs.next()){
+                users.add(rs.getString(2));
+            }
+        } catch (SQLException ex){
+            System.out.println("SQL request error");
+        }
+        return users;
+    }
+
 
     @Override
     public User findByUsername(String username){
@@ -211,19 +227,20 @@ public class MySQLUserDAO implements UserDAO {
         return result;
     }
 
-public boolean declineWaitingInvitation(String username, int id){
-    boolean result = false;
+    public boolean declineWaitingInvitation(String username, int id){
+        boolean result = false;
 
-    try{
-        Statement stmt = connection.createStatement();
-        stmt.executeUpdate("update invitations SET state = -1 WHERE invitedUsername = '" + username + "' and idMeetingInvitation = "+id+";");
-        result = true;
-    } catch (SQLException ex){
-        System.out.println(ex);
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("update invitations SET state = -1 WHERE invitedUsername = '" + username + "' and idMeetingInvitation = "+id+";");
+            result = true;
+        } catch (SQLException ex){
+            System.out.println(ex);
+        }
+
+        return result;
     }
 
-    return result;
-}
     public boolean acceptWaitingInvitation(String username, int id) {
         boolean result = false;
 
@@ -237,8 +254,6 @@ public boolean declineWaitingInvitation(String username, int id){
 
         return result;
     }
-
-
 
     @Override
     public boolean validateAccount(String username) {
