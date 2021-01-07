@@ -1,16 +1,21 @@
 package persist;
 
+/**
+ * The FactoryDAOImpl class implements the FacotryDAO interface and is used to create DAOs that manipulate persistent data.
+ */
 public class FactoryDAOImpl implements FactoryDAO{
 
     /**
-     * Singleton attribute
+     * Singleton attribute.
      */
     private static FactoryDAOImpl factoryDAOImpl;
 
+    /**
+     * Constructs the FactoryDAOImpl.
+     */
     private FactoryDAOImpl(){
-        this.factoryDAOImpl = this;
+        factoryDAOImpl = this;
     }
-
 
 
     @Override
@@ -40,7 +45,7 @@ public class FactoryDAOImpl implements FactoryDAO{
 
 
     /**
-     * Singleton getInstance()
+     * Singleton method getInstance() that ensures that only one instance of this class is instantiated at the same time.
      */
     public static FactoryDAOImpl getInstance() {
         if(factoryDAOImpl != null){

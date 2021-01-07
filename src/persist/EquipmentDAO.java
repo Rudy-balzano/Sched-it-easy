@@ -1,15 +1,25 @@
 package persist;
 
 import core.Equipment;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+/**
+ * This interface implements the method used by an EquipmentDAO to manipulates persistent Equipment related data.
+ */
 public interface EquipmentDAO {
 
+    /**
+     * Searches into the database the equipment that matches the parameter.
+     * @param name the equipment name to search for.
+     * @return the equipment that matches the given name (or null).
+     */
     Equipment findBy(String name);
 
+    /**
+     * Searches into the database all the equipments saved.
+     * @return A collection of equipments.
+     */
     ArrayList<Equipment> findAll();
 
 
