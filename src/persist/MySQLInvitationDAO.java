@@ -28,12 +28,12 @@ public class MySQLInvitationDAO implements InvitationDAO{
     }
 
     @Override
-    public boolean insert(User invitedUser, int state, Meeting meetingInvitation) {
+    public boolean insert(String invitedUser, int state, int meetingInvitation) {
         boolean result = false;
 
         try{
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into invitation (invitedUsername, state, idMeetingInvitation) values('" + invitedUser.getUserName() + "','" + state + "','" + meetingInvitation.getId() + "');");
+            stmt.executeUpdate("insert into invitations (invitedUsername, state, idMeetingInvitation) values('" + invitedUser + "','" + state + "','" + meetingInvitation + "');");
             result = true;
         } catch (SQLException ex) {
             System.out.println(ex);

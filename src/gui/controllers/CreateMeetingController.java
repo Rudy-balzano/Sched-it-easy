@@ -126,7 +126,7 @@ public class CreateMeetingController {
 
         for ( int i = 0 ; i < listEntries.size() ; i++) {
 
-            idMeeting = reservationfacade.createMeetingAndGetId(listEntries.get(i).getStartDate(), listEntries.get(i).getStartTime(), listEntries.get(i).getEndDate(), listEntries.get(i).getEndTime(), " ");
+            idMeeting = reservationfacade.createMeetingAndGetId(listEntries.get(i).getStartDate(), listEntries.get(i).getStartTime(), listEntries.get(i).getEndDate(), listEntries.get(i).getEndTime(), listEntries.get(i).getTitle());
             if (idMeeting!=-1){
                 System.out.println("Meeting inserted !");
             }
@@ -145,7 +145,7 @@ public class CreateMeetingController {
 
         for ( int i = 0 ; i < listEntries.size() ; i++) {
 
-            createMeeting = reservationfacade.createMeeting(listEntries.get(i).getStartDate(), listEntries.get(i).getStartTime(), listEntries.get(i).getEndDate(), listEntries.get(i).getEndTime(), " ");
+            createMeeting = reservationfacade.createMeeting(listEntries.get(i).getStartDate(), listEntries.get(i).getStartTime(), listEntries.get(i).getEndDate(), listEntries.get(i).getEndTime(), listEntries.get(i).getTitle());
 
             if (createMeeting){
                 System.out.println("Meeting inserted !");

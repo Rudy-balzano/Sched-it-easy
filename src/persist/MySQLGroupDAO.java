@@ -19,9 +19,9 @@ public class MySQLGroupDAO implements GroupDAO{
     }
 
     @Override
-    public Collection<String> getAllGroups() {
+    public ArrayList<String> findAll() {
 
-        Collection<String> groups = new ArrayList<>();
+        ArrayList<String> groups = new ArrayList<>();
 
         try{
             Statement stmt = connection.createStatement();

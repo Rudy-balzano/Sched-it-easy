@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.InvitePeopleController">
+   <children>
+      <Label layoutX="263.0" layoutY="42.0" prefHeight="29.0" prefWidth="108.0" text="Invite people ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ListView fx:id="listViewGroup" layoutX="88.0" layoutY="165.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="listViewPeople" layoutX="348.0" layoutY="165.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextField fx:id="researchBar" layoutX="237.0" layoutY="98.0" onAction="#research" />
+   </children>
+</AnchorPane>

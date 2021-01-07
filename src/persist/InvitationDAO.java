@@ -19,7 +19,7 @@ public interface InvitationDAO {
      * @param meetingInvitation the related meeting
      * @return boolean that indicates if the operation was successful
      */
-    boolean insert(User invitedUser, int state, Meeting meetingInvitation);
+    boolean insert(String invitedUser, int state, int meetingInvitation);
 
     /**
      * Searches into the database all the invitations that the given user hasn't yet accepted nor declined.
