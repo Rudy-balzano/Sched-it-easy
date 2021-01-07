@@ -1,5 +1,6 @@
 package persist;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -33,6 +34,8 @@ public interface UserDAO {
 
     boolean declineWaitingInvitation(String username, int id);
     boolean acceptWaitingInvitation(String username, int id);
+
+    ArrayList<String> findAllByGroup (String groupeName);
 
 
 
