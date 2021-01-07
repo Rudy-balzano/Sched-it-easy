@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import core.Group;
 import core.InvitationFacade;
 import core.ManagerFacade;
 import core.SessionFacade;
@@ -23,14 +24,16 @@ import java.util.Collection;
 
 public class SeeInvitedPeopleController {
 
-    private static final InvitationFacade facade = new InvitationFacade();
+    private static final InvitationFacade invitationFacade = new InvitationFacade();
 
     public static int idMeeting = MyCustomPopOverHomeView.idMeeting;
 
-    public Collection<String> invitedUsers = facade.getAllInvitedUsers(idMeeting);
 
     @FXML
     private ListView<HBoxCell> listViewInvitedUsers;
+
+    @FXML
+    private ListView<HBoxCell> listViewInvitedGroups;
 
 
     private class HBoxCell extends HBox {
@@ -52,13 +55,26 @@ public class SeeInvitedPeopleController {
     public void initialize(){
         //TODO integrer l'id meeting
 
+        Collection<String> invitedUsers = invitationFacade.getAllInvitedUsers(idMeeting);
+        Collection<String> invitedGroups = invitationFacade.getAllInvitedGroups(idMeeting);
+
+        ObservableList<HBoxCell> itemsG = FXCollections.observableArrayList();
         ObservableList<HBoxCell> itemsU = FXCollections.observableArrayList();
-        for (String name : invitedUsers){
-            HBoxCell hbc = new HBoxCell(name);
+
+        for (String nameUser : invitedUsers){
+            HBoxCell hbc = new HBoxCell(nameUser);
             itemsU.add(hbc);
         }
 
+        for (String nameGroup : invitedGroups){
+            HBoxCell hbc = new HBoxCell(nameGroup);
+            itemsG.add(hbc);
+        }
+
+
         listViewInvitedUsers.setItems(itemsU);
+        listViewInvitedGroups.setItems(itemsG);
+
     }
 
 

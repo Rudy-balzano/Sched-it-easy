@@ -21,6 +21,8 @@ public interface InvitationDAO {
      */
     boolean insert(String invitedUser, int state, int meetingInvitation);
 
+    boolean insertInvitationGroup(String groupName, int meetingInvitation);
+
     /**
      * Searches into the database all the invitations that the given user hasn't yet accepted nor declined.
      * @param username the user's username
@@ -49,5 +51,7 @@ public interface InvitationDAO {
      * @return a collection of the invited users to the Meeting that matches the given id.
      */
     Collection<String> getInvitedUsers(int idMeeting);
+
+    ArrayList<String> getInvitedGroups(int idMeeting);
 
 }

@@ -55,8 +55,28 @@ public class InvitationFacade {
      * @param idMeeting
      * @return True if the invitation has been created, false if not.
      */
-    public boolean createInvitation (String invitedUsername, int state, int idMeeting){
+    public boolean createInvitationForUser (String invitedUsername, int state, int idMeeting){
         return invitationDAO.insert(invitedUsername, state, idMeeting);
+    }
+
+    public boolean createInvitationForGroup (String invitedGroupName, int state, int idMeeting){
+        boolean res1 = false;
+        Collection<String> users = userDAO.findAllByGroup(invitedGroupName);
+        for (String user : users){
+            res1 = createInvitationForUser(user, state, idMeeting);
+            if (!res1){
+                return res1;
+            }
+        }
+        boolean res2 = false;
+        res2 = invitationDAO.insertInvitationGroup(invitedGroupName, idMeeting);
+
+        if (res1 & res2){
+            return true;
+        }else {
+            return false;
+        }
+
     }
 
     /**
@@ -111,7 +131,7 @@ public class InvitationFacade {
      * @return the name of every group invited
      */
     public ArrayList<String> getAllInvitedGroups(int idMeeting){
-        return new ArrayList<>();
+        return invitationDAO.getInvitedGroups(idMeeting);
     }
 
     /**
