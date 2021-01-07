@@ -31,4 +31,6 @@ public class Roots {
     public static final String managerMeetingValidationRoot = "../views/MeetingValidationView.fxml";
     public static final String managerProfileRoot = "../views/managerSeeAccountView.fxml";
     public static final String managerInvitationRoot = "../views/managerNotificationView.fxml";
+    public static final String managerCreateAutoScheduleRoot = "../views/ManagerCreateAutoScheduleView.fxml";
+    public static final String managerAutoScheduleRoot = "../views/ManagerAutoScheduleView.fxml";
 }

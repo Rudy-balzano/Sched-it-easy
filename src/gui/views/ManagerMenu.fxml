@@ -20,7 +20,7 @@
       </Menu>
       <Menu mnemonicParsing="false" text="Auto schedule">
         <items>
-          <MenuItem mnemonicParsing="false" text="About" />
+          <MenuItem mnemonicParsing="false" text="About" onAction="#switchToCreateAutoSchedule"/>
         </items>
       </Menu>
       <Menu mnemonicParsing="false" text="Validation">
