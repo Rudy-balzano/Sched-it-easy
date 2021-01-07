@@ -92,6 +92,21 @@ public class Meeting {
     }
 
     /**
+     * Constructor where only the invitation list is initialized to null
+     */
+    public Meeting(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, Topic meetingTopic, String clientMeeting) {
+
+        this.dateBegin = dateBegin;
+        this.hourBegin = hourBegin;
+        this.dateEnd = dateEnd;
+        this.hourEnd = hourEnd;
+        this.clientMeeting = clientMeeting;
+        this.meetingTopic = meetingTopic;
+        this.listInvitation = null;
+
+    }
+
+    /**
      * Constructor where everything is initialized to null
      */
     public Meeting(){

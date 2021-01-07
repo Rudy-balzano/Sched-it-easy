@@ -70,6 +70,7 @@ public class RoomTopicFacade {
     public ArrayList<Topic> getTopics(){
         return topicDAO.findAll();
     }
+    public Topic getTopicByName(String name){ return topicDAO.findBy(name);}
     public  void displayTopicByName(String name){
         Topic topic = topicDAO.findBy(name);
         if(topic == null){

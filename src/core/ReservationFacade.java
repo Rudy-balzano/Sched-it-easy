@@ -1,6 +1,7 @@
 package core;
 
 import com.calendarfx.model.Interval;
+import net.fortuna.ical4j.model.DateTime;
 import org.apache.commons.lang3.tuple.Pair;
 import persist.FactoryDAOImpl;
 import persist.MeetingDAO;
@@ -11,10 +12,8 @@ import persist.RoomDAO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
+import java.time.Period;
+import java.util.*;
 
 public class ReservationFacade {
 
@@ -22,6 +21,8 @@ public class ReservationFacade {
     private FactoryDAOImpl factoryDAO;
     private MeetingDAO meetingDAO;
     private RoomDAO roomDAO;
+
+    public static RoomTopicFacade topicFacade = new RoomTopicFacade();
 
     /**
      * Default constructor
@@ -175,7 +176,236 @@ public class ReservationFacade {
     }
 
  */
+public HashMap<Integer,ArrayList<String>> createAutoSchedule(HashMap<String,Integer> matieres, LocalDate dateDebut, LocalDate dateFin) throws Exception {
 
+    int nbHeures = 0;
+    for ( int i  : matieres.values()){
+        nbHeures += i;
+
+    }
+
+    HashMap<Integer,ArrayList<String>> uDays = usableDaysBetween(dateDebut,dateFin);
+    int hDisp = 0;
+    for (Integer i : uDays.keySet()){
+        if(i > 0){
+            hDisp += 8;
+        }
+    }
+    if(hDisp<nbHeures) throw new Exception();
+
+
+    ArrayList<String> mat = new ArrayList<>();
+
+    for (String i : matieres.keySet()){
+        for(int j = 0; j < matieres.get(i); j++){
+            mat.add(i);
+        }
+    }
+
+    int nbCren = hDisp / 4;
+
+    int min;
+
+    if((float) hDisp/nbHeures <1.2){
+        min = 4;
+    } else if((float) hDisp/nbHeures < 2){
+        min = 3;
+    } else {
+        min = 2;
+    }
+
+    int cpt = 1;
+    int pair = 0;
+    ArrayList<String> m = new ArrayList<>();
+
+    for (int i = 0; i < nbCren; i++){
+        ArrayList<String> choixCren = new ArrayList<>();
+
+        if(mat.size() > 2) {
+            int nombreHeuresCren = min + (int) (Math.random() * ((4 - min) + 1));
+            if(nombreHeuresCren < mat.size()){
+                for (int j = 0; j < nombreHeuresCren; j++) {
+                    int cours = (int) (Math.random() * ((mat.size() - 1) + 1));
+                    choixCren.add(mat.get(cours));
+                    mat.remove(cours);
+                }
+            } else{
+                choixCren = mat;
+            }
+        } else if (!mat.isEmpty()){
+            choixCren = mat;
+        }
+
+        if(pair%2 == 0){
+            m = triCreneau(choixCren,i);
+        } else {
+            ArrayList<String> n = triCreneau(choixCren,i);
+            m.addAll(n);
+            uDays.put(cpt, m);
+            cpt += 1;
+        }
+
+        pair += 1;
+
+
+    }
+    return uDays;
+
+
+}
+    public Collection<Meeting> autoSchedule(HashMap<String,Integer> matieres,LocalDate dB,LocalDate dE) throws Exception{
+        HashMap<Integer,ArrayList<String>> uDays = createAutoSchedule(matieres,dB,dE);
+
+        Collection<Meeting> meetings = new ArrayList<>();
+        if(uDays.isEmpty()){
+             meetings = autoSchedule(matieres,dB,dE);
+        }
+        else {
+            LocalDate date = dB;
+            for(Integer i : uDays.keySet()){
+                if(i>0 && !(uDays.get(i).isEmpty())) {
+                    for (int j = 0; j < 8; j++) {
+                        if (!(Objects.equals(uDays.get(i).get(j), "X"))) {
+                            LocalTime hD;
+                            switch (j) {
+                                case 1:
+                                    hD = LocalTime.of(9, 00);
+                                    break;
+                                case 2:
+                                    hD = LocalTime.of(10, 00);
+                                    break;
+                                case 3:
+                                    hD = LocalTime.of(11, 00);
+                                    break;
+                                case 4:
+                                    hD = LocalTime.of(14, 00);
+                                    break;
+                                case 5:
+                                    hD = LocalTime.of(15, 00);
+                                    break;
+                                case 6:
+                                    hD = LocalTime.of(16, 00);
+                                    break;
+                                case 7:
+                                    hD = LocalTime.of(17, 00);
+                                    break;
+                                case 0:
+                                default:
+                                    hD = LocalTime.of(8, 00);
+                                    break;
+                            }
+                            LocalTime hF = hD.plusMinutes(55);
+
+                            Topic topic = topicFacade.getTopicByName(uDays.get(i).get(j));
+                            String username = SessionFacade.getConnectedUser().getUserName();
+
+                            Meeting m = new Meeting(date, hD, date, hF, topic, username);
+
+                            meetings.add(m);
+                        }
+                    }
+                }
+                date = date.plusDays(1);
+            }
+        }
+
+        return meetings;
+    }
+
+    public ArrayList<String> triCreneau(ArrayList<String> cours, int cren){
+
+        String [] res = new String [4];
+        int size = cours.size();
+        for (int i = 0; i < size-1; i ++){
+            for(int j = i+1; j < size; j ++){
+                if (cours.get(i).equals(cours.get(j))){
+                    Collections.sort(cours);
+                }
+            }
+        }
+        if (cren%2 == 0){
+            for (int i = 3; i >= 0; i--) {
+                if(!cours.isEmpty()) {
+                    res[i] = cours.get(0);
+                    cours.remove(0);
+                } else {
+                    res[i] = "X";
+                }
+            }
+
+        } else {
+            for(int i = 0; i < 4; i++){
+                if(!cours.isEmpty()) {
+                    res[i] = cours.get(0);
+                    cours.remove(0);
+                } else {
+                    res[i] = "X";
+                }
+            }
+        }
+
+
+        return new ArrayList<>(Arrays.asList(res).subList(0, 4));
+    }
+
+    public HashMap<Integer,ArrayList<String>> usableDaysBetween(LocalDate dateD, LocalDate dateF){
+
+        HashMap<Integer,ArrayList<String>> res = new HashMap<>();
+
+        LocalDateTime d = dateD.atStartOfDay();
+
+        int nbJours = daysBetween(dateD,dateF);
+        int fDay;
+
+        String z = String.valueOf(d.getDayOfWeek());
+
+        switch (z) {
+            case "MONDAY":
+                fDay = 0;
+                break;
+            case "TUESDAY":
+                fDay = 1;
+                break;
+            case "WEDNESDAY":
+                fDay = 2;
+                break;
+            case "THURSDAY":
+                fDay = 3;
+                break;
+            case "FRIDAY":
+                fDay = 4;
+                break;
+            case "SATURDAY":
+                fDay = 5;
+                break;
+            default:
+                fDay = 6;
+                break;
+        }
+        int i = 1;
+        int k = i + fDay;
+        while (i<nbJours+1){
+
+            if(k==8){ k = 1; }
+            if(k<6){
+                ArrayList<String> hours = new ArrayList<>();
+                res.put(i,hours);
+            }
+            else {
+                ArrayList<String> hours = new ArrayList<>();
+                res.put(-i,hours);
+            }
+            i += 1;
+            k += 1;
+        }
+
+        return res;
+    }
+
+    public int daysBetween(LocalDate d1, LocalDate d2) {
+        Period period = Period.between(d1,d2);
+        return period.getDays();
+    }
 
 
 

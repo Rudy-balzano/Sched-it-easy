@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import com.calendarfx.view.page.WeekPage?>
+
+<AnchorPane prefHeight="485.0" prefWidth="671.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ManagerAutoScheduleController">
+   <children>
+       <WeekPage fx:id="weekPage" layoutX="1.0" layoutY="34.0" prefHeight="366.0" prefWidth="800.0" />
+      <Button layoutX="282.0" layoutY="417.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="161.0" text="Generate a new one" onAction="#handleNewOne"/>
+      <Button layoutX="519.0" layoutY="417.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="89.0" text="Validate" onAction="#handleValidation"/>
+      <Button layoutX="111.0" layoutY="417.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="75.0" text="Cancel" onAction="#handleCancel"/>
+   </children>
+</AnchorPane>

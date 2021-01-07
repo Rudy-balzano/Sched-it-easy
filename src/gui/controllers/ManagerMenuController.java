@@ -37,4 +37,7 @@ public class ManagerMenuController {
     public void switchToInvitation() throws IOException {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerInvitationRoot))));
     }
+    public void switchToCreateAutoSchedule() throws IOException{
+        Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerCreateAutoScheduleRoot))));
+    }
 }
