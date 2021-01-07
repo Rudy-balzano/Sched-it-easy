@@ -51,6 +51,7 @@ public class UserHomeController {
             e.changeEndDate(m.getDateEnd());
             e.changeStartTime(m.getHourBegin());
             e.changeEndTime(m.getHourEnd());
+            e.setId(String.valueOf(m.getId()));
 
             calendar.addEntry(e);
             i++;

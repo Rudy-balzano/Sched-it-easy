@@ -5,6 +5,7 @@ import core.ManagerFacade;
 import core.SessionFacade;
 import gui.Main;
 import gui.roots.Roots;
+import gui.views.popover.MyCustomPopOverHomeView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -44,7 +45,7 @@ public class InvitePeopleController {
     @FXML
     public void initialize(){
         //TODO integrer l'id meeting
-        int idMeeting = 1;
+        int idMeeting = MyCustomPopOverHomeView.idMeeting;
         Collection<String> invitedUsers = facade.getAllInvitedUsers(idMeeting);
 
         ObservableList<HBoxCell> itemsU = FXCollections.observableArrayList();

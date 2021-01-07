@@ -17,16 +17,18 @@ import java.io.IOException;
 
 public class MyCustomPopOverHomeView extends EntryPopOverPane {
 
+
     private Label topic = new Label("topic");
     private Label description = new Label("description");
     private Button button = new Button("Invite People");
 
     private Entry entry;
-
+    public static int idMeeting;
 
     public MyCustomPopOverHomeView(Entry entry){
 
         this.entry = entry;
+        idMeeting = Integer.parseInt(entry.getId());
 
         button.setOnAction(actionEvent -> {
             try {
