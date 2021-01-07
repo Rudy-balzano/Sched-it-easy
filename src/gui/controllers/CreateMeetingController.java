@@ -10,6 +10,8 @@ import core.ReservationFacade;
 import core.SessionFacade;
 import gui.Main;
 import gui.roots.Roots;
+import gui.views.popover.MyCustomPopOverCreateMeetingView;
+import gui.views.popover.MyCustomPopOverHomeView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -50,6 +52,8 @@ public class CreateMeetingController {
         myCalendarSource.getCalendars().add(calendar);
 
         dayPage.getCalendarSources().add(0,myCalendarSource);
+
+        dayPage.setEntryDetailsPopOverContentCallback(param -> new MyCustomPopOverCreateMeetingView(param.getEntry()));
 
 
 
