@@ -40,14 +40,14 @@ public class MyCustomPopOverHomeView extends EntryPopOverPane {
         VBox vBox = new VBox();
 
         TextField titleField = new TextField(entry.getTitle());
-        TextField locationField = new TextField(entry.getLocation());
+        TextField descriptionField = new TextField(entry.getLocation());
         titleField.setEditable(false);
-        locationField.setEditable(false);
+        descriptionField.setEditable(false);
 
         gridPane1.add(topic,0,0);
         gridPane1.add(titleField, 1, 0);
         gridPane1.add(description,0,1);
-        gridPane1.add(locationField, 1, 1);
+        gridPane1.add(descriptionField, 1, 1);
 
         getStyleClass().add("popover-header");
 

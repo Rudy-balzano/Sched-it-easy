@@ -21,25 +21,6 @@ public class RoomTopicFacade {
         this.equipmentDAO = factoryDAO.createEquipmentDAO();
     }
 
-    public ArrayList<String> getRooms(){
-        return roomDAO.findAll();
-    }
-    public Room displayRoomByName(String name){
-        return roomDAO.findBy(name);
-    }
-    public ArrayList<Topic> getTopics(){
-        return topicDAO.findAll();
-    }
-
-    public  void displayTopicByName(String name){
-        Topic topic = topicDAO.findBy(name);
-        if(topic == null){
-            System.out.println("No topic matching specified name found");
-            //TODO Traiter erreur ?
-        }else{
-            //TODO envoyer à la vue
-        }
-    }
 
     public ArrayList<Equipment> getEquipments() {
         return equipmentDAO.findAll();
@@ -53,6 +34,9 @@ public class RoomTopicFacade {
         return roomDAO.findEquipmentsForRoom(nameRoom);
     }
 
+
+
+
     public Boolean addRoom(String name, int capacity, ArrayList<Pair<String,Integer>> equipments){
         return roomDAO.insert(name,capacity,equipments);
     }
@@ -60,10 +44,19 @@ public class RoomTopicFacade {
     public Boolean updateRoom(String name,int cap, ArrayList<Pair<String,Integer>> equipments){
         return roomDAO.update(name,cap,equipments);
     }
-
     public Boolean deleteRoom(String name){
         return roomDAO.delete(name);
     }
+    public ArrayList<String> getRooms(){
+        return roomDAO.findAll();
+    }
+    public Room displayRoomByName(String name){
+        return roomDAO.findBy(name);
+    }
+
+
+
+
 
     public Boolean addTopic(String name, String desc) {
         return topicDAO.insert(name,desc);
@@ -73,6 +66,18 @@ public class RoomTopicFacade {
     }
     public Boolean deleteTopic(String name){
         return topicDAO.delete(name);
+    }
+    public ArrayList<Topic> getTopics(){
+        return topicDAO.findAll();
+    }
+    public  void displayTopicByName(String name){
+        Topic topic = topicDAO.findBy(name);
+        if(topic == null){
+            System.out.println("No topic matching specified name found");
+            //TODO Traiter erreur ?
+        }else{
+            //TODO envoyer à la vue
+        }
     }
 
 }
