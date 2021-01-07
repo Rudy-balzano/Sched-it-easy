@@ -41,6 +41,22 @@ public class MySQLInvitationDAO implements InvitationDAO{
 
         return result;
     }
+
+    @Override
+    public boolean insertInvitationGroup(String groupName, int meetingInvitation) {
+        boolean result = false;
+
+        try{
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("insert into invitationGroups (groupName, idMeeting) values('" + groupName + "','" + meetingInvitation + "');");
+            result = true;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return result;
+    }
+
     public Invitation findBy(User invitedUSer, Meeting meetingInvitation ){
         Invitation i = new Invitation();
 
@@ -75,6 +91,24 @@ public class MySQLInvitationDAO implements InvitationDAO{
 
 
         return invitedUsers;
+    }
+
+    @Override
+    public ArrayList<String> getInvitedGroups(int idMeeting) {
+        ArrayList<String> invitedGroups = new ArrayList<>();
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select groupName  from invitationGroups where idMeeting = '" + idMeeting +"';");
+            while(rs.next()){
+                invitedGroups.add(rs.getString(1));
+            }
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+
+        return invitedGroups;
+
     }
 
     public ArrayList<Invitation> findAllInvitation(String username){
