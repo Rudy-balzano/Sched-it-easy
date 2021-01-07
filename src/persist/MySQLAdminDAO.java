@@ -1,20 +1,27 @@
 package persist;
 
 import core.Admin;
-import core.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * This class implements AdminDAO and implements methods to manipulate Admin related persistent data from a MySQL database.
+ */
 public class MySQLAdminDAO implements AdminDAO {
 
-    private ConnectionDBMySQL instanceConnection;
-    private Connection connection;
+    /**
+     * Connection to the database.
+     */
+    private final Connection connection;
 
+    /**
+     * Constructs the MySQLAdminDAO.
+     */
     public MySQLAdminDAO(){
-        this.instanceConnection = ConnectionDBMySQL.getInstance();
+        ConnectionDBMySQL instanceConnection = ConnectionDBMySQL.getInstance();
         this.connection = instanceConnection.getConnection();
     }
 
@@ -47,7 +54,7 @@ public class MySQLAdminDAO implements AdminDAO {
             stmt.executeUpdate("insert into admins (username,password,firstname,lastname) values('" + username + "','" + mdp + "','" + first + "','" + last +"');");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
         return result;
     }

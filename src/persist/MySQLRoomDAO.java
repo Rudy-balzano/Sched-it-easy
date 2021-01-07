@@ -1,26 +1,41 @@
 package persist;
-import java.sql.Connection;
+
 import core.Room;
-import core.Equipment;
-import core.Topic;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
+/**
+ * This class implements RoomDAO and implements methods to manipulate Room related persistent data from a MySQL databse.
+ */
 public class MySQLRoomDAO implements RoomDAO {
 
-    private ConnectionDBMySQL instanceConnection;
-    private Connection connection;
+    /**
+     * Connection to the database.
+     */
+    private final Connection connection;
 
+    /**
+     * Constructs the MySQLRoomDAO.
+     */
     public MySQLRoomDAO(){
-        this.instanceConnection = ConnectionDBMySQL.getInstance();
+        ConnectionDBMySQL instanceConnection = ConnectionDBMySQL.getInstance();
         this.connection = instanceConnection.getConnection();
     }
 
+    /**
+     * Inserts a room into the database. Used in the insert method.
+     * @see this.insert
+     * @param nameRoom the room's name.
+     * @param capacity the room's capacity.
+     * @return boolean that indicates if the operation has been successful.
+     */
     private boolean insertRoom(String nameRoom, int capacity){
         boolean result = false;
         try{
@@ -28,11 +43,18 @@ public class MySQLRoomDAO implements RoomDAO {
             stmt.executeUpdate("insert into rooms (nameRoom,capacity) values('" + nameRoom + "','" + capacity + "');");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
         return result;
     }
 
+    /**
+     * Inserts an Equipment into the database. Used in the insert method.
+     * @param nameRoom the related room's name.
+     * @param nameEquipment the equipment's name.
+     * @param quantity the quantity of the given equipment in the given room.
+     * @return boolean that indicates if the operation has been successful.
+     */
     private boolean insertEquipmentForRoom(String nameRoom, String nameEquipment, int quantity){
         boolean result = false;
         try{
@@ -40,24 +62,20 @@ public class MySQLRoomDAO implements RoomDAO {
             stmt.executeUpdate("insert into roomEquipments (nameRoom, nameEquipment, quantity) values('" + nameRoom + "','" + nameEquipment + "', '" +quantity + "');");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
         return result;
     }
 
     @Override
     public boolean insert(String nameRoom, int capacity, ArrayList<Pair<String,Integer>> equipments) {
-        boolean result1 = false;
+        boolean result1;
         boolean result2 = false;
         result1 = insertRoom(nameRoom, capacity);
-        for (int i=0; i<equipments.size(); i++){
-            result2 = insertEquipmentForRoom(nameRoom, equipments.get(i).getKey(), equipments.get(i).getValue());
+        for (Pair<String, Integer> equipment : equipments) {
+            result2 = insertEquipmentForRoom(nameRoom, equipment.getKey(), equipment.getValue());
         }
-        if (result1 & result2){
-            return true;
-        }else {
-            return false;
-        }
+        return result1 & result2;
     }
 
     @Override
@@ -70,15 +88,17 @@ public class MySQLRoomDAO implements RoomDAO {
             result1 = true;
             result2 = updateEquipmentsForRoom(name, equipments);
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
-        if (result1 & result2){
-            return true;
-        }else {
-            return false;
-        }
+        return result1 & result2;
     }
 
+    /**
+     * Update the equipment associated to a given room.
+     * @param name the room's name.
+     * @param equipments the new equipment list.
+     * @return boolean that indicates if the operation has been successful.
+     */
     private boolean updateEquipmentsForRoom (String name, ArrayList<Pair<String,Integer>> equipments){
         boolean result1 = false;
         boolean result2 = false;
@@ -87,17 +107,13 @@ public class MySQLRoomDAO implements RoomDAO {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate("DELETE FROM roomEquipments WHERE nameRoom = '" + name + "';");
             result1 = true;
-            for (int i=0; i<equipments.size(); i++){
-                result2 = insertEquipmentForRoom(name, equipments.get(i).getKey(), equipments.get(i).getValue());
+            for (Pair<String, Integer> equipment : equipments) {
+                result2 = insertEquipmentForRoom(name, equipment.getKey(), equipment.getValue());
             }
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
-        if (result1 & result2){
-            return true;
-        }else {
-            return false;
-        }
+        return result1 & result2;
     }
 
     @Override
@@ -110,15 +126,16 @@ public class MySQLRoomDAO implements RoomDAO {
             result1 = true;
             result2 = deleteEquipmentForRoom(name);
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
-        if (result1 & result2){
-            return true;
-        }else {
-            return false;
-        }
+        return result1 & result2;
     }
 
+    /**
+     * Delete all the equipment associated to a given room.
+     * @param name the room's name.
+     * @return boolean that indicates if the operation has been successful.
+     */
     private boolean deleteEquipmentForRoom (String name){
         boolean result = false;
         try{
@@ -126,7 +143,7 @@ public class MySQLRoomDAO implements RoomDAO {
             stmt.executeUpdate("DELETE FROM roomEquipments WHERE nameRoom = '" + name + "';");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
         return result;
     }
@@ -163,7 +180,7 @@ public class MySQLRoomDAO implements RoomDAO {
                 rooms.add(room);
             }
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
         return rooms;
     }
@@ -187,23 +204,6 @@ public class MySQLRoomDAO implements RoomDAO {
 
     }
 
-    @Override
-    public String findRoomEquipmentBy(String nameRoom, String nameEquipment) {
-
-        String equipment = null;
-
-        try{
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from roomEquipments where nameRoom = '" + nameRoom + "' and nameEquipment = '"+ nameEquipment +"';");
-            if(rs.next()){
-                equipment = rs.getString(2);
-            }
-        } catch (SQLException ex){
-            System.out.println("SQL request error");
-        }
-
-        return equipment;
-    }
 
     @Override
     public HashMap<Integer,String> getAllTakenRooms() {

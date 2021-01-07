@@ -1,35 +1,42 @@
 package persist;
 
-import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.temporal.Temporal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
-import core.Invitation;
 import core.Meeting;
 import core.User;
 
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collection;
+
+/**
+ * This class implements the interface UserDAO and implements methods to manipulate persistent data from a MySQL database.
+ */
 public class MySQLUserDAO implements UserDAO {
 
-    private ConnectionDBMySQL instanceConnection;
-    private Connection connection;
-    private FactoryDAOImpl factoryDAO;
-    private TopicDAO topicDAO;
+    /**
+     * Connection to the database.
+     */
+    private final Connection connection;
 
+    /**
+     * TopicDAO used to manipulate topic related persistent data.
+     */
+    private final TopicDAO topicDAO;
+
+    /**
+     * Constructs the MySQLUserDAO.
+     */
     public MySQLUserDAO(){
-        this.instanceConnection = ConnectionDBMySQL.getInstance();
+        ConnectionDBMySQL instanceConnection = ConnectionDBMySQL.getInstance();
         this.connection = instanceConnection.getConnection();
-        this.factoryDAO = FactoryDAOImpl.getInstance();
+        FactoryDAOImpl factoryDAO = FactoryDAOImpl.getInstance();
         this.topicDAO = factoryDAO.createTopicDAO();
     }
 
     @Override
     public Collection<String> findAllRegUsersNames() {
-        Collection<String> res = new ArrayList<String>();
+        Collection<String> res = new ArrayList<>();
         try{
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT firstname,lastname,username FROM users WHERE isManager = 0;");
@@ -43,8 +50,10 @@ public class MySQLUserDAO implements UserDAO {
         }
         return res;
     }
+
+    @Override
     public Collection<Meeting> findSchedule(String username) {
-        Collection<Meeting> m = new ArrayList<Meeting>();
+        Collection<Meeting> m = new ArrayList<>();
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT username, idMeeting FROM meetingAttendence WHERE username = '" + username + "';");
@@ -86,7 +95,7 @@ public class MySQLUserDAO implements UserDAO {
             stmt.executeUpdate("UPDATE users SET firstname = '" + firstName +"', lastname = '" + lastName +"' WHERE username = '" + username + "';");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
 
         return result;
@@ -94,7 +103,7 @@ public class MySQLUserDAO implements UserDAO {
 
     @Override
     public Collection<String> findAllManagersNames() {
-        Collection<String> res = new ArrayList<String>();
+        Collection<String> res = new ArrayList<>();
         try{
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT firstname,lastname,username FROM users WHERE isManager = 1;");
@@ -112,7 +121,7 @@ public class MySQLUserDAO implements UserDAO {
     @Override
     public Collection<String> findAllWaitingUsers() {
 
-        Collection<String> res = new ArrayList<String>();
+        Collection<String> res = new ArrayList<>();
 
         try{
             Statement stmt = connection.createStatement();
@@ -177,7 +186,7 @@ public class MySQLUserDAO implements UserDAO {
                 stmt.executeUpdate("insert into waiting_users (username,password,first_name,last_name) values('" + username + "','" + mdp + "','" + first + "','" + last +"');");
                 result = true;
             } catch (SQLException ex){
-                System.out.println(ex);
+                System.out.println(ex.getSQLState());
             }
         }
 
@@ -193,7 +202,7 @@ public class MySQLUserDAO implements UserDAO {
             stmt.executeUpdate("UPDATE users SET isManager = 1 WHERE username = '" + username + "';");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
 
         return result;
@@ -208,11 +217,13 @@ public class MySQLUserDAO implements UserDAO {
             stmt.executeUpdate("DELETE FROM users WHERE username = '" + username + "';");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
 
         return result;
     }
+
+    @Override
     public boolean declineWaitingUser(String username) {
         boolean result = false;
 
@@ -221,12 +232,13 @@ public class MySQLUserDAO implements UserDAO {
             stmt.executeUpdate("DELETE FROM waiting_users WHERE username = '" + username + "';");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
 
         return result;
     }
 
+    @Override
     public boolean declineWaitingInvitation(String username, int id){
         boolean result = false;
 
@@ -235,12 +247,13 @@ public class MySQLUserDAO implements UserDAO {
             stmt.executeUpdate("update invitations SET state = -1 WHERE invitedUsername = '" + username + "' and idMeetingInvitation = "+id+";");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
 
         return result;
     }
 
+    @Override
     public boolean acceptWaitingInvitation(String username, int id) {
         boolean result = false;
 
@@ -249,7 +262,7 @@ public class MySQLUserDAO implements UserDAO {
             stmt.executeUpdate("update invitations SET state = 1 WHERE invitedUsername = '" + username + "' and idMeetingInvitation = "+id+";");
             result = true;
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
 
         return result;
@@ -283,10 +296,10 @@ public class MySQLUserDAO implements UserDAO {
                         stmt2.executeUpdate("DELETE FROM waiting_users WHERE username = '" + username + "';");
                         result2 = true;
                     } catch (SQLException ex){
-                        System.out.println(ex);
+                        System.out.println(ex.getSQLState());
                     }
                 } catch (SQLException ex){
-                    System.out.println(ex);
+                    System.out.println(ex.getSQLState());
                 }
         } catch (SQLException ex){
             System.out.println("SQL request error");
@@ -300,6 +313,11 @@ public class MySQLUserDAO implements UserDAO {
         return result1 && result2;
     }
 
+    /**
+     * Verify if a given username is already in the database.
+     * @param username the username.
+     * @return boolean that indicates if the username is already in the database.
+     */
     private boolean verify(String username){
         boolean exist = false;
 
@@ -313,13 +331,18 @@ public class MySQLUserDAO implements UserDAO {
             }
         } catch (SQLException ex){
 
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
 
         }
 
         return exist;
     }
 
+    /**
+     * Converts a data type Time to LocalDate.
+     * @param time the time to convert.
+     * @return the LocalTime converted Time.
+     */
     private LocalTime timeToLocalDate(Time time){
         return time.toLocalTime().minusHours(1);
     }

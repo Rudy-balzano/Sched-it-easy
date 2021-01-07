@@ -11,18 +11,33 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class implements MeetingDAO and implements methods to manipulate Meeting related persistent data from a MySQL database.
+ */
 public class MySQLMeetingDAO implements MeetingDAO{
 
-    private ConnectionDBMySQL instanceConnection;
-    private Connection connection;
-    private FactoryDAOImpl factoryDAO;
-    private TopicDAO topicDAO;
-    private UserDAO userDAO;
+    /**
+     * Connection to the database.
+     */
+    private final Connection connection;
 
+    /**
+     * TopicDAO used to manipulate topic related persistent data.
+     */
+    private final TopicDAO topicDAO;
+
+    /**
+     * UserDAO used to manipulate user related persistent data.
+     */
+    private final UserDAO userDAO;
+
+    /**
+     * Constructs the MySQLMeetingDAO.
+     */
     public MySQLMeetingDAO(){
-        this.instanceConnection = ConnectionDBMySQL.getInstance();
+        ConnectionDBMySQL instanceConnection = ConnectionDBMySQL.getInstance();
         this.connection = instanceConnection.getConnection();
-        this.factoryDAO = FactoryDAOImpl.getInstance();
+        FactoryDAOImpl factoryDAO = FactoryDAOImpl.getInstance();
         this.topicDAO = factoryDAO.createTopicDAO();
         this.userDAO = factoryDAO.createUserDAO();
 
@@ -249,10 +264,10 @@ public class MySQLMeetingDAO implements MeetingDAO{
                     stmt2.executeUpdate("DELETE FROM waiting_meetings WHERE id = '" + id + "';");
                     result2 = true;
                 } catch (SQLException ex){
-                    System.out.println(ex);
+                    System.out.println(ex.getSQLState());
                 }
             } catch (SQLException ex){
-                System.out.println(ex);
+                System.out.println(ex.getSQLState());
             }
         } catch (SQLException ex){
             System.out.println("SQL request error");
@@ -269,7 +284,7 @@ public class MySQLMeetingDAO implements MeetingDAO{
             stmt.executeUpdate("DELETE FROM waiting_meetings WHERE id = '" + id + "';");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
 
         return result;

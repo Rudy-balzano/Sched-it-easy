@@ -1,23 +1,28 @@
 package persist;
 
 import core.Equipment;
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 
+/**
+ * This class implements EquipmentDAO and implements methods to manipulate Equipment related persistent data from a MySQL database.
+ */
 public class MySQLEquipmentDAO implements EquipmentDAO{
 
-    private ConnectionDBMySQL instanceConnection;
-    private Connection connection;
+    /**
+     * Connection to the database.
+     */
+    private final Connection connection;
 
+    /**
+     * Constructs the MySQLEquipmentDAO
+     */
     public MySQLEquipmentDAO(){
-        this.instanceConnection = ConnectionDBMySQL.getInstance();
+        ConnectionDBMySQL instanceConnection = ConnectionDBMySQL.getInstance();
         this.connection = instanceConnection.getConnection();
     }
 
@@ -53,7 +58,7 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
                 equipments.add(equipment);
             }
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
         return equipments;
     }

@@ -1,15 +1,28 @@
 package persist;
-import java.sql.Connection;
+
 import core.Topic;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * This class implements the interface TopicDAO and implements methods to manipulate persistent data from a MySQL database.
+ */
 public class MySQLTopicDAO implements TopicDAO {
-    private ConnectionDBMySQL instanceConnection;
-    private Connection connection;
 
+    /**
+     * Connection to the database.
+     */
+    private final Connection connection;
+
+    /**
+     * Constructs the MySQLTopicDAO.
+     */
     public MySQLTopicDAO(){
-        this.instanceConnection = ConnectionDBMySQL.getInstance();
+        ConnectionDBMySQL instanceConnection = ConnectionDBMySQL.getInstance();
         this.connection = instanceConnection.getConnection();
     }
 
@@ -21,7 +34,7 @@ public class MySQLTopicDAO implements TopicDAO {
             stmt.executeUpdate("insert into topics (nameTopic,description) values('" + nameTopic + "','" + descriptionTopic + "');");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
         return result;
     }
@@ -35,7 +48,7 @@ public class MySQLTopicDAO implements TopicDAO {
             stmt.executeUpdate("UPDATE topics SET description = '" + description + "' WHERE nameTopic = '" + name + "';");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
         return result;
     }
@@ -48,7 +61,7 @@ public class MySQLTopicDAO implements TopicDAO {
             stmt.executeUpdate("DELETE FROM topics WHERE nameTopic = '" + name+ "';");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
         return result;
     }
@@ -63,7 +76,7 @@ public class MySQLTopicDAO implements TopicDAO {
                 t = new Topic(rs.getString(1),rs.getString(2));
             }
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
         return t;
     }
@@ -79,7 +92,7 @@ public class MySQLTopicDAO implements TopicDAO {
                 topics.add(t);
             }
         } catch (SQLException ex){
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
         return topics;
     }
