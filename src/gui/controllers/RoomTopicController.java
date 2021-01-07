@@ -27,6 +27,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Class controller for room and topic
+ */
 public class RoomTopicController {
     @FXML
     private TextField nameAddRoom;
@@ -83,14 +86,22 @@ public class RoomTopicController {
     @FXML
     private ListView<HBoxCell> listViewDeleteTopics;
 
-
+    /**
+     * roomtopicfacade
+     */
     private static final RoomTopicFacade roomTopicFacade = new RoomTopicFacade();
-
+    /**
+     * Tab View in which we display rooms that we have added
+     */
     private static ObservableList<Pair<String,Integer>> listTabViewAddRoom = FXCollections.observableArrayList();
-
+    /**
+     *Tab View in which we display rooms that we have updated
+     */
     private static ObservableList<Pair<String,Integer>> listTabViewUpdateRoom = FXCollections.observableArrayList();
 
-
+    /**
+     * Class HBoxCell to handle the ListView
+     */
     private class HBoxCell extends HBox {
 
         Label label = new Label();
@@ -101,6 +112,12 @@ public class RoomTopicController {
         Button deleteR = new Button("Delete");
         Button deleteT = new Button("Delete");
 
+        /**
+         * Function used to handle the ListView and buttons
+         * @param labelText
+         * @param tableView
+         * @param listTabView
+         */
         HBoxCell(String labelText, TableView tableView, ObservableList<Pair<String,Integer>> listTabView) {
 
             super();
@@ -167,6 +184,9 @@ public class RoomTopicController {
 
     }
 
+    /**
+     * Function used to refresh the listView
+     */
     private void refresh(){
         Collection<String> rooms = roomTopicFacade.getRooms();
         Collection<Topic> topics = roomTopicFacade.getTopics();
@@ -188,6 +208,10 @@ public class RoomTopicController {
         listViewDeleteTopics.setItems(itemsT);
     }
 
+    /**
+     * Function used to display a popup with all the informations about equipment
+     * @param e
+     */
     private static void displayPopupEquipmentInfo(Equipment e){
         //Popup that displays information about the selected equipment
         Stage popup = new Stage();
@@ -209,6 +233,10 @@ public class RoomTopicController {
         popup.showAndWait();
 
     }
+
+    /**
+     * Function used to initalize the listView
+     */
     @FXML
     private void initialize(){
 
@@ -269,6 +297,12 @@ public class RoomTopicController {
 
     }
 
+    /**
+     * Function used to lad everyEquipment
+     * @param listEqu
+     * @param tableView
+     * @param listTabView
+     */
     private void loadAllEquipmentFromDB (ListView listEqu, TableView tableView, ObservableList<Pair<String, Integer>> listTabView){
 
         Collection<Equipment> equipments = roomTopicFacade.getEquipments();
@@ -283,6 +317,10 @@ public class RoomTopicController {
         listEqu.setItems(listEquipment);
     }
 
+    /**
+     * Function used to add a room
+     * @param actionEvent
+     */
     public void addRoom(ActionEvent actionEvent) {
         Window owner = addRoomButton.getScene().getWindow();
 
@@ -314,6 +352,10 @@ public class RoomTopicController {
         }
     }
 
+    /**
+     * Function used to add a topic
+     * @param actionEvent
+     */
     public void addTopic(ActionEvent actionEvent) {
         Window owner = addTopicButton.getScene().getWindow();
 
@@ -338,6 +380,10 @@ public class RoomTopicController {
         }
     }
 
+    /**
+     * Function used to delete a room
+     * @param actionEvent
+     */
     public void deleteRoom(ActionEvent actionEvent) {
         Window owner = deleteRoomButton.getScene().getWindow();
 
@@ -360,6 +406,10 @@ public class RoomTopicController {
         }
     }
 
+    /**
+     * Function used to delete a topic
+     * @param actionEvent
+     */
     public void deleteTopic(ActionEvent actionEvent) {
         Window owner = deleteTopicButton.getScene().getWindow();
 
@@ -378,6 +428,11 @@ public class RoomTopicController {
             System.out.println("impossible to delete the topic ");
         }
     }
+
+    /**
+     * Function used to update infos about a room
+     * @param actionEvent
+     */
     public void updateRoom(ActionEvent actionEvent) {
 
         Window owner = updateRoomButton.getScene().getWindow();
@@ -408,6 +463,10 @@ public class RoomTopicController {
         }
     }
 
+    /**
+     * Function used to load a room by entering a name of room
+     * @param actionEvent
+     */
     public void loadRoom(ActionEvent actionEvent) {
 
         Window owner = loadButton.getScene().getWindow();
@@ -445,6 +504,10 @@ public class RoomTopicController {
 
     }
 
+    /**
+     * Function used to update infos about a topic
+     * @param actionEvent
+     */
     public void updateTopic(ActionEvent actionEvent) {
         Window owner = updateTopicButton.getScene().getWindow();
 

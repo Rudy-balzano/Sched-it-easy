@@ -17,22 +17,40 @@ import javafx.scene.layout.Priority;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * Class controller for room reservation
+ */
 public class RoomReservationController {
+    /**
+     * ListView
+     */
     @FXML
     private ListView<EquipmentHBoxCell> listViewEquipment;
-
+    /**
+     * ListView
+     */
     @FXML
     private ListView<RoomHBoxCell> listViewRooms;
 
+    /**
+     * Meeting
+     */
     Meeting meeting = CreateMeetingController.meeting;
 
     ObservableList<RoomHBoxCell> listViewRoom = FXCollections.observableArrayList();
-
+    /**
+     * roomTopicFacade
+     */
     private static final RoomTopicFacade roomTopicFacade = new RoomTopicFacade();
+    /**
+     * ReservationFacade
+     */
     private static final ReservationFacade reservationFacade = new ReservationFacade();
 
 
-
+    /**
+     * class EquipmentHBoxCell to handle the listView for equipment
+     */
     private static class EquipmentHBoxCell extends HBox {
 
         Label label = new Label();
@@ -52,6 +70,9 @@ public class RoomReservationController {
 
     }
 
+    /**
+     * class RoomHboxCell to handle the listView of rooms
+     */
     private static class RoomHBoxCell extends HBox {
 
         Label label = new Label();
@@ -71,6 +92,9 @@ public class RoomReservationController {
 
     }
 
+    /**
+     * function used to initialize the listViews
+     */
     @FXML
     private void initialize(){
 
@@ -108,6 +132,9 @@ public class RoomReservationController {
 */
     }
 
+    /**
+     * Function used to loadEquipment in the listView
+     */
     private void loadEquipment(){
         Collection<Equipment> equipments = roomTopicFacade.getEquipments();
 
@@ -121,6 +148,9 @@ public class RoomReservationController {
         listViewEquipment.setItems(listEquipment);
     }
 
+    /**
+     * Function used to load all the available rooms in the listView
+     */
     private void loadAvailableRoom(){
         //TODO implementer capacity
         int capacity = 0;
@@ -165,6 +195,10 @@ public class RoomReservationController {
 
  */
 
+    /**
+     * Function used to create a meeting
+     * @param actionEvent
+     */
     public void handleCreateMeeting(ActionEvent actionEvent) {
         if (listViewRooms.getSelectionModel().getSelectedItem()!=null){
             boolean res = false;
@@ -178,9 +212,17 @@ public class RoomReservationController {
         }
     }
 
+    /**
+     * Function used to rent equipment
+     * @param actionEvent
+     */
     public void rentEquipments(ActionEvent actionEvent) {
     }
 
+    /**
+     * Function used to handle the cancel button
+     * @throws IOException
+     */
     public void handleCancel() throws IOException {
         reservationFacade.deleteMeeting(meeting.getId());
 

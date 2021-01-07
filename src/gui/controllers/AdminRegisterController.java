@@ -13,25 +13,46 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 
+/**
+ * Class Controller to register an admin
+ * @author emilie
+ * @version 1.0
+ */
 public class AdminRegisterController implements AlertShower{
+    /**
+     * Textfield for username
+     */
     @FXML
     private TextField username;
-
+    /**
+     * Textfield for firstname
+     */
     @FXML
     private TextField firstname;
-
+    /**
+     * Textfield for lastname
+     */
     @FXML
     private TextField lastname;
-
+    /**
+     * Textfield for password
+     */
     @FXML
     private TextField password;
-
+    /**
+     * Textfield for confirmPassword
+     */
     @FXML
     private TextField confirmPassword;
-
+    /**
+     * Button for register
+     */
     @FXML
     private Button registerButton;
 
+    /**
+     * Function used to switch to the Admin View
+     */
     public void switchToAdminUsersManagementView(){
         try {
             Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.adminUserManagementRoot))));
@@ -40,9 +61,16 @@ public class AdminRegisterController implements AlertShower{
         }
     }
 
+    /**
+     * Function used to go back to the admin view, when clicking on cancel
+     */
     public void handleCancel(){
         switchToAdminUsersManagementView();
     }
+
+    /**
+     * Function used to register a new admin
+     */
     public void handleRegister() {
         AdminAccountManagementFacade facade = new AdminAccountManagementFacade();
 

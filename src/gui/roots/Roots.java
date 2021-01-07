@@ -1,5 +1,10 @@
 package gui.roots;
 
+/**
+ * Class Routes
+ * @author rudy pierre baptiste emilie
+ * @version 1.0
+ */
 public class Roots {
     public static final String loginRoot = "../views/loginView.fxml";
     public static final String registerRoot = "../views/registerView.fxml";

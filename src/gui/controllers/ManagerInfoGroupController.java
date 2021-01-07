@@ -17,18 +17,30 @@ import javafx.scene.layout.Priority;
 
 import java.io.IOException;
 
+/**
+ * Class controller for ManagerInfoGroup
+ * @author emilie
+ * @version 1.0
+ */
 public class ManagerInfoGroupController {
 
-
+    /**
+     * managerFacade
+     */
     private static final ManagerFacade facade = new ManagerFacade();
 
+    /**
+     * current group
+     */
     Group currentGroup = ManagerManageGroupController.currentGroup;
 
 
     @FXML
     private ListView<HBoxCell> listViewGroupMembers;
 
-
+    /**
+     * Class HBoxCell for the ListView
+     */
     private class HBoxCell extends HBox {
         Label label = new Label();
         Button deleteButton = new Button("Delete from group");
@@ -50,6 +62,9 @@ public class ManagerInfoGroupController {
         }
     }
 
+    /**
+     * Function used to refresh the ListView
+     */
     private void refresh(){
 
         ObservableList<HBoxCell> itemsU = FXCollections.observableArrayList();
@@ -64,7 +79,9 @@ public class ManagerInfoGroupController {
         listViewGroupMembers.setItems(itemsU);
     }
 
-
+    /**
+     * Function used to initialize the listView
+     */
     @FXML
     public void initialize(){
 
@@ -79,11 +96,19 @@ public class ManagerInfoGroupController {
         listViewGroupMembers.setItems(itemsU);
     }
 
+    /**
+     * Function used to handle cancel button
+     * @throws IOException
+     */
     @FXML
     public void cancel() throws IOException {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerManageGroupRoot))));
     }
 
+    /**
+     * Function used to go to the add user to a group page
+     * @throws IOException
+     */
     @FXML
     public void switchToAddNewUser() throws IOException {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerAddUserToGroupRoot))));

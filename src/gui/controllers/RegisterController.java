@@ -15,37 +15,63 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 
+/**
+ * Class Controller to register
+ * @author baptiste rudy pierre emilie
+ * @version 1.0
+ */
 public class RegisterController {
-
+    /**
+     * Textfield for username
+     */
     @FXML
     private TextField username;
-
+    /**
+     * Textfield for firstname
+     */
     @FXML
     private TextField firstname;
-
+    /**
+     * Textfield for lastname
+     */
     @FXML
     private TextField lastname;
-
+    /**
+     * Textfield for password
+     */
     @FXML
     private TextField password;
-
+    /**
+     * Textfield for confirmPassword
+     */
     @FXML
     private TextField confirmPassword;
-
+    /**
+     * Button to Login
+     */
     @FXML
     private Button loginButton;
-
+    /**
+     * Button to register
+     */
     @FXML
     private Button registerButton;
 
-
+    /**
+     * Function used to go to the login page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void switchToLoginView(javafx.event.ActionEvent actionEvent) throws IOException {
         Parent loginRoot = FXMLLoader.load(getClass().getResource(Roots.loginRoot));
         Scene loginView = new Scene(loginRoot);
         Main.scheditWindow.setScene(loginView);
     }
 
-
+    /**
+     * Function used to register a visitor
+     * @param actionEvent
+     */
     public void handleRegister(ActionEvent actionEvent) {
         SessionFacade session = new SessionFacade();
 

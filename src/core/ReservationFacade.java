@@ -15,17 +15,41 @@ import java.time.LocalTime;
 import java.time.Period;
 import java.util.*;
 
+/**
+ * Class that represents the facade for a reservation
+ * @author emilie jean
+ * @version 1.0
+ * @see gui.controllers.RoomReservationController
+ * @see gui.controllers.CreateMeetingController
+ * @see gui.controllers.ManagerAutoScheduleController
+ * @see gui.controllers.ManagerCreateAutoScheduleController
+ *
+ */
 public class ReservationFacade {
-
+    /**
+     * The user that is connected
+     */
     private User connectedUser;
+    /**
+     * factoryDAO
+     */
     private FactoryDAOImpl factoryDAO;
+    /**
+     * meetingDAO
+     */
     private MeetingDAO meetingDAO;
+    /**
+     * roomDAO
+     */
     private RoomDAO roomDAO;
 
+    /**
+     * Creation of a RoomTopicFacade
+     */
     public static RoomTopicFacade topicFacade = new RoomTopicFacade();
 
     /**
-     * Default constructor
+     * Default constructor of ReservationFacade
      */
     public ReservationFacade() {
         this.factoryDAO = FactoryDAOImpl.getInstance();
@@ -33,6 +57,15 @@ public class ReservationFacade {
         this.roomDAO = factoryDAO.createRoomDAO();
     }
 
+    /**
+     * Function used to create a new meeting
+     * @param dateBegin
+     * @param hourBegin
+     * @param dateEnd
+     * @param hourEnd
+     * @param meetingTopic
+     * @return True if the meeting has been created, false if not
+     */
     public boolean createMeeting(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String meetingTopic){
         User creator = SessionFacade.getConnectedUser();
         String creatorUsername = creator.getUserName();
@@ -47,6 +80,12 @@ public class ReservationFacade {
         return check;
     }
 
+    /**
+     * Function used to create a new meeting associated to a room
+     * @param idMeeting
+     * @param nameRoom
+     * @return true if the meeting with a room has been created, false if not
+     */
     public boolean createMeetingWithRoom(int idMeeting, String nameRoom){
         User creator = SessionFacade.getConnectedUser();
         String creatorUsername = creator.getUserName();
@@ -61,6 +100,15 @@ public class ReservationFacade {
         return check;
     }
 
+    /**
+     * Function used to create a meeting to get his id
+     * @param dateBegin
+     * @param hourBegin
+     * @param dateEnd
+     * @param hourEnd
+     * @param meetingTopic
+     * @return the id of the meeting we just created
+     */
     public int createMeetingAndGetId(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String meetingTopic){
         User creator = SessionFacade.getConnectedUser();
         String creatorUsername = creator.getUserName();
@@ -75,14 +123,29 @@ public class ReservationFacade {
         return idMeeting;
     }
 
+    /**
+     * Function used to find a meeting thanks to his id
+     * @param id
+     * @return a meeting thanks to his id
+     */
     public Meeting findMeetingById(int id){
         return meetingDAO.findByID(id);
     }
 
+    /**
+     * Function used to delete a meeting thanks to his id
+     * @param id
+     */
     public void deleteMeeting(int id){
         meetingDAO.deleteMeeting(id,SessionFacade.getConnectedUser().getIsManager());
     }
 
+    /**
+     * Function used to see every rooms that are available (there is no meeting in it)
+     * @param capacity
+     * @param m
+     * @return Every Rooms available
+     */
     public Collection<String> getAvailableRooms(int capacity, Meeting m){
 
         RoomTopicFacade rtfacade = new RoomTopicFacade();
@@ -107,6 +170,12 @@ public class ReservationFacade {
         return res;
     }
 
+    /**
+     * Function used to see if 2 meetings are at the same time
+     * @param m1
+     * @param m2
+     * @return True if 2 meetings are at the same time, false if not
+     */
     private boolean isAtTheSameTime(Meeting m1, Meeting m2){
 
         boolean res = false;
@@ -176,7 +245,16 @@ public class ReservationFacade {
     }
 
  */
-public HashMap<Integer,ArrayList<String>> createAutoSchedule(HashMap<String,Integer> matieres, LocalDate dateDebut, LocalDate dateFin) throws Exception {
+
+    /**
+     *
+     * @param matieres
+     * @param dateDebut
+     * @param dateFin
+     * @return
+     * @throws Exception
+     */
+    public HashMap<Integer,ArrayList<String>> createAutoSchedule(HashMap<String,Integer> matieres, LocalDate dateDebut, LocalDate dateFin) throws Exception {
 
     int nbHeures = 0;
     for ( int i  : matieres.values()){
@@ -253,6 +331,15 @@ public HashMap<Integer,ArrayList<String>> createAutoSchedule(HashMap<String,Inte
 
 
 }
+
+    /**
+     *
+     * @param matieres
+     * @param dB
+     * @param dE
+     * @return
+     * @throws Exception
+     */
     public Collection<Meeting> autoSchedule(HashMap<String,Integer> matieres,LocalDate dB,LocalDate dE) throws Exception{
         HashMap<Integer,ArrayList<String>> uDays = createAutoSchedule(matieres,dB,dE);
 
@@ -312,6 +399,12 @@ public HashMap<Integer,ArrayList<String>> createAutoSchedule(HashMap<String,Inte
         return meetings;
     }
 
+    /**
+     *
+     * @param cours
+     * @param cren
+     * @return
+     */
     public ArrayList<String> triCreneau(ArrayList<String> cours, int cren){
 
         String [] res = new String [4];
@@ -348,6 +441,12 @@ public HashMap<Integer,ArrayList<String>> createAutoSchedule(HashMap<String,Inte
         return new ArrayList<>(Arrays.asList(res).subList(0, 4));
     }
 
+    /**
+     *
+     * @param dateD
+     * @param dateF
+     * @return
+     */
     public HashMap<Integer,ArrayList<String>> usableDaysBetween(LocalDate dateD, LocalDate dateF){
 
         HashMap<Integer,ArrayList<String>> res = new HashMap<>();
@@ -402,6 +501,12 @@ public HashMap<Integer,ArrayList<String>> createAutoSchedule(HashMap<String,Inte
         return res;
     }
 
+    /**
+     * Function used to see the number of days between 2 dates in parameters
+     * @param d1
+     * @param d2
+     * @return the number of days between 2 dates
+     */
     public int daysBetween(LocalDate d1, LocalDate d2) {
         Period period = Period.between(d1,d2);
         return period.getDays();

@@ -12,18 +12,43 @@ import javafx.scene.layout.Priority;
 
 import java.util.Collection;
 
+/**
+ * Class controller for account validation
+ * @author emilie
+ * @version 1.0
+ */
 public class AccountValidationController {
-
+    /**
+     * manager facade
+     */
     private static final ManagerFacade facade = new ManagerFacade();
-
+    /**
+     * ListView with every users that are waiting to be accepted
+     */
     @FXML
     private ListView<HBoxCell> listViewWaitingUsers;
 
+    /**
+     * class  HBoxCell to handle our ListView
+     */
     private class HBoxCell extends HBox {
+        /**
+         * Label
+         */
         Label label = new Label();
+        /**
+         * Button validate
+         */
         Button button = new Button("Validate account");
+        /**
+         * Button decline
+         */
         Button button2 = new Button("Decline account");
 
+        /**
+         * function to handle when clicking on buttons validate and decline
+         * @param labelText
+         */
         HBoxCell(String labelText) {
             super();
 
@@ -46,6 +71,9 @@ public class AccountValidationController {
         }
     }
 
+    /**
+     * Function to refresh the listView
+     */
     private void refresh(){
         Collection<String> waitingUsers = facade.getAllWaitingUsers();
 
@@ -59,6 +87,9 @@ public class AccountValidationController {
         listViewWaitingUsers.setItems(itemsU);
     }
 
+    /**
+     * Function used to initalize the listView
+     */
     @FXML
     public void initialize(){
 
