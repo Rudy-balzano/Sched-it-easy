@@ -4,25 +4,40 @@ import core.Invitation;
 import core.Meeting;
 import core.User;
 
-import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
-
+/**
+ * This class implements the interface InvitationDAO and implements methods to manipulate Invitation related persistent data from a MySQL database.
+ */
 public class MySQLInvitationDAO implements InvitationDAO{
 
-    private ConnectionDBMySQL instanceConnection;
-    private Connection connection;
-    private FactoryDAOImpl factoryDAO;
-    private MeetingDAO meetingDAO;
-    private UserDAO userDAO;
+    /**
+     * Connection to the database
+     */
+    private final Connection connection;
 
+    /**
+     * MeetingDAO used to manipulate Meeting related persistent data.
+     */
+    private final MeetingDAO meetingDAO;
+
+    /**
+     * UserDAO used to manipulate User related persistent data.
+     */
+    private final UserDAO userDAO;
+
+    /**
+     * Constructs a MySQLInvitationDAO.
+     */
     public MySQLInvitationDAO(){
-        this.instanceConnection = ConnectionDBMySQL.getInstance();
+        ConnectionDBMySQL instanceConnection = ConnectionDBMySQL.getInstance();
         this.connection = instanceConnection.getConnection();
-        this.factoryDAO = FactoryDAOImpl.getInstance();
+        FactoryDAOImpl factoryDAO = FactoryDAOImpl.getInstance();
         this.meetingDAO = factoryDAO.createMeetingDAO();
         this.userDAO = factoryDAO.createUserDAO();
     }
@@ -36,7 +51,7 @@ public class MySQLInvitationDAO implements InvitationDAO{
             stmt.executeUpdate("insert into invitations (invitedUsername, state, idMeetingInvitation) values('" + invitedUser + "','" + state + "','" + meetingInvitation + "');");
             result = true;
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
 
         return result;
@@ -51,12 +66,13 @@ public class MySQLInvitationDAO implements InvitationDAO{
             stmt.executeUpdate("insert into invitationGroups (groupName, idMeeting) values('" + groupName + "','" + meetingInvitation + "');");
             result = true;
         } catch (SQLException ex) {
-            System.out.println(ex);
+            System.out.println(ex.getSQLState());
         }
 
         return result;
     }
 
+    @Override
     public Invitation findBy(User invitedUSer, Meeting meetingInvitation ){
         Invitation i = new Invitation();
 
@@ -111,6 +127,7 @@ public class MySQLInvitationDAO implements InvitationDAO{
 
     }
 
+    @Override
     public ArrayList<Invitation> findAllInvitation(String username){
         ArrayList<Invitation> res = new ArrayList<>();
 
@@ -130,6 +147,8 @@ public class MySQLInvitationDAO implements InvitationDAO{
         }
         return res;
     }
+
+    @Override
     public ArrayList<Invitation> findInvitation(String username){
         ArrayList<Invitation> res = new ArrayList<>() {
         };

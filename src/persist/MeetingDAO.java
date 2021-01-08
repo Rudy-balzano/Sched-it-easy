@@ -11,6 +11,7 @@ import java.util.HashMap;
  * This interface implements the method used by an MeetingDAO to manipulates meeting related persistent data.
  */
 public interface MeetingDAO {
+
     /**
      * Makes a new meeting persistent.
      * @param dateBegin meeting's beginning date.

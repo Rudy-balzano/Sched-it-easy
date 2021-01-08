@@ -21,6 +21,12 @@ public interface InvitationDAO {
      */
     boolean insert(String invitedUser, int state, int meetingInvitation);
 
+    /**
+     * Makes a new invitation to a group persistent.
+     * @param groupName the invited group's name.
+     * @param meetingInvitation the related meeting.
+     * @return boolean that indicates if the operation was successful
+     */
     boolean insertInvitationGroup(String groupName, int meetingInvitation);
 
     /**
@@ -46,12 +52,17 @@ public interface InvitationDAO {
     Invitation findBy(User invitedUser, Meeting meetingInvitation);
 
     /**
-     * Searches into the database the usernames of the users invited to a given meeting.
-     * @param idMeeting id of the Meeting to search invited users.
-     * @return a collection of the invited users to the Meeting that matches the given id.
+     * Searches into the persistence the usernames of the users invited to a given meeting.
+     * @param idMeeting id of the Meeting to search invited users for.
+     * @return a collection of the invited Users to the Meeting that matches the given id.
      */
     Collection<String> getInvitedUsers(int idMeeting);
 
+    /**
+     * Searches into the persistence the Groups that have been invited to a given Meeting.
+     * @param idMeeting id of the Meeting to search invited groups for.
+     * @return a collection of the invited Groups to the Meeting that matches the given id.
+     */
     ArrayList<String> getInvitedGroups(int idMeeting);
 
 }

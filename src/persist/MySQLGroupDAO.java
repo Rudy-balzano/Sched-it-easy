@@ -7,12 +7,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
 
+/**
+ * This class implements the interface GroupDAO and implements methods to manipulate Group related persistent data.
+ */
 public class MySQLGroupDAO implements GroupDAO{
 
+    /**
+     * Connection to the database.
+     */
     private final Connection connection;
 
+    /**
+     * Constructs a new MySQLGroupDAO.
+     */
     public MySQLGroupDAO(){
         ConnectionDBMySQL instanceConnection = ConnectionDBMySQL.getInstance();
         this.connection = instanceConnection.getConnection();
@@ -76,6 +84,11 @@ public class MySQLGroupDAO implements GroupDAO{
         return result;
     }
 
+    /**
+     * Verifies if a given name matches an existing Group's name.
+     * @param name the name to check.
+     * @return boolean that indicates if the given name already exists in the database.
+     */
     private boolean verify(String name){
         boolean exist = false;
 
@@ -142,6 +155,12 @@ public class MySQLGroupDAO implements GroupDAO{
         return result;
     }
 
+    /**
+     * Verifies if a given User identified by it's username is already in a given Group identified by it's group name.
+     * @param username the username to check.
+     * @param groupName the group name to check.
+     * @return a boolean that indicates if the User is already in the given Group.
+     */
     private boolean verifyUsername(String username, String groupName){
 
         boolean exist = false;
