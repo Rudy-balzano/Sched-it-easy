@@ -22,10 +22,19 @@ import javafx.scene.layout.Priority;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * Class controller to see invited people
+ * @author
+ * @version 1.0
+ */
 public class SeeInvitedPeopleController {
-
+    /**
+     * invitationFacade
+     */
     private static final InvitationFacade invitationFacade = new InvitationFacade();
-
+    /**
+     * popOver idMeeting
+     */
     public static int idMeeting = MyCustomPopOverHomeView.idMeeting;
 
 
@@ -51,6 +60,9 @@ public class SeeInvitedPeopleController {
         }
     }
 
+    /**
+     * Function used to initialize
+     */
     @FXML
     public void initialize(){
         //TODO integrer l'id meeting
@@ -77,11 +89,18 @@ public class SeeInvitedPeopleController {
 
     }
 
-
+    /**
+     * function used to handle invited user
+     * @throws IOException
+     */
     public void handleInviteUser() throws IOException {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.invitePeopleRoot))));
     }
 
+    /**
+     * Functioin used if we want to go back
+     * @throws IOException
+     */
     public void handleGoBack() throws IOException {
         if(SessionFacade.getConnectedUser().getIsManager()){
             Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerHomeRoot))));

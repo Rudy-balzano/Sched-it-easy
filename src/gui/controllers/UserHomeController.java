@@ -15,20 +15,31 @@ import javafx.fxml.FXML;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
+/**
+ * Class controller for the user home
+ * @author
+ * @version 1.0
+ */
 public class UserHomeController {
 
     @FXML
     private WeekPage weekPage;
-
+    /**
+     * Calendar
+     */
     Calendar calendar = new Calendar("Calendar");
-
+    /**
+     * Schedule facade
+     */
     private static ScheduleFacade facade = new ScheduleFacade();
 
 
     private void handle(CalendarEvent evt) {
     }
 
+    /**
+     * Function used to initialize the view by displaying the calendar, and setting the ui readonly
+     */
     @FXML
     private void initialize(){
 

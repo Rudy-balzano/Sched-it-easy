@@ -24,22 +24,37 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+/**
+ * Class Controller of create meeting
+ * @author emilie
+ * @version 1.0
+ */
 public class CreateMeetingController {
 
 
     @FXML
     private DayPage dayPage;
-
+    /**
+     * calendar
+     */
     Calendar calendar = new Calendar("Calendar");
-
+    /**
+     * list of every entry ( entries are for CalendarFX )
+     */
     ArrayList<Entry> listEntries = new ArrayList<>();
-
+    /**
+     * meeting
+     */
     public static Meeting meeting;
-
+    /**
+     * reservationFacade
+     */
     private static ReservationFacade reservationfacade = new ReservationFacade();
 
 
-
+    /**
+     *
+     */
     @FXML
     private void initialize(){
 
@@ -85,7 +100,10 @@ public class CreateMeetingController {
         updateTimeThread.start();
     }
 
-
+    /**
+     *
+     * @param evt
+     */
     private void handle(CalendarEvent evt) {
         if (evt.isEntryAdded()){
             listEntries.add(evt.getEntry());
@@ -101,15 +119,19 @@ public class CreateMeetingController {
     }
 
 
-
-
-
-
+    /**
+     * Function used to create a meeting and handle if you choose to cancel
+     * @throws IOException
+     */
     public void handleCreateMeeting() throws IOException {
         saveMeeting();
         handleCancel();
     }
 
+    /**
+     * Function used to handle the case if you want to cancel
+     * @throws IOException
+     */
     public void handleCancel() throws IOException {
         if(SessionFacade.getConnectedUser().getIsManager()){
             Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerHomeRoot))));
@@ -120,6 +142,11 @@ public class CreateMeetingController {
         }
     }
 
+    /**
+     * Function used to handle if you want to book a room
+     * @param actionEvent
+     * @throws IOException
+     */
     public void handleBookRoom(ActionEvent actionEvent) throws IOException {
 
         int idMeeting=-1;
@@ -140,6 +167,9 @@ public class CreateMeetingController {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.bookRoomRoot))));
     }
 
+    /**
+     * Function used to create a meeting
+     */
     private void saveMeeting(){
         Boolean createMeeting = false;
 

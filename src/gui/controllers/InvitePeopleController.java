@@ -13,15 +13,24 @@ import javafx.scene.layout.Priority;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Class controller to invite People to a meeting
+ * @author
+ * @version 1.0
+ */
 public class InvitePeopleController {
 
     @FXML
     private ListView<HBoxCell> listViewGroup;
     @FXML
     private ListView<HBoxCell> listViewPeople;
-
+    /**
+     * invitationFacade
+     */
     private static final InvitationFacade invitationFacade = new InvitationFacade();
-
+    /**
+     * Id of a meeting
+     */
     int idMeeting = SeeInvitedPeopleController.idMeeting;
 
     ObservableList<HBoxCell> listPeople =  FXCollections.observableArrayList();
@@ -60,6 +69,9 @@ public class InvitePeopleController {
 
     }
 
+    /**
+     * Function used to initialize the listView
+     */
     @FXML
     private void initialize(){
 
@@ -107,6 +119,10 @@ public class InvitePeopleController {
 
     }
 
+    /**
+     * Function used to refresh the listView
+     * @param listView
+     */
     private void refresh(ListView listView){
         Collection<String> invitedUsers = invitationFacade.getAllInvitedUsers(idMeeting);
         Collection<String> users = invitationFacade.getAllUsers();

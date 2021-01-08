@@ -26,9 +26,19 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * Class controler to manage the creation of an autoSchedule
+ * @author
+ * @version 1.0
+ */
 public class ManagerCreateAutoScheduleController {
-
+    /**
+     * reservationFacade
+     */
     ReservationFacade facade = new ReservationFacade();
+    /**
+     * RoomTopicFacade
+     */
     RoomTopicFacade topicFacade = new RoomTopicFacade();
 
     @FXML
@@ -41,7 +51,9 @@ public class ManagerCreateAutoScheduleController {
     @FXML
     ListView listViewTopics;
 
-
+    /**
+     * HashMap of every topics
+     */
     public static HashMap<String,Integer> matieres = new HashMap<>();
 
     private class HBoxCell extends HBox {
@@ -83,6 +95,9 @@ public class ManagerCreateAutoScheduleController {
         }
     }
 
+    /**
+     * Function used to refresh
+     */
     private void refresh(){
 
         ObservableList<HBoxCell1> listAddedTopics = FXCollections.observableArrayList();
@@ -96,11 +111,20 @@ public class ManagerCreateAutoScheduleController {
 
     }
 
+    /**
+     * Function used to add an hour to a topic
+     * @param topic
+     * @param hours
+     */
     private void addToTopics(String topic, String hours){
         int hour = Integer.parseInt(hours);
         matieres.put(topic,hour);
     }
 
+    /**
+     * Funciton used to initialize
+     * @throws Exception
+     */
     public void initialize() throws Exception {
 
         Collection<Topic> topics = topicFacade.getTopics();
@@ -122,6 +146,10 @@ public class ManagerCreateAutoScheduleController {
 
     public static Collection<Meeting> autosched = new ArrayList<>();
 
+    /**
+     * Function used to handleAutoSchedule
+     * @throws Exception
+     */
     @FXML
     public void handleAutoSchedule()  throws  Exception{
 

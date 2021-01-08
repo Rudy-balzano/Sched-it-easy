@@ -20,17 +20,31 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class controller to manage the autoSchedule
+ * @author
+ * @version 1.0
+ */
 public class ManagerAutoScheduleController {
 
     @FXML
     private WeekPage weekPage;
-
+    /**
+     * Calendar
+     */
     Calendar calendar = new Calendar("Calendar");
-
+    /**
+     * reservationFacade
+     */
     private final ReservationFacade facade = new ReservationFacade();
+    /**
+     * The autoSchedule
+     */
     private final Collection<Meeting> autosched = ManagerCreateAutoScheduleController.autosched;
 
-
+    /**
+     * Function used to initialize
+     */
     @FXML
     private void initialize() {
 
@@ -57,10 +71,17 @@ public class ManagerAutoScheduleController {
 
     }
 
+    /**
+     * Function used to cancel
+     * @throws IOException
+     */
     public void handleCancel() throws IOException {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerHomeRoot))));
     }
 
+    /**
+     * function used to handle new entry
+     */
     public void handleNewOne() {
 
         calendar.clear();
@@ -78,6 +99,11 @@ public class ManagerAutoScheduleController {
         calendarSource.getCalendars().addAll(calendar);
         weekPage.getCalendarSources().addAll(calendarSource);
     }
+
+    /**
+     * Function used to validate the creation of the autoSchedule
+     * @throws IOException
+     */
     public void handleValidation() throws IOException{
         for(Meeting m : autosched){
             facade.createMeeting(m.getDateBegin(),m.getHourBegin(),m.getDateEnd(),m.getHourEnd(),m.getMeetingTopic().getNameTopic());

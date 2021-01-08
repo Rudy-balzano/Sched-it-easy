@@ -22,14 +22,27 @@ import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class controller to manage the add of an user to a group
+ * @author
+ * @version 1.0
+ */
 public class ManagerAddUserToGroupController {
-
+    /**
+     * currentGroup
+     */
     Group currentGroup = ManagerManageGroupController.currentGroup;
-
+    /**
+     * managerFacade
+     */
     private static final ManagerFacade facade = new ManagerFacade();
-
+    /**
+     * Every Users
+     */
     Collection<String> users = facade.getAllUsers();
-
+    /**
+     * Selected Users
+     */
     Collection<String> selectedUsers = new ArrayList<>();
 
 
@@ -65,8 +78,9 @@ public class ManagerAddUserToGroupController {
     }
 
 
-
-
+    /**
+     * Function used to initialize the ListView
+     */
     @FXML
     public void initialize(){
 
@@ -81,7 +95,9 @@ public class ManagerAddUserToGroupController {
         searchButton.setOnKeyPressed(keyEvent -> handleSearch());
     }
 
-
+    /**
+     * Function used to search an user
+     */
     @FXML
     public void handleSearch(){
         ArrayList<String> searched = new ArrayList<>();
@@ -107,7 +123,10 @@ public class ManagerAddUserToGroupController {
     }
 
 
-
+    /**
+     * Function used to add an user to a group
+     * @throws IOException
+     */
     @FXML
     public void handleAddUsers() throws IOException{
         for (String i : selectedUsers){
@@ -118,6 +137,10 @@ public class ManagerAddUserToGroupController {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerInfoGroupRoot))));
     }
 
+    /**
+     * Function used to cancel
+     * @throws IOException
+     */
     @FXML
     public void cancel() throws IOException {
         Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerInfoGroupRoot))));

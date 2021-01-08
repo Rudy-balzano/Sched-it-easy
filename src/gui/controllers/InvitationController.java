@@ -13,18 +13,37 @@ import javafx.scene.layout.Priority;
 
 import java.util.ArrayList;
 
+/**
+ * Class controller for an invitation
+ * @author
+ * @version 1.0
+ */
 public class InvitationController {
+    /**
+     * Invitation facade
+     */
     private static final InvitationFacade facade = new InvitationFacade();
+    /**
+     * List of every waitings invitations
+     */
     private ArrayList<Invitation> waitingInvitation = facade.getAllInvitation();
 
     @FXML
     private ListView<HBoxCell> listwaitingsInvitation;
+
+    /**
+     * Class to the listView
+     */
     private class HBoxCell extends HBox {
 
         Label label = new Label();
         Button button = new Button("Present");
         Button button1 = new Button("Absent");
 
+        /**
+         * Function used for the ListView, to decline et accept an invitation
+         * @param invit
+         */
         HBoxCell(Invitation invit) {
 
             super();
@@ -40,7 +59,7 @@ public class InvitationController {
             this.getChildren().addAll(label,button, button1);
 
             button.setOnAction(actionEvent -> {
-                System.out.println(invit.getInvitedUser()+" "+invit.getMeetingInvitation().getId());
+                //System.out.println(invit.getInvitedUser()+" "+invit.getMeetingInvitation().getId());
                 //String x = invit.getInvitedUser2();
                 facade.acceptInvitation(invit.getInvitedUser2(), invit.getMeetingInvitation().getId());
                 refresh();
@@ -54,6 +73,9 @@ public class InvitationController {
         }
     }
 
+    /**
+     * Function used to refresh the listView
+     */
     private void refresh(){
         ArrayList<Invitation> invitationsRefreshed = facade.getAllInvitation();
 
@@ -67,6 +89,10 @@ public class InvitationController {
 
         listwaitingsInvitation.setItems(itemsInv);
     }
+
+    /**
+     * Function used to initialize the listView with every waitings invitations
+     */
     public void initialize(){
 
         ObservableList<HBoxCell> itemsInv = FXCollections.observableArrayList();

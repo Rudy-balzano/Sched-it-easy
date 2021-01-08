@@ -18,10 +18,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.util.HashMap;
 
+/**
+ * Class controller for a meeting validation
+ * @author emilie
+ * @version 1.0
+ */
 public class MeetingValidationController {
-
+    /**
+     * managerFacade
+     */
     private static final ManagerFacade facade = new ManagerFacade();
-
+    /**
+     * List every waitings meetings
+     */
     private HashMap<Integer,String> waitingMeetings = facade.getAllWaitingMeetings();
 
     @FXML
@@ -63,6 +72,10 @@ public class MeetingValidationController {
         }
     }
 
+    /**
+     * Function used to display a popup window with the meeting informations
+     * @param m
+     */
     private void displayPopupMeetingInfo(Meeting m){
         Stage popup = new Stage();
         popup.initModality(Modality.APPLICATION_MODAL);
@@ -84,6 +97,9 @@ public class MeetingValidationController {
 
     }
 
+    /**
+     * Function used to refresh
+     */
     private void refresh(){
         HashMap<Integer,String> meetingsRefreshed = facade.getAllWaitingMeetings();
 
@@ -96,6 +112,10 @@ public class MeetingValidationController {
 
         listwaitingMeetings.setItems(itemsMe);
     }
+
+    /**
+     * Function used to initialize
+     */
         public void initialize(){
 
             ObservableList<HBoxCell> itemsMe = FXCollections.observableArrayList();
