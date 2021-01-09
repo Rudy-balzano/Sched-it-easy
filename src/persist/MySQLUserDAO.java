@@ -53,10 +53,22 @@ public class MySQLUserDAO implements UserDAO {
 
     @Override
     public Collection<Meeting> findSchedule(String username) {
-        Collection<Meeting> m = new ArrayList<>();
+
+        Collection<Meeting> allMeetings = new ArrayList<>();
+
+        allMeetings.addAll(findMeetingCreatedByUsername(username));
+        allMeetings.addAll(findInvitationMeetingByUsername(username));
+
+        return allMeetings;
+    }
+
+    private Collection<Meeting> findMeetingCreatedByUsername(String username){
+
+        Collection<Meeting> meetings = new ArrayList<>();
+
         try {
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT username, idMeeting FROM meetingAttendence WHERE username = '" + username + "';");
+            Statement stmt1 = connection.createStatement();
+            ResultSet rs = stmt1.executeQuery("SELECT username, idMeeting FROM meetingAttendence WHERE username = '" + username + "';");
             while (rs.next()) {
                 int idm = rs.getInt(2);
                 PreparedStatement ps = connection.prepareStatement("SELECT * FROM meetings WHERE id = ?;");
@@ -76,15 +88,56 @@ public class MySQLUserDAO implements UserDAO {
                     meeting.setHourEnd(hourEnd);
                     meeting.setClientMeeting(findByUsername((me.getString(6))).getUserName());
                     meeting.setMeetingTopic(topicDAO.findBy(me.getString(7)));
-                    m.add(meeting);
+                    meetings.add(meeting);
                 }
             }
-            } catch(SQLException ex){
-                System.out.println("SQL request error");
-                ex.printStackTrace();
-            }
-            return m;
+        } catch(SQLException ex){
+            System.out.println("SQL request error for meetingAttendence");
+            ex.printStackTrace();
         }
+
+        return meetings;
+    }
+
+    private Collection<Meeting> findInvitationMeetingByUsername(String username){
+
+        Collection<Meeting> meetings = new ArrayList<>();
+
+        try {
+            Statement stmt2 = connection.createStatement();
+            ResultSet rs = stmt2.executeQuery("SELECT invitedUsername, idMeetingInvitation FROM invitations WHERE invitedUsername = '" + username + "';");
+            while (rs.next()) {
+                int idm = rs.getInt(3);
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM meetings WHERE id = ?;");
+                ps.setInt(1,idm);
+                ResultSet me = ps.executeQuery();
+                while(me.next()) {
+                    Meeting meeting = new Meeting();
+
+                    meeting.setId(me.getInt(1));
+                    LocalDate dateBegin = me.getDate(2).toLocalDate();
+                    meeting.setDateBegin(dateBegin);
+                    LocalTime hourBegin = this.timeToLocalDate(me.getTime(3));
+                    meeting.setHourBegin(hourBegin);
+                    LocalDate dateEnd = me.getDate(4).toLocalDate();
+                    meeting.setDateEnd(dateEnd);
+                    LocalTime hourEnd = this.timeToLocalDate(me.getTime(5));
+                    meeting.setHourEnd(hourEnd);
+                    meeting.setClientMeeting(findByUsername((me.getString(6))).getUserName());
+                    meeting.setMeetingTopic(topicDAO.findBy(me.getString(7)));
+                    meetings.add(meeting);
+
+                    System.out.println(meeting.getId());
+                }
+            }
+        } catch(SQLException ex){
+            System.out.println("SQL request error for invitations");
+            ex.printStackTrace();
+        }
+
+        return meetings;
+    }
+
 
     @Override
     public boolean modifyUser(String username,String firstName, String lastName) {

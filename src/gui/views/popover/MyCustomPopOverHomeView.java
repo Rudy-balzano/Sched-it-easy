@@ -4,6 +4,10 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.view.Messages;
 import com.calendarfx.view.TimeField;
 import com.calendarfx.view.popover.*;
+import core.ManagerFacade;
+import core.Meeting;
+import core.ReservationFacade;
+import core.SessionFacade;
 import gui.Main;
 import gui.roots.Roots;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +21,8 @@ import java.io.IOException;
 
 public class MyCustomPopOverHomeView extends EntryPopOverPane {
 
+    private static final ReservationFacade reservationFacade = new ReservationFacade();
+
 
     private Label topic = new Label("topic");
     private Label description = new Label("description");
@@ -29,6 +35,8 @@ public class MyCustomPopOverHomeView extends EntryPopOverPane {
 
         this.entry = entry;
         idMeeting = Integer.parseInt(entry.getId());
+
+        String userCreator = reservationFacade.findMeetingById(idMeeting).getClientMeeting();
 
         button.setOnAction(actionEvent -> {
             try {
@@ -90,10 +98,12 @@ public class MyCustomPopOverHomeView extends EntryPopOverPane {
 
         popOverTitledPane.setContent(box);
 
-
         vBox.getChildren().add(gridPane1);
         vBox.getChildren().add(popOverTitledPane);
-        vBox.getChildren().add(button);
+
+        if (SessionFacade.getConnectedUser().equals(userCreator)){
+            vBox.getChildren().add(button);
+        }
         getChildren().add(vBox);
 
     }

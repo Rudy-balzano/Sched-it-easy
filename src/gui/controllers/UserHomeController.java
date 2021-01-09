@@ -53,11 +53,13 @@ public class UserHomeController {
         calendar.setStyle(Calendar.Style.STYLE1);
 
         Collection<Meeting> meetings = facade.checkSchedule(SessionFacade.getConnectedUser().getUserName());
-        int i = 0;
+        for(Meeting m : meetings){
+            System.out.println(m.getId());
+        }
+
         for(Meeting m : meetings){
             //TODO : Résoudre pb de références vides à un topic dans la BDD + afficher le nom et plus cours + i
-            //Entry<String> e = new Entry<>(m.getMeetingTopic().getNameTopic());
-            Entry<String> e = new Entry<>("Cours " + i);
+            Entry<String> e = new Entry<>(m.getMeetingTopic().getNameTopic());
             e.changeStartDate(m.getDateBegin());
             e.changeEndDate(m.getDateEnd());
             e.changeStartTime(m.getHourBegin());
@@ -65,21 +67,18 @@ public class UserHomeController {
             e.setId(String.valueOf(m.getId()));
 
             calendar.addEntry(e);
-            i++;
         }
         ArrayList<Invitation> inv = facade.checkInvitation(SessionFacade.getConnectedUser().getUserName());
-        int j = 0;
+
         for(Invitation in : inv){
             //TODO : Résoudre pb de références vides à un topic dans la BDD + afficher le nom et plus cours + i
-            //Entry<String> e = new Entry<>(m.getMeetingTopic().getNameTopic());
-            Entry<String> e = new Entry<>("Cours " + j);
+            Entry<String> e = new Entry<>(in.getMeetingInvitation().getMeetingTopic().getNameTopic());
             e.changeStartDate(in.getMeetingInvitation().getDateBegin());
             e.changeEndDate(in.getMeetingInvitation().getDateEnd());
             e.changeStartTime(in.getMeetingInvitation().getHourBegin());
             e.changeEndTime(in.getMeetingInvitation().getHourEnd());
 
             calendar.addEntry(e);
-            j++;
         }
 
         CalendarSource calendarSource = new CalendarSource("Week calendar");

@@ -1,6 +1,7 @@
 package gui.controllers;
 
 import core.InvitationFacade;
+import core.SessionFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,9 +34,6 @@ public class InvitePeopleController {
      */
     int idMeeting = SeeInvitedPeopleController.idMeeting;
 
-    ObservableList<HBoxCell> listPeople =  FXCollections.observableArrayList();
-    ObservableList<HBoxCell> listGroups =  FXCollections.observableArrayList();
-
 
 
     private class HBoxCell extends HBox {
@@ -59,7 +57,7 @@ public class InvitePeopleController {
                     }
                     else if (listView.equals(listViewGroup)){
                         invitationFacade.createInvitationForGroup(labelText, 0, idMeeting);
-                        refresh(listViewPeople);
+                        refresh();
                     }
                 }
             });
@@ -75,6 +73,9 @@ public class InvitePeopleController {
     @FXML
     private void initialize(){
 
+        ObservableList<HBoxCell> listPeople =  FXCollections.observableArrayList();
+        ObservableList<HBoxCell> listGroups =  FXCollections.observableArrayList();
+
         Collection<String> invitedUsers = invitationFacade.getAllInvitedUsers(idMeeting);
         Collection<String> users = invitationFacade.getAllUsers();
         //TODO : gérer les groupes invités (il ne faut pas que quelqu'un soit invité 2 fois si il appartient à un groupe)
@@ -83,6 +84,8 @@ public class InvitePeopleController {
 
         ArrayList<String> listUsersWithoutInvitedUser = new ArrayList<>();
         listUsersWithoutInvitedUser.addAll(users);
+        //Je m'enlève de la liste des users à inviter
+        listUsersWithoutInvitedUser.remove(SessionFacade.getConnectedUser().getUserName());
 
         ArrayList<String> listGroupsWithoutInvitedGroup = new ArrayList<>();
         listGroupsWithoutInvitedGroup.addAll(groups);
@@ -123,12 +126,15 @@ public class InvitePeopleController {
      * Function used to refresh the listView
      * @param listView
      */
-    private void refresh(ListView listView){
+    private void refresh(){
+        ObservableList<HBoxCell> listPeople =  FXCollections.observableArrayList();
         Collection<String> invitedUsers = invitationFacade.getAllInvitedUsers(idMeeting);
         Collection<String> users = invitationFacade.getAllUsers();
 
         ArrayList<String> listUsersWithoutInvitedUser = new ArrayList<>();
         listUsersWithoutInvitedUser.addAll(users);
+        //Je m'enlève de la liste des users à inviter
+        listUsersWithoutInvitedUser.remove(SessionFacade.getConnectedUser().getUserName());
 
         for (String u : users){
             if (invitedUsers.contains(u)){
@@ -136,10 +142,10 @@ public class InvitePeopleController {
             }
         }
         for (String nameUSer : listUsersWithoutInvitedUser ){
-            HBoxCell hbc = new HBoxCell(nameUSer, listView);
+            HBoxCell hbc = new HBoxCell(nameUSer, listViewPeople);
             listPeople.add(hbc);
         }
-        listView.setItems(listPeople);
+        listViewPeople.setItems(listPeople);
     }
 
 
