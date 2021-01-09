@@ -104,6 +104,7 @@ public class SeeInvitedPeopleController {
     public void handleGoBack() throws IOException {
         if(SessionFacade.getConnectedUser().getIsManager()){
             Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerHomeRoot))));
+
         }
         else{
             Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.userHomeRoot))));

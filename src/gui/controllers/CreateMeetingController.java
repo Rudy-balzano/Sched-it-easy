@@ -17,7 +17,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -29,7 +32,7 @@ import java.util.ArrayList;
  * @author emilie
  * @version 1.0
  */
-public class CreateMeetingController {
+public class CreateMeetingController implements AlertShower {
 
 
     @FXML
@@ -50,7 +53,6 @@ public class CreateMeetingController {
      * reservationFacade
      */
     private static ReservationFacade reservationfacade = new ReservationFacade();
-
 
     /**
      *
@@ -176,12 +178,16 @@ public class CreateMeetingController {
         for ( int i = 0 ; i < listEntries.size() ; i++) {
 
             createMeeting = reservationfacade.createMeeting(listEntries.get(i).getStartDate(), listEntries.get(i).getStartTime(), listEntries.get(i).getEndDate(), listEntries.get(i).getEndTime(), listEntries.get(i).getTitle());
+            //TODO window owner =?? reconnait pas get scene
 
+            //Window owner = listEntries.getScene.getWindow();
             if (createMeeting){
                 System.out.println("Meeting inserted !");
+               // this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Meeting successfully inserted !");
             }
             else {
                 System.out.println("Meeting not inserted ...");
+                //this.showAlert(Alert.AlertType.ERROR,owner,"Error","Impossible to insert the meeting");
             }
         }
     }

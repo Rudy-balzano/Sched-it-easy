@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.stage.Window;
 
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.util.Collection;
 /**
  * Class controller for room reservation
  */
-public class RoomReservationController {
+public class RoomReservationController implements AlertShower{
     /**
      * ListView
      */
@@ -200,14 +201,18 @@ public class RoomReservationController {
      * @param actionEvent
      */
     public void handleCreateMeeting(ActionEvent actionEvent) {
+//TODO listViewEquipment owner ??
+        Window owner = listViewEquipment.getScene().getWindow();
         if (listViewRooms.getSelectionModel().getSelectedItem()!=null){
             boolean res = false;
             String nameRoom = listViewRooms.getSelectionModel().getSelectedItem().label.getText();
             res = reservationFacade.createMeetingWithRoom(meeting.getId(), nameRoom);
             if (res){
                 System.out.println("meeting with room added !");
+                this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Meeting with room successfully added !");
             }else {
                 System.out.println("not added ...");
+                this.showAlert(Alert.AlertType.ERROR,owner,"Error"," Impossible to add this meeting with room d !");
             }
         }
     }

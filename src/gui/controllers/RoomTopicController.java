@@ -30,7 +30,7 @@ import java.util.Collection;
 /**
  * Class controller for room and topic
  */
-public class RoomTopicController {
+public class RoomTopicController implements AlertShower {
     @FXML
     private TextField nameAddRoom;
     @FXML
@@ -343,12 +343,15 @@ public class RoomTopicController {
         added = roomTopicFacade.addRoom(name, cap, equipments);
         if (added) {
             System.out.println("Room added !");
+
+            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Meeting successfully inserted !");
             nameAddRoom.setText("");
             capacityAddRoom.setText("");
             listTabViewAddRoom.removeAll();
 
         } else {
             System.out.println("impossible to add the room ");
+            this.showAlert(Alert.AlertType.ERROR,owner,"Error","Impossible to add the room!");
         }
     }
 
@@ -372,11 +375,13 @@ public class RoomTopicController {
         added = roomTopicFacade.addTopic(name,desc);
         if (added){
             System.out.println("Topic added !");
+            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","topic successfully inserted !");
             nameAddTopic.setText("");
             descriptionAddTopic.setText("");
         }
         else {
             System.out.println("impossible to add the topic ");
+            this.showAlert(Alert.AlertType.ERROR,owner,"Error","impossible to add the topic !");
         }
     }
 
@@ -398,11 +403,13 @@ public class RoomTopicController {
 
         if (deleted){
             System.out.println("Room deleted !");
+            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Room successfully deleted !");
             nameDeleteRoom.setText("");
 
         }
         else {
             System.out.println("impossible to delete the room ");
+            this.showAlert(Alert.AlertType.ERROR,owner,"Error","impossible to delete the room !");
         }
     }
 
@@ -422,10 +429,12 @@ public class RoomTopicController {
         deleted = roomTopicFacade.deleteTopic(name);
         if (deleted){
             System.out.println("Topic deleted !");
+            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Topic successfully deleted !");
             nameDeleteTopic.setText("");
         }
         else {
             System.out.println("impossible to delete the topic ");
+            this.showAlert(Alert.AlertType.ERROR,owner,"Error","impossible to delete the topic !");
         }
     }
 
@@ -452,6 +461,7 @@ public class RoomTopicController {
         updated = roomTopicFacade.updateRoom(name, cap, equipment);
         if (updated){
             System.out.println("Room updated !");
+            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Room successfully updated !");
             nameUpdateRoom.setText("");
             capacityUpdateRoom.setText("");
             listViewEquipments2.setItems(null);
@@ -460,6 +470,7 @@ public class RoomTopicController {
         }
         else {
             System.out.println("impossible to update the room ");
+            this.showAlert(Alert.AlertType.ERROR,owner,"Error","impossible to update the room !");
         }
     }
 
@@ -524,9 +535,13 @@ public class RoomTopicController {
         Boolean updated = false;
         updated = roomTopicFacade.updateTopic(name, desc);
         if (updated){
-            System.out.println("topic updated !"); }
+            System.out.println("topic updated !");
+            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Topic successfully updated !");
+        }
+
         else {
             System.out.println("impossible to update the topic ");
+            this.showAlert(Alert.AlertType.ERROR,owner,"Error","impossible to update the topic !");
         }
     }
 

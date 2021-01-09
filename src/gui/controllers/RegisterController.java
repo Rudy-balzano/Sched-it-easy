@@ -20,7 +20,7 @@ import java.io.IOException;
  * @author baptiste rudy pierre emilie
  * @version 1.0
  */
-public class RegisterController {
+public class RegisterController implements AlertShower {
     /**
      * Textfield for username
      */
@@ -80,9 +80,10 @@ public class RegisterController {
         String Lastname = lastname.getText();
         String Password = password.getText();
         String ConfirmPassword = confirmPassword.getText();
-
+        Window owner = registerButton.getScene().getWindow();
         if (!Password.equals(ConfirmPassword) ){
             System.out.println("password and confirmPassword are different !");
+            this.showAlert(Alert.AlertType.ERROR,owner,"Error","Password and confirmPassword are different, impossible to register");
             password.setText("");
             confirmPassword.setText("");
         }
@@ -96,6 +97,8 @@ public class RegisterController {
             }
             else {
                 System.out.println("Username already exist !");
+                this.showAlert(Alert.AlertType.ERROR,owner,"Error","Username already exist, impossible to register");
+
             }
         }
 
