@@ -27,10 +27,6 @@ import java.util.*;
  */
 public class ReservationFacade {
     /**
-     * The user that is connected
-     */
-    private User connectedUser;
-    /**
      * factoryDAO
      */
     private FactoryDAOImpl factoryDAO;
@@ -47,6 +43,13 @@ public class ReservationFacade {
      * Creation of a RoomTopicFacade
      */
     public static RoomTopicFacade topicFacade = new RoomTopicFacade();
+
+    /**
+     * Static variables to generate new auto schedule
+     */
+    public static LocalDate dD;
+    public static LocalDate dF;
+    public static HashMap<String,Integer> matiere;
 
     /**
      * Default constructor of ReservationFacade
@@ -101,7 +104,7 @@ public class ReservationFacade {
     }
 
     /**
-     * Function used to create a meeting to get his id
+     * Function used to create a meeting and get his id
      * @param dateBegin
      * @param hourBegin
      * @param dateEnd
@@ -247,11 +250,11 @@ public class ReservationFacade {
  */
 
     /**
-     *
+     * Function used to create a schedule automatically thanks to a list of topics with the number of hours wanted for each, a start date and an end date
      * @param matieres
      * @param dateDebut
      * @param dateFin
-     * @return
+     * @return A HashMap where each element represent one day. If the key is negative, then it is a Week end day. If the key is positive, it comes with an array of 8 topics, one per working hour of the day.
      * @throws Exception
      */
     public HashMap<Integer,ArrayList<String>> createAutoSchedule(HashMap<String,Integer> matieres, LocalDate dateDebut, LocalDate dateFin) throws Exception {
@@ -330,18 +333,38 @@ public class ReservationFacade {
     return uDays;
 
 
-}
+    }
+
+    public LocalDate getdD() {
+        return dD;
+    }
+
+    public LocalDate getdF() {
+        return dF;
+    }
+
+    public HashMap<String, Integer> getMatiere() {
+        return matiere;
+    }
 
     /**
-     *
+     * Call the method create auto schedule, and with the result, create all the needed meetings.
      * @param matieres
      * @param dB
      * @param dE
-     * @return
+     * @return A collection of meetings, for the moment they are not inserted in the database
      * @throws Exception
      */
     public Collection<Meeting> autoSchedule(HashMap<String,Integer> matieres,LocalDate dB,LocalDate dE) throws Exception{
+
+        matiere = matieres;
+        dD = dB;
+        dF = dE;
+
+        System.out.println(matiere);
+
         HashMap<Integer,ArrayList<String>> uDays = createAutoSchedule(matieres,dB,dE);
+
 
         Collection<Meeting> meetings = new ArrayList<>();
         if(uDays.isEmpty()){
@@ -400,10 +423,10 @@ public class ReservationFacade {
     }
 
     /**
-     *
+     *  Takes an array of 4 topics and will order them to regroup the same topics together, the parameter cren is used to know if it is for the morning or the afternoon
      * @param cours
      * @param cren
-     * @return
+     * @return A array list of ordered topics
      */
     public ArrayList<String> triCreneau(ArrayList<String> cours, int cren){
 
@@ -442,10 +465,10 @@ public class ReservationFacade {
     }
 
     /**
-     *
+     * Is used to know the days that are not during the week end
      * @param dateD
      * @param dateF
-     * @return
+     * @return A hashmap, if the key is positive, it is a week day. If it is negative, it is a week end day.
      */
     public HashMap<Integer,ArrayList<String>> usableDaysBetween(LocalDate dateD, LocalDate dateF){
 

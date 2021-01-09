@@ -15,10 +15,8 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * Class controller to manage the autoSchedule
@@ -40,7 +38,7 @@ public class ManagerAutoScheduleController {
     /**
      * The autoSchedule
      */
-    private final Collection<Meeting> autosched = ManagerCreateAutoScheduleController.autosched;
+    private Collection<Meeting> autosched = ManagerCreateAutoScheduleController.autosched;
 
     /**
      * Function used to initialize
@@ -82,9 +80,16 @@ public class ManagerAutoScheduleController {
     /**
      * function used to handle new entry
      */
-    public void handleNewOne() {
+    public void handleNewOne() throws Exception {
 
         calendar.clear();
+
+        LocalDate dD = facade.getdD();
+        LocalDate dF = facade.getdF();
+        HashMap<String, Integer> matieres = facade.getMatiere();
+
+        autosched = facade.autoSchedule(matieres, dD, dF);
+
 
         for (Meeting m : autosched) {
             Entry<String> e = new Entry<>(m.getMeetingTopic().getNameTopic());
