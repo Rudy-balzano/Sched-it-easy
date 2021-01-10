@@ -123,16 +123,30 @@ public class MySQLMeetingDAO implements MeetingDAO{
     public int insertAndGetId(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String clientMeeting, String meetingTopic) {
 
         int id = -1;
+        int idWaitingMeeting =-1;
+        boolean result = false;
+        boolean result2 = false;
+
+        User creator = userDAO.findByUsername(clientMeeting);
+
         try {
+
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into meetings (dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + dateBegin + "','" + hourBegin + "','" + dateEnd + "','" + hourEnd +"','"+ clientMeeting +"', '"+ meetingTopic +"');", Statement.RETURN_GENERATED_KEYS);
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()){
-                id = rs.getInt(1);
+
+            idWaitingMeeting = insertWaitingMeetingAndGetId(dateBegin, hourBegin, dateEnd, hourEnd, clientMeeting, meetingTopic);
+
+            if (creator.getIsManager()){
+                stmt.executeUpdate("insert into meetings (id, dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('"+ idWaitingMeeting +"','" + dateBegin + "','" + hourBegin + "','" + dateEnd + "','" + hourEnd +"','"+ clientMeeting +"', '"+ meetingTopic +"');");
+                result = true;
+                result2 = declineWaitingMeeting(idWaitingMeeting);
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        id = idWaitingMeeting;
+
         return id;
     }
 
