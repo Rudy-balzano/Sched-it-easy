@@ -3,11 +3,8 @@ package core;
 import com.calendarfx.model.Interval;
 import net.fortuna.ical4j.model.DateTime;
 import org.apache.commons.lang3.tuple.Pair;
-import persist.FactoryDAOImpl;
-import persist.MeetingDAO;
-import persist.InvitationDAO;
+import persist.*;
 import core.SessionFacade;
-import persist.RoomDAO;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,6 +35,10 @@ public class ReservationFacade {
      * roomDAO
      */
     private RoomDAO roomDAO;
+    /**
+     * equipmentDAO
+     */
+    private EquipmentDAO equipmentDAO;
 
     /**
      * Creation of a RoomTopicFacade
@@ -58,6 +59,7 @@ public class ReservationFacade {
         this.factoryDAO = FactoryDAOImpl.getInstance();
         this.meetingDAO = factoryDAO.createMeetingDAO();
         this.roomDAO = factoryDAO.createRoomDAO();
+        this.equipmentDAO = factoryDAO.createEquipmentDAO();
     }
 
     /**
@@ -124,6 +126,10 @@ public class ReservationFacade {
         }
 
         return idMeeting;
+    }
+
+    public void rentEquipment(Collection<String> equipments, int idMeeting){
+        equipmentDAO.rentEquipment(equipments,SessionFacade.getConnectedUser().getUserName(), idMeeting);
     }
 
     /**
@@ -360,8 +366,6 @@ public class ReservationFacade {
         matiere = matieres;
         dD = dB;
         dF = dE;
-
-        System.out.println(matiere);
 
         HashMap<Integer,ArrayList<String>> uDays = createAutoSchedule(matieres,dB,dE);
 

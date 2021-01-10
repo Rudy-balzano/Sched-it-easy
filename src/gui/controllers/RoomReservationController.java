@@ -16,6 +16,7 @@ import javafx.stage.Window;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -47,6 +48,10 @@ public class RoomReservationController implements AlertShower{
      * ReservationFacade
      */
     private static final ReservationFacade reservationFacade = new ReservationFacade();
+    /**
+     * List of rented equipment
+     */
+    private static Collection<String> rentedEquipment = new ArrayList<>();
 
 
     /**
@@ -66,6 +71,10 @@ public class RoomReservationController implements AlertShower{
             HBox.setHgrow(label, Priority.ALWAYS);
 
             this.getChildren().addAll(label, checkBox);
+
+            checkBox.setOnAction(actionEvent -> {
+                rentedEquipment.add(label.getText());
+            });
 
         }
 
@@ -142,7 +151,7 @@ public class RoomReservationController implements AlertShower{
         ObservableList<EquipmentHBoxCell> listEquipment = FXCollections.observableArrayList();
 
         for (Equipment equipment : equipments ){
-            EquipmentHBoxCell hbc = new EquipmentHBoxCell(equipment.getName());
+            EquipmentHBoxCell hbc = new EquipmentHBoxCell(equipment.getName()+" : "+equipment.getPrice()+" Euros.");
             listEquipment.add(hbc);
         }
 
@@ -197,19 +206,28 @@ public class RoomReservationController implements AlertShower{
  */
 
     /**
-     * Function used to create a meeting
-     * @param actionEvent
+     * Function used to book a room for a meeting
+     * @throws IOException
      */
-    public void handleCreateMeeting(ActionEvent actionEvent) {
-//TODO listViewEquipment owner ??
+    public void handleCreateMeeting() throws IOException{
+
         Window owner = listViewEquipment.getScene().getWindow();
+
         if (listViewRooms.getSelectionModel().getSelectedItem()!=null){
             boolean res = false;
             String nameRoom = listViewRooms.getSelectionModel().getSelectedItem().label.getText();
             res = reservationFacade.createMeetingWithRoom(meeting.getId(), nameRoom);
             if (res){
+                reservationFacade.rentEquipment(rentedEquipment, meeting.getId());
                 System.out.println("meeting with room added !");
                 this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Meeting with room successfully added !");
+                if(SessionFacade.getConnectedUser().getIsManager()){
+                    Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerHomeRoot))));
+                }
+                else{
+                    Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.userHomeRoot))));
+
+                }
             }else {
                 System.out.println("not added ...");
                 this.showAlert(Alert.AlertType.ERROR,owner,"Error"," Impossible to add this meeting with room d !");
@@ -217,12 +235,6 @@ public class RoomReservationController implements AlertShower{
         }
     }
 
-    /**
-     * Function used to rent equipment
-     * @param actionEvent
-     */
-    public void rentEquipments(ActionEvent actionEvent) {
-    }
 
     /**
      * Function used to handle the cancel button

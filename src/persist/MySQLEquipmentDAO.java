@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * This class implements EquipmentDAO and implements methods to manipulate Equipment related persistent data from a MySQL database.
@@ -63,8 +64,36 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
         return equipments;
     }
 
+    @Override
+    public void rentEquipment(Collection<String> equipments, String username, int idMeeting) {
 
+        for(String str : equipments){
+            try{
+                Statement stmt = connection.createStatement();
+                stmt.executeUpdate("insert into rent_equipments (idMeeting, username, equipmentName) values ("+ idMeeting +",'"+username+"','"+str+"');");
+            } catch (SQLException throwables){
+                throwables.printStackTrace();
+            }
+        }
+    }
 
+    @Override
+    public Collection<Equipment> getRentedEquipment(String username, int idMeeting) {
+
+        Collection<Equipment> rentedEquipment = new ArrayList<>();
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select equipmentName from rent_equipments where idMeeting = " + idMeeting + " and username = '"+username+"';");
+            while(rs.next()){
+               rentedEquipment.add(findBy(rs.getString(1)));
+            }
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+
+        return rentedEquipment;
+    }
 
 
 }

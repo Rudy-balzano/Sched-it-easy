@@ -80,8 +80,6 @@ public class ManagerCreateAutoScheduleController {
 
     private class HBoxCell1 extends HBox {
         Label label = new Label();
-        TextField hours = new TextField();
-        Button button = new Button("Add");
 
         HBoxCell1(String labelText) {
             super();

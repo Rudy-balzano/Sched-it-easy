@@ -9,8 +9,7 @@
    <children>
       <ListView fx:id="listViewEquipment" layoutX="23.0" layoutY="100.0" prefHeight="179.0" prefWidth="200.0" />
       <Label layoutX="27.0" layoutY="73.0" text="Equipment wanted" />
-      <Button fx:id="seeRoomsButton" layoutX="84.0" layoutY="309.0" mnemonicParsing="false" onAction="#rentEquipments" prefHeight="27.0" prefWidth="64.0" text="rent " />
-      <Button fx:id="createMeetingButton" layoutX="407.0" layoutY="309.0" mnemonicParsing="false" onAction="#handleCreateMeeting" text="Ask  to create a meeting" />
+      <Button fx:id="createMeetingButton" layoutX="407.0" layoutY="309.0" mnemonicParsing="false" onAction="#handleCreateMeeting" text="Book room" />
       <Button fx:id="cancelButton" layoutX="281.0" layoutY="308.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
       <Label layoutX="309.0" layoutY="73.0" text="Rooms available" />
       <ListView fx:id="listViewRooms" layoutX="305.0" layoutY="100.0" prefHeight="179.0" prefWidth="252.0" />
