@@ -59,6 +59,9 @@ public class MySQLUserDAO implements UserDAO {
         allMeetings.addAll(findMeetingCreatedByUsername(username));
         allMeetings.addAll(findInvitationMeetingByUsername(username));
 
+        System.out.println(allMeetings.isEmpty());
+
+
         return allMeetings;
     }
 
@@ -95,6 +98,7 @@ public class MySQLUserDAO implements UserDAO {
             System.out.println("SQL request error for meetingAttendence");
             ex.printStackTrace();
         }
+
 
         return meetings;
     }
@@ -134,7 +138,6 @@ public class MySQLUserDAO implements UserDAO {
             System.out.println("SQL request error for invitations");
             ex.printStackTrace();
         }
-
         return meetings;
     }
 

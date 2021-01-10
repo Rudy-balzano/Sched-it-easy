@@ -84,6 +84,7 @@ public class InvitePeopleController {
 
         ArrayList<String> listUsersWithoutInvitedUser = new ArrayList<>();
         listUsersWithoutInvitedUser.addAll(users);
+
         //Je m'enlève de la liste des users à inviter
         listUsersWithoutInvitedUser.remove(SessionFacade.getConnectedUser().getUserName());
 
