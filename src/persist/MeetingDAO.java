@@ -5,6 +5,7 @@ import core.Meeting;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -82,6 +83,13 @@ public interface MeetingDAO {
      * @return a collection of meetings.
      */
     ArrayList<Meeting> findAllForUsername(String username);
+
+    /**
+     * Search in the database and return all the meetings created by a given user
+     * @param username
+     * @return a collection of meetings
+     */
+    Collection<Meeting> findAllCreatedMeetings(String username);
 
     /**
      * Retrieves a WaitingMeeting given its id.

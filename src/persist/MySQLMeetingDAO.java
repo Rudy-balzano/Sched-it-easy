@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -203,14 +204,31 @@ public class MySQLMeetingDAO implements MeetingDAO{
         try{
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from invitations where invitedUsername = '" + username + "';");
-
             while(rs.next()){
                 listMeetings.add(findByID(rs.getInt(3)));
             }
-        } catch (SQLException throwables){
-            throwables.printStackTrace();
+        } catch (SQLException throwable){
+            throwable.printStackTrace();
         }
         return listMeetings;
+    }
+
+    @Override
+    public Collection<Meeting> findAllCreatedMeetings(String username) {
+
+        Collection<Meeting> meetings = new ArrayList<>();
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from meetingAttendence where username = '" + username + "';");
+            while(rs.next()){
+                meetings.add(findByID(rs.getInt(2)));
+            }
+        } catch (SQLException throwable){
+            throwable.printStackTrace();
+        }
+
+        return meetings;
     }
 
     @Override
@@ -275,12 +293,7 @@ public class MySQLMeetingDAO implements MeetingDAO{
         } catch (SQLException ex){
             System.out.println("SQL request error");
         }
-        if (result1==true & result2 ==true){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return result1 & result2;
     }
 
     @Override

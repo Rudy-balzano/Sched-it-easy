@@ -70,7 +70,7 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
         for(String str : equipments){
             try{
                 Statement stmt = connection.createStatement();
-                stmt.executeUpdate("insert into rent_equipments (idMeeting, username, equipmentName) values ("+ idMeeting +",'"+username+"','"+str+"');");
+                stmt.executeUpdate("insert into rent_equipments (idMeeting, username, equipmentName, paid) values ("+ idMeeting +",'"+username+"','"+str+"',"+0+");");
             } catch (SQLException throwables){
                 throwables.printStackTrace();
             }
