@@ -250,9 +250,9 @@ public class MySQLMeetingDAO implements MeetingDAO{
 
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from meetingAttendence where username = '" + username + "';");
+            ResultSet rs = stmt.executeQuery("select * from meetings where userCreator = '" + username + "';");
             while(rs.next()){
-                meetings.add(findByID(rs.getInt(2)));
+                meetings.add(findByID(rs.getInt(1)));
             }
         } catch (SQLException throwable){
             throwable.printStackTrace();

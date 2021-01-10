@@ -65,4 +65,5 @@ public interface InvitationDAO {
      */
     ArrayList<String> getInvitedGroups(int idMeeting);
 
+
 }

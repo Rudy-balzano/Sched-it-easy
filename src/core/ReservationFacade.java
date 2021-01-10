@@ -124,6 +124,12 @@ public class ReservationFacade {
         return idMeeting;
     }
 
+    /**
+     * Calls the DAO to put the rented equipment in teh database
+     * @param equipments
+     * @param idMeeting
+     */
+
     public void rentEquipment(Collection<String> equipments, int idMeeting){
         equipmentDAO.rentEquipment(equipments,SessionFacade.getConnectedUser().getUserName(), idMeeting);
     }
@@ -190,16 +196,31 @@ public class ReservationFacade {
         LocalTime hD1 = m1.getHourBegin();
         LocalTime hF1 = m1.getHourEnd();
 
-        LocalDateTime deb1 = dD1.atTime(hD1);
-        LocalDateTime fin1 = dF1.atTime(hF1);
+        LocalDateTime deb1 = LocalDateTime.now();
+        LocalDateTime fin1 = LocalDateTime.now();
 
+        if(dD1 != null && dF1 != null) {
+            deb1 = dD1.atTime(hD1);
+            fin1 = dF1.atTime(hF1);
+        }
+        else{
+            return false;
+        }
         LocalDate dD2 = m2.getDateBegin();
         LocalDate dF2 = m2.getDateEnd();
         LocalTime hD2 = m2.getHourBegin();
         LocalTime hF2 = m2.getHourEnd();
 
-        LocalDateTime deb2 = dD2.atTime(hD2);
-        LocalDateTime fin2 = dF2.atTime(hF2);
+        LocalDateTime deb2 = LocalDateTime.now();
+        LocalDateTime fin2 = LocalDateTime.now();
+
+        if(dD2 != null && dF2 != null) {
+            deb2 = dD1.atTime(hD2);
+            fin2 = dF1.atTime(hF2);
+        }
+        else{
+            return false;
+        }
 
         if(deb1.isBefore(deb2) && fin1.isAfter(deb2)){
             res = true;

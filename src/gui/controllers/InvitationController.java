@@ -1,17 +1,26 @@
 package gui.controllers;
 
+import core.Equipment;
 import core.Invitation;
 import core.InvitationFacade;
+import core.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Class controller for an invitation
@@ -27,6 +36,10 @@ public class InvitationController {
      * List of every waitings invitations
      */
     private ArrayList<Invitation> waitingInvitation = facade.getAllInvitation();
+    /**
+     * List of bills
+     */
+    private Collection<String> notifFactures = new ArrayList<>();
 
     @FXML
     private ListView<HBoxCell> listwaitingsInvitation;
@@ -39,38 +52,79 @@ public class InvitationController {
         Label label = new Label();
         Button button = new Button("Present");
         Button button1 = new Button("Absent");
+        Button button2 = new Button("Infos");
+        Button button3 = new Button("Get in PDF");
 
         /**
-         * Function used for the ListView, to decline et accept an invitation
-         * @param invit
+         * Function used for the ListView, to display the notifications
+         * @param str
          */
-        HBoxCell(Invitation invit) {
+        HBoxCell(String str) {
 
             super();
-            String inv = invit.getMeetingInvitation().getClientMeeting() + " " + invit.getMeetingInvitation().getDateBegin() + " " +invit.getMeetingInvitation().getDateEnd() + " from " +invit.getMeetingInvitation().getHourBegin() + " to " + invit.getMeetingInvitation().getHourEnd() + " about " + invit.getMeetingInvitation().getMeetingTopic()/*.getNameTopic()*/;
-            //TODO : trouver un moyen de mieux présenter l'affichage ?
-            //TODO : décommenter le .getNameTopic de inv = quand on aura mis des invitations avec des topics dans la BDD
-
-            label.setText(inv);
+            label.setText(str);
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
 
+            if(!str.endsWith("euros.")) {
 
-            this.getChildren().addAll(label,button, button1);
+                this.getChildren().addAll(label, button, button1, button2);
 
-            button.setOnAction(actionEvent -> {
-                //System.out.println(invit.getInvitedUser()+" "+invit.getMeetingInvitation().getId());
-                //String x = invit.getInvitedUser2();
-                facade.acceptInvitation(invit.getInvitedUser2(), invit.getMeetingInvitation().getId());
-                refresh();
-            });
+                String id = label.getText().split(": ")[1];
+                int idMeeting = Integer.parseInt(id);
 
-            button1.setOnAction(actionEvent -> {
-                facade.declineInvitation(invit.getInvitedUser2(),  invit.getMeetingInvitation().getId());
-                refresh();
-            });
+                Invitation invit = facade.findInvitation(idMeeting);
+
+                button.setOnAction(actionEvent -> {
+                    facade.acceptInvitation(invit.getInvitedUser2(), invit.getMeetingInvitation().getId());
+                    refresh();
+                });
+
+                button1.setOnAction(actionEvent -> {
+                    facade.declineInvitation(invit.getInvitedUser2(), invit.getMeetingInvitation().getId());
+                    refresh();
+                });
+                button2.setOnAction(actionEvent -> {
+                    displayPopupInfo(invit);
+                });
+            } else {
+                this.getChildren().addAll(label,button3);
+
+                String id = label.getText().split(" ")[5];
+                int idMeeting = Integer.parseInt(id);
+
+                button3.setOnAction(actionEvent -> {
+                    Collection<Equipment> equipments = facade.getRentedEquipment(idMeeting);
+                    try {
+                        facade.facture(equipments,idMeeting);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
 
         }
+    }
+
+    private void displayPopupInfo(Invitation invit){
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.setTitle("Invitation information");
+
+        Label meeting = new Label("The meeting :");
+        Label dD = new Label("Start the : " + invit.getMeetingInvitation().getDateBegin() +"\n at : " + invit.getMeetingInvitation().getHourBegin());
+        Label dE = new Label("And end at : " + invit.getMeetingInvitation().getHourEnd());
+
+        Button b = new Button("Close");
+        b.setOnAction(actionEvent -> popup.close());
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(meeting,dD,dE,b);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout,200,150);
+        popup.setScene(scene);
+        popup.showAndWait();
+
     }
 
     /**
@@ -82,8 +136,15 @@ public class InvitationController {
         ObservableList<HBoxCell> itemsInv = FXCollections.observableArrayList();
 
         for (Invitation i : invitationsRefreshed){
-            int id = i.getMeetingInvitation().getId();
-            HBoxCell hbc = new HBoxCell(i);
+            String str = "Invitation from "+i.getMeetingInvitation().getClientMeeting() + " for the meeting n° : "+i.getMeetingInvitation().getId();
+            HBoxCell hbc = new HBoxCell(str);
+            itemsInv.add(hbc);
+        }
+        Collection<Integer> meetingsWithRoom = facade.allMeetingsWithRoom();
+
+        for(Integer i : meetingsWithRoom){
+            String str = facade.notifFacture(facade.getRentedEquipment(i),i);
+            HBoxCell hbc = new HBoxCell(str);
             itemsInv.add(hbc);
         }
 
@@ -96,9 +157,19 @@ public class InvitationController {
     public void initialize(){
 
         ObservableList<HBoxCell> itemsInv = FXCollections.observableArrayList();
+
         for (Invitation i : waitingInvitation) {
-            //System.out.println(i.getInvitedUser().getUserName());
-            HBoxCell hbc = new HBoxCell(i);
+            String str = "Invitation from "+i.getMeetingInvitation().getClientMeeting() + " for the meeting n° : "+i.getMeetingInvitation().getId();
+            HBoxCell hbc = new HBoxCell(str);
+            itemsInv.add(hbc);
+        }
+
+        Collection<Integer> meetingsWithRoom = facade.allMeetingsWithRoom();
+        System.out.println(meetingsWithRoom);
+
+        for(Integer i : meetingsWithRoom){
+           String str = facade.notifFacture(facade.getRentedEquipment(i),i);
+            HBoxCell hbc = new HBoxCell(str);
             itemsInv.add(hbc);
         }
         listwaitingsInvitation.setItems(itemsInv);

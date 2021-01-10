@@ -212,9 +212,9 @@ public class MySQLRoomDAO implements RoomDAO {
 
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from roomMeetings;");
+            ResultSet rs = stmt.executeQuery("select * from meetingWithRoom;");
             while(rs.next()){
-                res.put(rs.getInt(2),rs.getString(1));
+                res.put(rs.getInt(1),rs.getString(2));
             }
         } catch (SQLException throwables){
             throwables.printStackTrace();
