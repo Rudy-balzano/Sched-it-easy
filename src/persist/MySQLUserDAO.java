@@ -111,7 +111,7 @@ public class MySQLUserDAO implements UserDAO {
             Statement stmt2 = connection.createStatement();
             ResultSet rs = stmt2.executeQuery("SELECT invitedUsername, idMeetingInvitation FROM invitations WHERE invitedUsername = '" + username + "';");
             while (rs.next()) {
-                int idm = rs.getInt(3);
+                int idm = rs.getInt(2);
                 PreparedStatement ps = connection.prepareStatement("SELECT * FROM meetings WHERE id = ?;");
                 ps.setInt(1,idm);
                 ResultSet me = ps.executeQuery();
@@ -205,6 +205,24 @@ public class MySQLUserDAO implements UserDAO {
         } catch (SQLException ex){
             System.out.println("SQL request error");
         }
+        return users;
+    }
+
+    @Override
+    public Collection<String> findAllUsersWithoutMe(String username) {
+        Collection<String> users = new ArrayList<>();
+
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT username FROM users;");
+            while(rs.next()){
+                String name = rs.getString(1);
+                users.add(name);
+            }
+        } catch (SQLException ex){
+            System.out.println("SQL request error");
+        }
+        users.remove(username);
         return users;
     }
 

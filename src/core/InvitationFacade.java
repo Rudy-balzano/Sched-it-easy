@@ -139,10 +139,9 @@ public class InvitationFacade {
      * used to get all the users
      * @return every usernames of every users
      */
-    public ArrayList<String> getAllUsers() {
-        ArrayList<String> listUsers = new ArrayList<>();
-        listUsers.addAll(userDAO.findAllRegUsersNames());
-        listUsers.addAll(userDAO.findAllManagersNames());
+    public Collection<String> getAllUsers() {
+        Collection<String> listUsers = new ArrayList<>();
+        listUsers.addAll(userDAO.findAllUsersWithoutMe(SessionFacade.getConnectedUser().getUserName()));
         return listUsers;
     }
 
