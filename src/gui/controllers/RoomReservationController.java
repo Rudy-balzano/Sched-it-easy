@@ -73,7 +73,8 @@ public class RoomReservationController implements AlertShower{
             this.getChildren().addAll(label, checkBox);
 
             checkBox.setOnAction(actionEvent -> {
-                rentedEquipment.add(label.getText());
+                String str = label.getText().split(" : ")[0];
+                rentedEquipment.add(str);
             });
 
         }

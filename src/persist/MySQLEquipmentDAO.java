@@ -33,6 +33,7 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
 
         Equipment equipment = new Equipment();
 
+
         try{
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from equipments where equipmentName = '" + name + "';");

@@ -4,10 +4,13 @@ import javafx.beans.property.StringProperty;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import persist.*;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -196,9 +199,7 @@ public class InvitationFacade {
      */
     public Collection<Integer> allMeetingsWithRoom(){
         Collection<Meeting> m = meetingDAO.findAllCreatedMeetings(SessionFacade.getConnectedUser().getUserName());
-        System.out.println(m);
         HashMap<Integer,String> r = roomDAO.getAllTakenRooms();
-        System.out.println(r);
         Collection<Integer> res = new ArrayList<>();
 
         for(Integer i : r.keySet()){
@@ -230,6 +231,13 @@ public class InvitationFacade {
         return res;
     }
 
+    /**
+     * Generate a bill in pdf
+     * @param equipments
+     * @param idMeeting
+     * @throws IOException
+     */
+
     public void facture(Collection<Equipment> equipments, int idMeeting) throws IOException {
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();
@@ -237,16 +245,27 @@ public class InvitationFacade {
 
         PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
-        contentStream.setFont(PDType1Font.COURIER, 20);
         contentStream.beginText();
-        contentStream.showText("Bill for equipment reservation : ");
+
         contentStream.setFont(PDType1Font.COURIER, 20);
+        contentStream.setLeading(14.5f);
+        contentStream.newLineAtOffset(25, 700);
+        contentStream.showText("Bill for equipment reservation : ");
         contentStream.newLine();
+        contentStream.newLine();
+        contentStream.newLine();
+        contentStream.newLine();
+
+        contentStream.setFont(PDType1Font.COURIER, 12);
+
         for (Equipment e : equipments){
             contentStream.newLine();
-            contentStream.showText(e.getName()+"                         "+e.getPrice());
+            contentStream.showText("    "+e.getName()+" : "+e.getPrice());
             contentStream.newLine();
         }
+        contentStream.newLine();
+        contentStream.newLine();
+        contentStream.newLine();
         contentStream.newLine();
         contentStream.newLine();
         contentStream.showText(notifFacture(equipments,idMeeting));
