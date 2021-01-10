@@ -113,5 +113,7 @@ public interface UserDAO {
      */
     ArrayList<String> findAllByGroup (String groupeName);
 
+    Collection<String>findAllUsersWithoutMe(String username);
+
 
 }
