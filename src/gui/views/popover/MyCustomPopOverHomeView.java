@@ -101,7 +101,7 @@ public class MyCustomPopOverHomeView extends EntryPopOverPane {
         vBox.getChildren().add(gridPane1);
         vBox.getChildren().add(popOverTitledPane);
 
-        if (SessionFacade.getConnectedUser().equals(userCreator)){
+        if (SessionFacade.getConnectedUser().getUserName().equals(userCreator)){
             vBox.getChildren().add(button);
         }
         getChildren().add(vBox);

@@ -124,7 +124,6 @@ public class InvitePeopleController {
 
     /**
      * Function used to refresh the listView
-     * @param listView
      */
     private void refresh(){
         ObservableList<HBoxCell> listPeople =  FXCollections.observableArrayList();

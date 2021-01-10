@@ -53,12 +53,8 @@ public class UserHomeController {
         calendar.setStyle(Calendar.Style.STYLE1);
 
         Collection<Meeting> meetings = facade.checkSchedule(SessionFacade.getConnectedUser().getUserName());
-        for(Meeting m : meetings){
-            System.out.println(m.getId());
-        }
 
         for(Meeting m : meetings){
-            //TODO : Résoudre pb de références vides à un topic dans la BDD + afficher le nom et plus cours + i
             Entry<String> e = new Entry<>(m.getMeetingTopic().getNameTopic());
             e.changeStartDate(m.getDateBegin());
             e.changeEndDate(m.getDateEnd());
@@ -68,6 +64,7 @@ public class UserHomeController {
 
             calendar.addEntry(e);
         }
+        /*
         ArrayList<Invitation> inv = facade.checkInvitation(SessionFacade.getConnectedUser().getUserName());
 
         for(Invitation in : inv){
@@ -80,6 +77,8 @@ public class UserHomeController {
 
             calendar.addEntry(e);
         }
+       
+         */
 
         CalendarSource calendarSource = new CalendarSource("Week calendar");
         calendarSource.getCalendars().addAll(calendar);

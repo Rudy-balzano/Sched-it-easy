@@ -1,10 +1,6 @@
 package core;
 
-import com.calendarfx.model.Interval;
-import net.fortuna.ical4j.model.DateTime;
-import org.apache.commons.lang3.tuple.Pair;
 import persist.*;
-import core.SessionFacade;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

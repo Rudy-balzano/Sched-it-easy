@@ -1,6 +1,7 @@
 package persist;
 
 import core.Meeting;
+import core.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -47,17 +48,32 @@ public class MySQLMeetingDAO implements MeetingDAO{
     @Override
     public boolean insert(LocalDate dateBegin, LocalTime hourBegin, LocalDate dateEnd, LocalTime hourEnd, String clientMeeting, String meetingTopic) {
 
+        User creator = userDAO.findByUsername(clientMeeting);
+
         boolean result = false;
+        boolean result2 = false;
+        int idWaitingMeeting;
         
 
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into meetings (dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + dateBegin + "','" + hourBegin + "','" + dateEnd + "','" + hourEnd +"','"+ clientMeeting +"', '"+ meetingTopic +"');");
-            result = true;
+
+            idWaitingMeeting = insertWaitingMeetingAndGetId(dateBegin, hourBegin, dateEnd, hourEnd, clientMeeting, meetingTopic);
+
+            if (creator.getIsManager()){
+                stmt.executeUpdate("insert into meetings (id, dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('"+ idWaitingMeeting +"','" + dateBegin + "','" + hourBegin + "','" + dateEnd + "','" + hourEnd +"','"+ clientMeeting +"', '"+ meetingTopic +"');");
+                result = true;
+                result2 = declineWaitingMeeting(idWaitingMeeting);
+            }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return result;
+        if (result == true & result2==true){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
@@ -274,9 +290,8 @@ public class MySQLMeetingDAO implements MeetingDAO{
 
             try{
                 Statement stmt1 = connection.createStatement();
-                boolean res = insert( m.getDateBegin(), m.getHourBegin(),m.getDateEnd() ,m.getHourEnd() ,m.getClientMeeting(), m.getMeetingTopic().getNameTopic());
-                System.out.println(res);
-                //stmt1.executeUpdate("insert into meetings (dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + m.getDateBegin() + "','" + m.getHourBegin() + "','" + m.getDateEnd() + "','" + m.getHourEnd() +"','"+ m.getClientMeeting() +"', '"+ m.getMeetingTopic() +"');");
+                //boolean res = insert( m.getDateBegin(), m.getHourBegin(),m.getDateEnd() ,m.getHourEnd() ,m.getClientMeeting(), m.getMeetingTopic().getNameTopic());
+                stmt1.executeUpdate("insert into meetings (id, dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + id + "','" + m.getDateBegin() + "','" + m.getHourBegin() + "','" + m.getDateEnd() + "','" + m.getHourEnd() +"','"+ m.getClientMeeting() +"', '"+ m.getMeetingTopic().getNameTopic() +"');");
                 stmt1.executeUpdate("insert into meetingAttendence (username, idMeeting) values('" + m.getClientMeeting() + "','" + id + "');");
                 result1 = true;
 

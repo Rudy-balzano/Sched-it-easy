@@ -54,6 +54,8 @@ public class CreateMeetingController implements AlertShower {
      */
     private static ReservationFacade reservationfacade = new ReservationFacade();
 
+    private static boolean meetingSelected = false;
+
     /**
      *
      */
