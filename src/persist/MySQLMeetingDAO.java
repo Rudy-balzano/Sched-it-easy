@@ -256,7 +256,9 @@ public class MySQLMeetingDAO implements MeetingDAO{
 
             try{
                 Statement stmt1 = connection.createStatement();
-                stmt1.executeUpdate("insert into meetings (dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + m.getDateBegin() + "','" + m.getHourBegin() + "','" + m.getDateEnd() + "','" + m.getHourEnd() +"','"+ m.getClientMeeting() +"', '"+ m.getMeetingTopic() +"');");
+                boolean res = insert( m.getDateBegin(), m.getHourBegin(),m.getDateEnd() ,m.getHourEnd() ,m.getClientMeeting(), m.getMeetingTopic().getNameTopic());
+                System.out.println(res);
+                //stmt1.executeUpdate("insert into meetings (dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + m.getDateBegin() + "','" + m.getHourBegin() + "','" + m.getDateEnd() + "','" + m.getHourEnd() +"','"+ m.getClientMeeting() +"', '"+ m.getMeetingTopic() +"');");
                 stmt1.executeUpdate("insert into meetingAttendence (username, idMeeting) values('" + m.getClientMeeting() + "','" + id + "');");
                 result1 = true;
 
