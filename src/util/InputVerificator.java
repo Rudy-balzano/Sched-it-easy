@@ -13,7 +13,7 @@ public final class InputVerificator {
     }
 
     public static boolean verifyTextOnlyInput(String input){
-        String regex = "[A-Za-z0-9]+";
+        String regex = "[A-Za-z]+";
         return Pattern.matches(regex,input);
     }
 
