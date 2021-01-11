@@ -78,8 +78,8 @@
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="319.0" prefWidth="301.0">
                                        <children>
                                           <Button fx:id="addTopicButton" layoutX="80.0" layoutY="183.0" mnemonicParsing="false" onAction="#addTopic" text="Add" />
-                                          <TextField fx:id="nameAddTopic" layoutX="20.0" layoutY="20.0" text="Name Topic" />
-                                          <TextField fx:id="descriptionAddTopic" layoutX="20.0" layoutY="59.0" text="Description" />
+                                          <TextField fx:id="nameAddTopic" layoutX="20.0" layoutY="20.0" promptText="Name Topic" />
+                                          <TextField fx:id="descriptionAddTopic" layoutX="20.0" layoutY="59.0" promptText="Description" />
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -89,8 +89,8 @@
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="257.0" prefWidth="200.0">
                                        <children>
                                           <Button fx:id="updateTopicButton" layoutX="71.0" layoutY="245.0" mnemonicParsing="false" onAction="#updateTopic" text="Update" />
-                                          <TextField fx:id="nameUpdateTopic" layoutX="14.0" layoutY="22.0" text="Name Topic" />
-                                          <TextField fx:id="descriptionUpdateTopic" layoutX="14.0" layoutY="65.0" text="Description" />
+                                          <TextField fx:id="nameUpdateTopic" layoutX="14.0" layoutY="22.0" promptText="Name Topic" />
+                                          <TextField fx:id="descriptionUpdateTopic" layoutX="14.0" layoutY="65.0" promptText="Description" />
                                        </children>
                                     </AnchorPane>
                                  </content>
