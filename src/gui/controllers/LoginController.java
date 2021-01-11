@@ -69,7 +69,7 @@ public class LoginController {
         String pass = (password.getText());
 
         while(!(InputVerificator.verifyUsernameAndPassword(userN) && InputVerificator.verifyUsernameAndPassword(pass))){
-            showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Username and password should can only contain alphanumerical characters and the following : . - _");
+            showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Username and password can only contain alphanumerical characters and the following : . - _");
             return;
         }
 
