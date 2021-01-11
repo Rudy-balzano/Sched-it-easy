@@ -60,15 +60,6 @@
                                     </AnchorPane>
                                  </content>
                               </Tab>
-                              <Tab text="Delete">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <ListView fx:id="listViewDeleteRooms" layoutX="40.0" layoutY="63.0" prefHeight="305.0" prefWidth="300.0" />
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
                            </tabs>
                         </TabPane>
                         <Text layoutX="163.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rooms ">
@@ -100,15 +91,6 @@
                                           <Button fx:id="updateTopicButton" layoutX="71.0" layoutY="245.0" mnemonicParsing="false" onAction="#updateTopic" text="Update" />
                                           <TextField fx:id="nameUpdateTopic" layoutX="14.0" layoutY="22.0" text="Name Topic" />
                                           <TextField fx:id="descriptionUpdateTopic" layoutX="14.0" layoutY="65.0" text="Description" />
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
-                              <Tab text="Delete">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <ListView fx:id="listViewDeleteTopics" layoutX="40.0" layoutY="63.0" prefHeight="305.0" prefWidth="300.0" />
                                        </children>
                                     </AnchorPane>
                                  </content>

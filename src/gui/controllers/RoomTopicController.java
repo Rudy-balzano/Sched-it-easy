@@ -260,39 +260,9 @@ public class RoomTopicController implements AlertShower {
                 return new ReadOnlyObjectWrapper(p.getValue().getValue());
             }
         });
-        /*
-        quantityColumn.setOnEditStart(
-                new EventHandler<TableColumn.CellEditEvent<Pair<String, Integer>, Integer>>() {
-                    @Override
-                    public void handle(TableColumn.CellEditEvent<Pair<String, Integer>, Integer> pairIntegerCellEditEvent) {
-                        (pairIntegerCellEditEvent.getTableView().getItems().get(pairIntegerCellEditEvent.getTablePosition().getRow())).setValue(pairIntegerCellEditEvent.getNewValue());
-                    }
-                }
-        );
-
-         */
 
         tableViewEquipmentAdded.setItems(listTabViewAddRoom);
 
-        Collection<String> rooms = roomTopicFacade.getRooms();
-
-        ObservableList<HBoxCell> itemsR = FXCollections.observableArrayList();
-        for (String name : rooms){
-            HBoxCell hbc2 = new HBoxCell(name);
-            itemsR.add(hbc2);
-        }
-
-        listViewDeleteRooms.setItems(itemsR);
-
-        Collection<Topic> topics = roomTopicFacade.getTopics();
-
-        ObservableList<HBoxCell> itemsT = FXCollections.observableArrayList();
-        for (Topic t : topics){
-            HBoxCell hbc2 = new HBoxCell(t.getNameTopic());
-            itemsT.add(hbc2);
-        }
-
-        listViewDeleteTopics.setItems(itemsT);
 
 
     }
