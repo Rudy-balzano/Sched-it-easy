@@ -23,6 +23,14 @@ public class ManagerMenuController {
     }
 
     /**
+     * Function used to go to the home page
+     * @throws IOException
+     */
+    public void switchToHome() throws IOException {
+        Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.managerHomeRoot))));
+    }
+
+    /**
      * Function used to go to the group page
      * @throws IOException
      */
