@@ -34,7 +34,7 @@ public class SeeInvitedPeopleController {
     /**
      * popOver idMeeting
      */
-    public static int idMeeting = MyCustomPopOverHomeView.idMeeting;
+    public static int idMeeting;
 
 
     @FXML
@@ -42,6 +42,8 @@ public class SeeInvitedPeopleController {
 
     @FXML
     private ListView<HBoxCell> listViewInvitedGroups;
+
+
 
 
     private class HBoxCell extends HBox {
@@ -64,10 +66,12 @@ public class SeeInvitedPeopleController {
      */
     @FXML
     public void initialize(){
-        //TODO integrer l'id meeting
+
+        idMeeting = InvitationFacade.idMeeting;
 
         Collection<String> invitedUsers = invitationFacade.getAllInvitedUsers(idMeeting);
         Collection<String> invitedGroups = invitationFacade.getAllInvitedGroups(idMeeting);
+
 
         ObservableList<HBoxCell> itemsG = FXCollections.observableArrayList();
         ObservableList<HBoxCell> itemsU = FXCollections.observableArrayList();

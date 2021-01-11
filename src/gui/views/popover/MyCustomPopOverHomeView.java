@@ -4,10 +4,7 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.view.Messages;
 import com.calendarfx.view.TimeField;
 import com.calendarfx.view.popover.*;
-import core.ManagerFacade;
-import core.Meeting;
-import core.ReservationFacade;
-import core.SessionFacade;
+import core.*;
 import gui.Main;
 import gui.roots.Roots;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 import java.io.IOException;
+
+import static javafx.fxml.FXMLLoader.load;
 
 
 public class MyCustomPopOverHomeView extends EntryPopOverPane {
@@ -31,6 +30,8 @@ public class MyCustomPopOverHomeView extends EntryPopOverPane {
     private Entry entry;
     public static int idMeeting;
 
+    private final InvitationFacade facade = new InvitationFacade();
+
     public MyCustomPopOverHomeView(Entry entry){
 
         this.entry = entry;
@@ -39,12 +40,15 @@ public class MyCustomPopOverHomeView extends EntryPopOverPane {
         String userCreator = reservationFacade.findMeetingById(idMeeting).getClientMeeting();
 
         button.setOnAction(actionEvent -> {
+            facade.setMeetingId(Integer.parseInt(entry.getId()));
             try {
-                Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.seeInvitedPeopleRoot))));
-            } catch (IOException e) {
-                e.printStackTrace();
+                Main.scheditWindow.setScene(new Scene(load(getClass().getResource(Roots.seeInvitedPeopleRoot))));
+            } catch (IOException ex){
+                ex.printStackTrace();
             }
+
         });
+
         PopOverTitledPane popOverTitledPane = new PopOverTitledPane("detail", this);
         GridPane gridPane1 = new GridPane();
         VBox vBox = new VBox();
@@ -102,7 +106,7 @@ public class MyCustomPopOverHomeView extends EntryPopOverPane {
         vBox.getChildren().add(popOverTitledPane);
 
         if (SessionFacade.getConnectedUser().getUserName().equals(userCreator)){
-            vBox.getChildren().add(button);
+            vBox.getChildren().addAll(button);
         }
         getChildren().add(vBox);
 

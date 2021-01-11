@@ -1,6 +1,10 @@
 package core;
 
+import gui.Main;
+import gui.roots.Roots;
 import javafx.beans.property.StringProperty;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -14,6 +18,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+
+import static javafx.fxml.FXMLLoader.load;
 
 /**
  * Class that represents a facade for an invitation
@@ -51,6 +57,10 @@ public class InvitationFacade {
      * roomDAO
      */
     private final RoomDAO roomDAO;
+    /**
+     * The id of the meeting
+     */
+    public static int idMeeting = 0;
 
     /**
      * Constructor of InvitationFacade
@@ -73,29 +83,33 @@ public class InvitationFacade {
      * @param invitedUsername
      * @param state
      * @param idMeeting
-     * @return True if the invitation has been created, false if not.
      */
-    public boolean createInvitationForUser (String invitedUsername, int state, int idMeeting){
-        return invitationDAO.insert(invitedUsername, state, idMeeting);
+    public void createInvitationForUser (String invitedUsername, int state, int idMeeting){
+
+        if(invitationDAO.findBy(userDAO.findByUsername(invitedUsername),meetingDAO.findByID(idMeeting)).getInvitedUser() == null) {
+            invitationDAO.insert(invitedUsername, state, idMeeting);
+        }
     }
 
-    public boolean createInvitationForGroup (String invitedGroupName, int state, int idMeeting){
-        boolean res1 = false;
-        Collection<String> users = userDAO.findAllByGroup(invitedGroupName);
-        for (String user : users){
-            res1 = createInvitationForUser(user, state, idMeeting);
-            if (!res1){
-                return res1;
-            }
-        }
-        boolean res2 = false;
-        res2 = invitationDAO.insertInvitationGroup(invitedGroupName, idMeeting);
+    public void createInvitationForGroup (String invitedGroupName, int state, int idMeeting){
 
-        if (res1 & res2){
-            return true;
-        }else {
-            return false;
+        Collection<String> users = userDAO.findAllByGroup(invitedGroupName);
+
+        for (String user : users){
+            createInvitationForUser(user, state, idMeeting);
+
         }
+
+        invitationDAO.insertInvitationGroup(invitedGroupName, idMeeting);
+
+
+    }
+
+    /**
+     *
+     */
+    public void setMeetingId(int id){
+        idMeeting = id;
 
     }
 

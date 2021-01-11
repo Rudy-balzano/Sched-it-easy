@@ -16,7 +16,7 @@
       </Label>
       <ListView fx:id="listViewGroup" layoutX="89.0" layoutY="148.0" prefHeight="200.0" prefWidth="200.0" />
       <ListView fx:id="listViewPeople" layoutX="347.0" layoutY="148.0" prefHeight="200.0" prefWidth="200.0" />
-      <TextField fx:id="researchBar" layoutX="237.0" layoutY="98.0" onAction="#research" />
-      <Button layoutX="161.0" layoutY="373.0" mnemonicParsing="false" text="Cancel" />
+      <TextField fx:id="searchBar" layoutX="237.0" layoutY="98.0" onAction="#research" />
+      <Button layoutX="161.0" layoutY="373.0" mnemonicParsing="false" text="Cancel" onAction="#handleCancel"/>
    </children>
 </AnchorPane>

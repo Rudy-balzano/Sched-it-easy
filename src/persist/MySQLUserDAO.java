@@ -193,9 +193,9 @@ public class MySQLUserDAO implements UserDAO {
 
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT username FROM groupMembers where groupname = ='"+ groupeName +"';");
+            ResultSet rs = stmt.executeQuery("SELECT username FROM groupMembers where groupname ='"+ groupeName +"';");
             while(rs.next()){
-                users.add(rs.getString(2));
+                users.add(rs.getString(1));
             }
         } catch (SQLException ex){
             System.out.println("SQL request error");
