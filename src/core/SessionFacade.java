@@ -2,7 +2,7 @@ package core;
 
 
 import persist.*;
-
+import util.PasswordUtil;
 
 
 /**
@@ -96,17 +96,17 @@ public class SessionFacade {
 
     /**
      * Function used to check the password of the user
-     * @param userPassword
-     * @param passwordEnter
+     * @param userPassword the real user password.
+     * @param enteredPassword the entered password.
      * @return True if the password is equals, false if not.
      */
-    private Boolean verification(String userPassword, String passwordEnter){
-        Boolean check = false;
-
-        if(userPassword.equals(passwordEnter)){
-            check = true;
+    private Boolean verification(String userPassword, String enteredPassword){
+        //TODO : enlever quand il n'y aura plus de mdp pas hashé dans la bdd
+        if(userPassword.split(":").length != 2){
+            return userPassword.equals(enteredPassword);
+        }else{
+            return PasswordUtil.validatePassword(enteredPassword,userPassword);
         }
-        return check;
     }
 
     /**

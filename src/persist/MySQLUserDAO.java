@@ -2,6 +2,7 @@ package persist;
 
 import core.Meeting;
 import core.User;
+import util.PasswordUtil;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -252,12 +253,12 @@ public class MySQLUserDAO implements UserDAO {
     @Override
     public boolean insertWaitingUser(String username, String first, String last, String mdp){
         boolean result = false;
-
         if(!verify(username)){
-
+            //Hashing password
+            String password = PasswordUtil.encode(mdp);
             try{
                 Statement stmt = connection.createStatement();
-                stmt.executeUpdate("insert into waiting_users (username,password,first_name,last_name) values('" + username + "','" + mdp + "','" + first + "','" + last +"');");
+                stmt.executeUpdate("insert into waiting_users (username,password,first_name,last_name) values('" + username + "','" + password + "','" + first + "','" + last +"');");
                 result = true;
             } catch (SQLException ex){
                 System.out.println(ex.getSQLState());
@@ -393,23 +394,17 @@ public class MySQLUserDAO implements UserDAO {
      * @return boolean that indicates if the username is already in the database.
      */
     private boolean verify(String username){
-        boolean exist = false;
 
         try {
             Statement stmt1 = connection.createStatement();
             Statement stmt2 = connection.createStatement();
             ResultSet rs1 = stmt1.executeQuery("select * from users where username = '" + username + "';");
             ResultSet rs2 = stmt2.executeQuery("select * from waiting_users where username = '" + username + "';");
-            if (rs1.next() || rs2.next()) {
-                exist = true;
-            }
+            return (rs1.next() || rs2.next());
         } catch (SQLException ex){
-
             System.out.println(ex.getSQLState());
-
+            return true;
         }
-
-        return exist;
     }
 
     /**
