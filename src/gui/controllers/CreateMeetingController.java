@@ -11,16 +11,13 @@ import core.SessionFacade;
 import gui.Main;
 import gui.roots.Roots;
 import gui.views.popover.MyCustomPopOverCreateMeetingView;
-import gui.views.popover.MyCustomPopOverHomeView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.stage.Window;
+import javafx.scene.control.Button;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -54,13 +51,23 @@ public class CreateMeetingController implements AlertShower {
      */
     private static ReservationFacade reservationfacade = new ReservationFacade();
 
-    private static boolean meetingSelected = false;
+
+    private Entry uniqueMeeting = null;
+
+    @FXML
+    public Button createMeetingButton;
+
+    @FXML
+    public Button bookRoomButton;
 
     /**
      *
      */
     @FXML
     private void initialize(){
+
+        createMeetingButton.setDisable(true);
+        bookRoomButton.setDisable(true);
 
         EventHandler<CalendarEvent> handler = evt -> handle(evt);
         calendar.addEventHandler(handler);
@@ -110,15 +117,19 @@ public class CreateMeetingController implements AlertShower {
      */
     private void handle(CalendarEvent evt) {
         if (evt.isEntryAdded()){
-            listEntries.add(evt.getEntry());
+            uniqueMeeting = evt.getEntry();
+            evt.getEntry().setTitle("Add the topic !");
+            dayPage.setEntryFactory(param -> null);
+            createMeetingButton.setDisable(false);
+            bookRoomButton.setDisable(false);
+
         }
-        else if (evt.isEntryRemoved()){
-            listEntries.remove(evt.getEntry());
+        else if (evt.isEntryRemoved()) {
+            uniqueMeeting = null;
+            createMeetingButton.setDisable(true);
+            bookRoomButton.setDisable(true);
         }
 
-        System.out.println(evt.getEntry().getDuration());
-        System.out.println(evt.getEntry().getStartDate());
-        System.out.println(evt.getEntry().getStartTime());
 
     }
 
@@ -128,8 +139,11 @@ public class CreateMeetingController implements AlertShower {
      * @throws IOException
      */
     public void handleCreateMeeting() throws IOException {
-        saveMeeting();
-        handleCancel();
+
+        if (!uniqueMeeting.getTitle().equals("Add the topic !")){
+            saveMeeting();
+            handleCancel();
+        }
     }
 
     /**
@@ -156,6 +170,7 @@ public class CreateMeetingController implements AlertShower {
         int idMeeting=-1;
 
         for ( int i = 0 ; i < listEntries.size() ; i++) {
+
 
             idMeeting = reservationfacade.createMeetingAndGetId(listEntries.get(i).getStartDate(), listEntries.get(i).getStartTime(), listEntries.get(i).getEndDate(), listEntries.get(i).getEndTime(), listEntries.get(i).getTitle());
             if (idMeeting!=-1){
