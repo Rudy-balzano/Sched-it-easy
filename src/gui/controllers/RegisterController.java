@@ -94,6 +94,7 @@ public class RegisterController implements AlertShower {
 
             if (register){
                 System.out.println("Waiting to be accept by the administrator");
+                this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Username already exist, impossible to register");
             }
             else {
                 System.out.println("Username already exist !");

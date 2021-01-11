@@ -344,7 +344,7 @@ public class RoomTopicController implements AlertShower {
         if (added) {
             System.out.println("Room added !");
 
-            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Meeting successfully inserted !");
+            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Room successfully inserted !");
             nameAddRoom.setText("");
             capacityAddRoom.setText("");
             listTabViewAddRoom.removeAll();
