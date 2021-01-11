@@ -23,7 +23,7 @@
                 </items></Menu>
             <Menu mnemonicParsing="false" text="Notifications">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#switchToSeeNotification" text="See" />
+                  <MenuItem mnemonicParsing="false" onAction="#switchToSeeNotification" text="See notifications" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Logout">

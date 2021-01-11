@@ -72,15 +72,9 @@ public class MySQLUserDAO implements UserDAO {
 
         try {
             Statement stmt1 = connection.createStatement();
-            ResultSet rs = stmt1.executeQuery("SELECT username, idMeeting FROM meetingAttendence WHERE username = '" + username + "';");
-            while (rs.next()) {
-                int idm = rs.getInt(2);
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM meetings WHERE id = ?;");
-                ps.setInt(1,idm);
-                ResultSet me = ps.executeQuery();
-                while(me.next()) {
+            ResultSet me = stmt1.executeQuery("SELECT * FROM meetings WHERE userCreator = '" + username + "';");
+            while (me.next()) {
                     Meeting meeting = new Meeting();
-
                     meeting.setId(me.getInt(1));
                     LocalDate dateBegin = me.getDate(2).toLocalDate();
                     meeting.setDateBegin(dateBegin);
@@ -93,7 +87,7 @@ public class MySQLUserDAO implements UserDAO {
                     meeting.setClientMeeting(findByUsername((me.getString(6))).getUserName());
                     meeting.setMeetingTopic(topicDAO.findBy(me.getString(7)));
                     meetings.add(meeting);
-                }
+
             }
         } catch(SQLException ex){
             System.out.println("SQL request error for meetingAttendence");

@@ -10,7 +10,7 @@
     <menus>
       <Menu mnemonicParsing="false" text="Schedule">
         <items>
-          <MenuItem mnemonicParsing="false" text="See schedule" />
+          <MenuItem mnemonicParsing="false" text="See schedule" onAction="#handleHome" />
         </items>
       </Menu>
       <Menu mnemonicParsing="false" text="Reservation">
@@ -41,9 +41,9 @@
           <MenuItem mnemonicParsing="false" onAction="#switchToSeeAccount" text="See" />
         </items>
       </Menu>
-         <Menu mnemonicParsing="false" text="Invitations">
+         <Menu mnemonicParsing="false" text="Notifications">
             <items>
-               <MenuItem fx:id="Notification" mnemonicParsing="false" onAction="#switchToInvitation" text="See" />
+               <MenuItem fx:id="Notification" mnemonicParsing="false" onAction="#switchToInvitation" text="See notifications" />
             </items>
          </Menu>
       <Menu mnemonicParsing="false" text="Logout">
