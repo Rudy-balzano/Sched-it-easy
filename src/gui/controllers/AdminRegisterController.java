@@ -78,15 +78,16 @@ public class AdminRegisterController implements AlertShower{
         String Lastname = lastname.getText();
         String Password = password.getText();
         String ConfirmPassword = confirmPassword.getText();
+        Window owner = registerButton.getScene().getWindow();
 
         if (!Password.equals(ConfirmPassword) ){
             System.out.println("password and confirmPassword are different !");
+            this.showAlert(Alert.AlertType.ERROR,owner,"Error","Impossible to register, password and confirmPassword are different...");
             password.setText("");
             confirmPassword.setText("");
         }
         else {
             boolean register;
-            Window owner = registerButton.getScene().getWindow();
 
             register = facade.registerNewAdmin(Username, Firstname, Lastname, Password);
 

@@ -17,8 +17,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.stage.Window;
 
+import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -194,16 +197,14 @@ public class CreateMeetingController implements AlertShower {
         for ( int i = 0 ; i < listEntries.size() ; i++) {
 
             createMeeting = reservationfacade.createMeeting(listEntries.get(i).getStartDate(), listEntries.get(i).getStartTime(), listEntries.get(i).getEndDate(), listEntries.get(i).getEndTime(), listEntries.get(i).getTitle());
-            //TODO window owner =?? reconnait pas get scene
 
-            //Window owner = listEntries.getScene.getWindow();
+            Window owner = dayPage.getScene().getWindow();
             if (createMeeting){
                 System.out.println("Meeting inserted !");
-               // this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Meeting successfully inserted !");
             }
             else {
                 System.out.println("Meeting not inserted ...");
-                //this.showAlert(Alert.AlertType.ERROR,owner,"Error","Impossible to insert the meeting");
+                this.showAlert(Alert.AlertType.ERROR,owner,"Error","Impossible to insert the meeting");
             }
         }
     }
