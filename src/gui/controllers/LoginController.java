@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 import org.junit.Test;
+import util.InputVerificator;
 
 import java.io.IOException;
 
@@ -63,8 +64,14 @@ public class LoginController {
 
         SessionFacade session = new SessionFacade();
 
-        String userN = username.getText();
-        String pass = password.getText();
+
+        String userN = (username.getText());
+        String pass = (password.getText());
+
+        while(!(InputVerificator.verifyUsernameAndPassword(userN) && InputVerificator.verifyUsernameAndPassword(pass))){
+            showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Username and password should can only contain alphanumerical characters and the following : . - _");
+            return;
+        }
 
         int check = -1;
 
