@@ -23,6 +23,7 @@ import javafx.stage.Window;
 import javafx.util.Callback;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import util.InputVerificator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -295,31 +296,36 @@ public class RoomTopicController implements AlertShower {
         Window owner = addRoomButton.getScene().getWindow();
 
         if (nameAddRoom.getText().isEmpty()) {
-            this.showAlert(Alert.AlertType.ERROR,owner,"ERROR","please enter a room name !");
+            this.showAlert(Alert.AlertType.ERROR, owner, "ERROR", "please enter a room name !");
         }
-        if (capacityAddRoom.getText().isEmpty()) {
-            this.showAlert(Alert.AlertType.ERROR,owner,"ERROR","please enter a room capacity !");
-        }
+
 
 
         String name = nameAddRoom.getText();
-        int cap = Integer.parseInt(capacityAddRoom.getText());
+
         ArrayList<Pair<String, Integer>> equipments = new ArrayList<>();
 
         equipments.addAll(listTabViewAddRoom);
+        if(!(InputVerificator.verifyIntOnlyInput(capacityAddRoom.getText()))){
+            showAlert(Alert.AlertType.ERROR, owner, "Error!", "Capacity must be an int");
+        }
+        else {
+            int cap = Integer.parseInt(capacityAddRoom.getText());
 
         Boolean added = false;
+        if (!capacityAddRoom.getText().isEmpty()) {
 
-        added = roomTopicFacade.addRoom(name, cap, equipments);
-        if (added && !name.isEmpty() && !capacityAddRoom.getText().isEmpty()) {
+            added = roomTopicFacade.addRoom(name, cap, equipments);
+            if (added && !name.isEmpty()) {
 
-            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Room successfully inserted !");
-            nameAddRoom.setText("");
-            capacityAddRoom.setText("");
-            listTabViewAddRoom.removeAll();
-
-        } else if(!added) {
-            this.showAlert(Alert.AlertType.ERROR,owner,"Error","Impossible to add the room!");
+                this.showAlert(Alert.AlertType.CONFIRMATION, owner, "Success", "Room successfully inserted !");
+                nameAddRoom.setText("");
+                capacityAddRoom.setText("");
+                listTabViewAddRoom.removeAll();
+            } else if (!added) {
+                this.showAlert(Alert.AlertType.ERROR, owner, "Error", "Impossible to add the room!");
+            }
+        }
         }
     }
 
@@ -379,26 +385,30 @@ public class RoomTopicController implements AlertShower {
         Window owner = updateRoomButton.getScene().getWindow();
 
 
-
         String name = nameUpdateRoom.getText();
 
-        int cap = Integer.parseInt(capacityUpdateRoom.getText());
+
         ArrayList<Pair<String, Integer>> equipment = new ArrayList<>();
 
         equipment.addAll(listTabViewUpdateRoom);
 
-        Boolean updated = false;
-        updated = roomTopicFacade.updateRoom(name, cap, equipment);
-        if (updated && roomTopicFacade.displayRoomByName(name).getNameRoom() != null){
-            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Room successfully updated !");
-            nameUpdateRoom.setText("");
-            capacityUpdateRoom.setText("");
-            listViewEquipments2.setItems(null);
-            listTabViewUpdateRoom.removeAll();
+        if (!(InputVerificator.verifyIntOnlyInput(capacityUpdateRoom.getText()))) {
+            showAlert(Alert.AlertType.ERROR, owner, "Error!", "Capacity must be an int");
+        } else {
+            int cap = Integer.parseInt(capacityUpdateRoom.getText());
 
-        }
-        else if (!updated) {
-            this.showAlert(Alert.AlertType.ERROR,owner,"Error","impossible to update the room !");
+            Boolean updated = false;
+            updated = roomTopicFacade.updateRoom(name, cap, equipment);
+            if (updated && roomTopicFacade.displayRoomByName(name).getNameRoom() != null) {
+                this.showAlert(Alert.AlertType.CONFIRMATION, owner, "Success", "Room successfully updated !");
+                nameUpdateRoom.setText("");
+                capacityUpdateRoom.setText("");
+                listViewEquipments2.setItems(null);
+                listTabViewUpdateRoom.removeAll();
+
+            } else if (!updated){
+                this.showAlert(Alert.AlertType.ERROR, owner, "Error", "impossible to update the room !");
+            }
         }
     }
 
