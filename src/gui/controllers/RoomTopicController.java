@@ -295,10 +295,10 @@ public class RoomTopicController implements AlertShower {
         Window owner = addRoomButton.getScene().getWindow();
 
         if (nameAddRoom.getText().isEmpty()) {
-            System.out.println("Please enter a name of room");
+            this.showAlert(Alert.AlertType.ERROR,owner,"ERROR","please enter a room name !");
         }
         if (capacityAddRoom.getText().isEmpty()) {
-            System.out.println("Please enter a capacity");
+            this.showAlert(Alert.AlertType.ERROR,owner,"ERROR","please enter a room capacity !");
         }
 
 
@@ -311,16 +311,14 @@ public class RoomTopicController implements AlertShower {
         Boolean added = false;
 
         added = roomTopicFacade.addRoom(name, cap, equipments);
-        if (added) {
-            System.out.println("Room added !");
+        if (added && !name.isEmpty() && !capacityAddRoom.getText().isEmpty()) {
 
             this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Room successfully inserted !");
             nameAddRoom.setText("");
             capacityAddRoom.setText("");
             listTabViewAddRoom.removeAll();
 
-        } else {
-            System.out.println("impossible to add the room ");
+        } else if(!added) {
             this.showAlert(Alert.AlertType.ERROR,owner,"Error","Impossible to add the room!");
         }
     }
@@ -333,60 +331,26 @@ public class RoomTopicController implements AlertShower {
         Window owner = addTopicButton.getScene().getWindow();
 
         if (nameAddTopic.getText().isEmpty()) {
-            System.out.println("Please enter a name of topic");
+            this.showAlert(Alert.AlertType.ERROR,owner,"ERROR","please enter a topic name !");
         }
         if (descriptionAddTopic.getText().isEmpty()) {
-            System.out.println("Please enter a description");
+            this.showAlert(Alert.AlertType.ERROR,owner,"ERROR","please enter a topic description !");
         }
-
         String name = nameAddTopic.getText();
         String desc = descriptionAddTopic.getText();
         Boolean added = false;
         added = roomTopicFacade.addTopic(name,desc);
-        if (added){
-            System.out.println("Topic added !");
+        if (added && !name.isEmpty() && !desc.isEmpty()){
             this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","topic successfully inserted !");
             nameAddTopic.setText("");
             descriptionAddTopic.setText("");
         }
-        else {
-            System.out.println("impossible to add the topic ");
+        else if (!added) {
             this.showAlert(Alert.AlertType.ERROR,owner,"Error","impossible to add the topic !");
         }
     }
 
-    /**
-     * Function used to delete a room
-     * @param actionEvent
-     */
-    public void deleteRoom(ActionEvent actionEvent) {
-        Window owner = deleteRoomButton.getScene().getWindow();
 
-        if (nameDeleteRoom.getText().isEmpty()) {
-            System.out.println("Please enter a name of room");
-
-        }
-
-        String name = nameDeleteRoom.getText();
-        Boolean deleted = false;
-        deleted = roomTopicFacade.deleteRoom(name);
-
-        if (deleted){
-            System.out.println("Room deleted !");
-            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Room successfully deleted !");
-            nameDeleteRoom.setText("");
-
-        }
-        else {
-            System.out.println("impossible to delete the room ");
-            this.showAlert(Alert.AlertType.ERROR,owner,"Error","impossible to delete the room !");
-        }
-    }
-
-    /**
-     * Function used to delete a topic
-     * @param actionEvent
-     */
     public void deleteTopic(ActionEvent actionEvent) {
         Window owner = deleteTopicButton.getScene().getWindow();
 
@@ -398,12 +362,10 @@ public class RoomTopicController implements AlertShower {
         Boolean deleted = false;
         deleted = roomTopicFacade.deleteTopic(name);
         if (deleted){
-            System.out.println("Topic deleted !");
             this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Topic successfully deleted !");
             nameDeleteTopic.setText("");
         }
         else {
-            System.out.println("impossible to delete the topic ");
             this.showAlert(Alert.AlertType.ERROR,owner,"Error","impossible to delete the topic !");
         }
     }
@@ -416,21 +378,18 @@ public class RoomTopicController implements AlertShower {
 
         Window owner = updateRoomButton.getScene().getWindow();
 
-        if (nameDeleteTopic.getText().isEmpty()) {
-            System.out.println("Please enter a name of topic");
-        }
+
 
         String name = nameUpdateRoom.getText();
-        int cap = Integer.parseInt(capacityUpdateRoom.getText());
 
+        int cap = Integer.parseInt(capacityUpdateRoom.getText());
         ArrayList<Pair<String, Integer>> equipment = new ArrayList<>();
 
         equipment.addAll(listTabViewUpdateRoom);
 
         Boolean updated = false;
         updated = roomTopicFacade.updateRoom(name, cap, equipment);
-        if (updated){
-            System.out.println("Room updated !");
+        if (updated && roomTopicFacade.displayRoomByName(name).getNameRoom() != null){
             this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Room successfully updated !");
             nameUpdateRoom.setText("");
             capacityUpdateRoom.setText("");
@@ -438,8 +397,7 @@ public class RoomTopicController implements AlertShower {
             listTabViewUpdateRoom.removeAll();
 
         }
-        else {
-            System.out.println("impossible to update the room ");
+        else if (!updated) {
             this.showAlert(Alert.AlertType.ERROR,owner,"Error","impossible to update the room !");
         }
     }
@@ -451,39 +409,37 @@ public class RoomTopicController implements AlertShower {
     public void loadRoom(ActionEvent actionEvent) {
 
         Window owner = loadButton.getScene().getWindow();
-
-        if (nameUpdateRoom.getText().isEmpty()) {
-            System.out.println("Please enter a name of room");
-        }
-
         String name = nameUpdateRoom.getText();
+        if(roomTopicFacade.displayRoomByName(name).getNameRoom() == null) {
+            this.showAlert(Alert.AlertType.ERROR, owner, "Error", "Please, enter a valid name of room !");
+        }
 
         Room room = roomTopicFacade.displayRoomByName(name);
 
-        capacityUpdateRoom.setText(""+room.getCapacity());
+    capacityUpdateRoom.setText("" + room.getCapacity());
 
-        loadAllEquipmentFromDB(listViewEquipments2, tableViewEquipmentAdded2, listTabViewUpdateRoom);
-
-
-        listTabViewUpdateRoom.addAll(roomTopicFacade.getEquipmentsForRoom(name));
-
-        equipmentColumn2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Pair<String, Integer>, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Pair<String, Integer>, String> p) {
-                return new ReadOnlyObjectWrapper(p.getValue().getKey());
-            }
-        });
+    loadAllEquipmentFromDB(listViewEquipments2, tableViewEquipmentAdded2, listTabViewUpdateRoom);
 
 
-        quantityColumn2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Pair<String, Integer>, Integer>, ObservableValue<Integer>>() {
-            public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Pair<String, Integer>, Integer> p) {
-                return new ReadOnlyObjectWrapper(p.getValue().getValue());
-            }
-        });
+    listTabViewUpdateRoom.addAll(roomTopicFacade.getEquipmentsForRoom(name));
+
+    equipmentColumn2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Pair<String, Integer>, String>, ObservableValue<String>>() {
+        public ObservableValue<String> call(TableColumn.CellDataFeatures<Pair<String, Integer>, String> p) {
+            return new ReadOnlyObjectWrapper(p.getValue().getKey());
+        }
+    });
 
 
-        tableViewEquipmentAdded2.setItems(listTabViewUpdateRoom);
+    quantityColumn2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Pair<String, Integer>, Integer>, ObservableValue<Integer>>() {
+        public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Pair<String, Integer>, Integer> p) {
+            return new ReadOnlyObjectWrapper(p.getValue().getValue());
+        }
+    });
 
-    }
+
+    tableViewEquipmentAdded2.setItems(listTabViewUpdateRoom);
+}
+
 
     /**
      * Function used to update infos about a topic
@@ -492,25 +448,26 @@ public class RoomTopicController implements AlertShower {
     public void updateTopic(ActionEvent actionEvent) {
         Window owner = updateTopicButton.getScene().getWindow();
 
-        if (nameUpdateTopic.getText().isEmpty()) {
-            System.out.println("Please enter a name of topic");
-        }
 
         if (descriptionUpdateTopic.getText().isEmpty()) {
-            System.out.println("Please enter a descritpion for the topic");
+            this.showAlert(Alert.AlertType.ERROR, owner, "Error", "Please, enter a description of topic !");
+        }
+        if (nameUpdateTopic.getText().isEmpty()) {
+            this.showAlert(Alert.AlertType.ERROR, owner, "Error", "Please, enter a name of topic !");
         }
 
         String name = nameUpdateTopic.getText();
         String desc = descriptionUpdateTopic.getText();
-        Boolean updated = false;
+        if(roomTopicFacade.getTopicByName(name) == null) {
+            this.showAlert(Alert.AlertType.ERROR, owner, "Error", "Please, enter a valid name of topic !");
+        }
+            Boolean updated = false;
         updated = roomTopicFacade.updateTopic(name, desc);
-        if (updated){
-            System.out.println("topic updated !");
+        if (updated && roomTopicFacade.getTopicByName(name)!= null && !name.isEmpty() &&!desc.isEmpty()){
             this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Topic successfully updated !");
         }
 
-        else {
-            System.out.println("impossible to update the topic ");
+        else if (!updated) {
             this.showAlert(Alert.AlertType.ERROR,owner,"Error","impossible to update the topic !");
         }
     }
