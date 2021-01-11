@@ -16,7 +16,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Room / Topic">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#switchToRoomTopic" text="See" />
+              <MenuItem mnemonicParsing="false" onAction="#switchToRoomTopic" text="Manage" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Accounts">
