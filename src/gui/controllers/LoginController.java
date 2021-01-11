@@ -71,12 +71,10 @@ public class LoginController {
         check = session.login(userN, pass);
         if (check == 0){
             System.out.println("L'utilisateur " + session.getUserFirstName() + " " + session.getUserLastName() + " est connecté!");
-            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Successfully connected  !");
             SessionFacade.setConnectedAdmin();
         }
         else if (check == 1){
             System.out.println("L'admin " +session.getAdminFirstName() + " " + session.getAdminLastName() + " est connecté!");
-            this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Successfully connected !");
             SessionFacade.setConnectedUser();
         }
         try {
