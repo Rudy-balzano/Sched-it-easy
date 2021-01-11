@@ -117,13 +117,4 @@ public final class PasswordUtil {
         return bytes;
     }
 
-
-    //Test
-    public static void main(String[] args) {
-        for(int i = 0; i < 10; i++) {
-            String hash = encode(String.valueOf(i));
-            System.out.println(hash);
-            System.out.println(validatePassword(String.valueOf(i),hash));
-        }
-    }
 }
