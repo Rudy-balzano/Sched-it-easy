@@ -83,6 +83,10 @@ public class LoginController {
         else if (check == 1){
             System.out.println("L'admin " +session.getAdminFirstName() + " " + session.getAdminLastName() + " est connecté!");
             SessionFacade.setConnectedUser();
+        }else{
+            System.out.println("Wrong password");
+            showAlert(Alert.AlertType.ERROR, owner, "Login error!", "Wrong username or password...");
+            return;
         }
         try {
             switchToHomeView();
