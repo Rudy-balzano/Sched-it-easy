@@ -27,7 +27,6 @@ public interface RoomDAO {
      * @return boolean that indicates if the operation has been successful.
      */
     boolean update (String name, int capacity, ArrayList<Pair<String,Integer>> equipments);
-    //TODO Ne pas update le nom car c'est la clé principale de Room.
 
     /**
      * Deletes the persistent Room that matches the given name.

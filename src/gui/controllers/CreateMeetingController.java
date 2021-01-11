@@ -17,7 +17,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -37,10 +39,7 @@ public class CreateMeetingController implements AlertShower {
      * calendar
      */
     Calendar calendar = new Calendar("Calendar");
-    /**
-     * list of every entry ( entries are for CalendarFX )
-     */
-    ArrayList<Entry> listEntries = new ArrayList<>();
+
     /**
      * meeting
      */
@@ -139,9 +138,16 @@ public class CreateMeetingController implements AlertShower {
      */
     public void handleCreateMeeting() throws IOException {
 
+        Window owner = createMeetingButton.getScene().getWindow();
+
         if (!uniqueMeeting.getTitle().equals("Add the topic !")){
             saveMeeting();
             handleCancel();
+        }
+        else {
+            showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
+                    "Please Enter a topic for your meeting");
+            return;
         }
     }
 
@@ -168,21 +174,27 @@ public class CreateMeetingController implements AlertShower {
 
         int idMeeting=-1;
 
-        for ( int i = 0 ; i < listEntries.size() ; i++) {
+        Window owner = createMeetingButton.getScene().getWindow();
 
-
-            idMeeting = reservationfacade.createMeetingAndGetId(listEntries.get(i).getStartDate(), listEntries.get(i).getStartTime(), listEntries.get(i).getEndDate(), listEntries.get(i).getEndTime(), listEntries.get(i).getTitle());
+        if (!uniqueMeeting.getTitle().equals("Add the topic !")){
+            idMeeting = reservationfacade.createMeetingAndGetId(uniqueMeeting.getStartDate(), uniqueMeeting.getStartTime(), uniqueMeeting.getEndDate(), uniqueMeeting.getEndTime(), uniqueMeeting.getTitle());
             if (idMeeting!=-1){
                 System.out.println("Meeting inserted !");
+                meeting = reservationfacade.findMeetingById(idMeeting);
+                System.out.println(idMeeting);
+
+                Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.bookRoomRoot))));
             }
             else {
                 System.out.println("Meeting not inserted ...");
             }
         }
-        meeting = reservationfacade.findMeetingById(idMeeting);
-        System.out.println(idMeeting);
+        else {
+            showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
+                    "Please Enter a topic for your meeting");
+            return;
+        }
 
-        Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.bookRoomRoot))));
     }
 
     /**
@@ -191,20 +203,16 @@ public class CreateMeetingController implements AlertShower {
     private void saveMeeting(){
         Boolean createMeeting = false;
 
-        for ( int i = 0 ; i < listEntries.size() ; i++) {
+        createMeeting = reservationfacade.createMeeting(uniqueMeeting.getStartDate(), uniqueMeeting.getStartTime(), uniqueMeeting.getEndDate(), uniqueMeeting.getEndTime(), uniqueMeeting.getTitle());
 
-            createMeeting = reservationfacade.createMeeting(listEntries.get(i).getStartDate(), listEntries.get(i).getStartTime(), listEntries.get(i).getEndDate(), listEntries.get(i).getEndTime(), listEntries.get(i).getTitle());
-            //TODO window owner =?? reconnait pas get scene
-
-            //Window owner = listEntries.getScene.getWindow();
-            if (createMeeting){
-                System.out.println("Meeting inserted !");
-               // this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Meeting successfully inserted !");
-            }
-            else {
-                System.out.println("Meeting not inserted ...");
-                //this.showAlert(Alert.AlertType.ERROR,owner,"Error","Impossible to insert the meeting");
-            }
+        //Window owner = listEntries.getScene.getWindow();
+        if (createMeeting){
+            System.out.println("Meeting inserted !");
+            // this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Meeting successfully inserted !");
+        }
+        else {
+            System.out.println("Meeting not inserted ...");
+            //this.showAlert(Alert.AlertType.ERROR,owner,"Error","Impossible to insert the meeting");
         }
     }
 }
