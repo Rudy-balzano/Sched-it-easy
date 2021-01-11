@@ -69,7 +69,7 @@ public class LoginController {
         String pass = (password.getText());
 
         while(!(InputVerificator.verifyUsernameAndPassword(userN) && InputVerificator.verifyUsernameAndPassword(pass))){
-            showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Username and password should can only contain alphanumerical characters and the following : . - _");
+            showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Username and password can only contain alphanumerical characters and the following : . - _");
             return;
         }
 
@@ -83,6 +83,10 @@ public class LoginController {
         else if (check == 1){
             System.out.println("L'admin " +session.getAdminFirstName() + " " + session.getAdminLastName() + " est connecté!");
             SessionFacade.setConnectedUser();
+        }else{
+            System.out.println("Wrong password");
+            showAlert(Alert.AlertType.ERROR, owner, "Login error!", "Wrong username or password...");
+            return;
         }
         try {
             switchToHomeView();
