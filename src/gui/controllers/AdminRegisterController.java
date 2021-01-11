@@ -15,7 +15,6 @@ import java.io.IOException;
 
 /**
  * Class Controller to register an admin
- * @author emilie
  * @version 1.0
  */
 public class AdminRegisterController implements AlertShower{

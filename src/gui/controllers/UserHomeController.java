@@ -17,7 +17,6 @@ import java.util.Collection;
 
 /**
  * Class controller for the user home
- * @author
  * @version 1.0
  */
 public class UserHomeController {

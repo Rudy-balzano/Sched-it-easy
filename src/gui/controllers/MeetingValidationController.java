@@ -20,7 +20,6 @@ import java.util.HashMap;
 
 /**
  * Class controller for a meeting validation
- * @author emilie
  * @version 1.0
  */
 public class MeetingValidationController {

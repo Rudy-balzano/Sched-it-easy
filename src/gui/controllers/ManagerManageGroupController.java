@@ -20,7 +20,6 @@ import java.util.Collection;
 
 /**
  * Class Controller to manager a group for a manager
- * @author emilie
  * @version 1.0
  */
 public class ManagerManageGroupController {

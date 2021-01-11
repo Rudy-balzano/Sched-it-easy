@@ -24,7 +24,6 @@ import java.util.Collection;
 
 /**
  * Class controller for an invitation
- * @author
  * @version 1.0
  */
 public class InvitationController {

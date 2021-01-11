@@ -19,7 +19,6 @@ import java.io.IOException;
 
 /**
  * Class controller for ManagerInfoGroup
- * @author emilie
  * @version 1.0
  */
 public class ManagerInfoGroupController {

@@ -10,7 +10,6 @@ import java.io.IOException;
 
 /**
  * Class controller for the admin header
- * @author emilie jean
  * @version 1.0
  */
 public class AdminMenuController {

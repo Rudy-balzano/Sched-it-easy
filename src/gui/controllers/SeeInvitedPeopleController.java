@@ -24,7 +24,6 @@ import java.util.Collection;
 
 /**
  * Class controller to see invited people
- * @author
  * @version 1.0
  */
 public class SeeInvitedPeopleController {

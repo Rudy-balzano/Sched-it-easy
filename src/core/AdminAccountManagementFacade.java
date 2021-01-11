@@ -9,7 +9,6 @@ import java.util.Map;
 
 /**
  * Facade for the Account Management made by an Admin
- * @author emilie jean
  * @verson 1.0
  * @see gui.controllers.AdminRegisterController
  * @see gui.controllers.AdminUsersManagementController

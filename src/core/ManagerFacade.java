@@ -11,7 +11,6 @@ import java.util.HashMap;
 
 /**
  * Class that represent the facade for a manager
- * @author emilie jean
  * @version 1.0
  * @see gui.controllers.AccountValidationController
  * @see gui.controllers.MeetingValidationController

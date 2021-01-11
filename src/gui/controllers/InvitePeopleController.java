@@ -16,7 +16,6 @@ import java.util.Collection;
 
 /**
  * Class controller to invite People to a meeting
- * @author
  * @version 1.0
  */
 public class InvitePeopleController {

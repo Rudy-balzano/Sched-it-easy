@@ -5,7 +5,6 @@ import java.util.Collection;
 
 /**
  * Class that represent a group of user.
- * @author emilie jean
  * @version 1.0
  */
 public class Group {

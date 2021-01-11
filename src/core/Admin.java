@@ -2,7 +2,6 @@ package core;
 
 /**
  * Classe représentant un Admin pour notre application.
- * @author emilie jean
  * @version 1.0
  */
 public class Admin {

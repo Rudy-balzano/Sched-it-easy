@@ -3,7 +3,6 @@ import java.util.*;
 
 /**
  * Class that represents an User of our app
- * @author emilie jean
  * @version 1.0
  */
 public class User {

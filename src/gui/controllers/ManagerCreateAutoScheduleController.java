@@ -28,7 +28,6 @@ import java.util.HashMap;
 
 /**
  * Class controler to manage the creation of an autoSchedule
- * @author
  * @version 1.0
  */
 public class ManagerCreateAutoScheduleController {

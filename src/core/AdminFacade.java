@@ -5,7 +5,6 @@ import persist.FactoryDAOImpl;
 
 /**
  * This class is the Facade for an Admin
- * @author emilie jean
  * @version 1.0
  * @see gui.controllers.AdminSeeAccountController
  */

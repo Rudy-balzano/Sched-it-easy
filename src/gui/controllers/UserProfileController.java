@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 
 /**
  * Class controller for the user profile
- * @author emilie
  * @version 1.0
  */
 public class UserProfileController implements AlertShower{

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 /**
  * Class that represent a meeting
- * @author emilie jean
  * @version 1.0
  */
 public class Meeting {

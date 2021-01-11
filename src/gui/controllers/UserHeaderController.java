@@ -11,7 +11,6 @@ import java.io.IOException;
 
 /**
  * Class controller for the user header
- * @author emilie
  * @version 1.0
  */
 public class UserHeaderController {

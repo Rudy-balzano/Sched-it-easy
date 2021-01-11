@@ -14,7 +14,6 @@ import java.util.Collection;
 
 /**
  * Class controller for account validation
- * @author emilie
  * @version 1.0
  */
 public class AccountValidationController {

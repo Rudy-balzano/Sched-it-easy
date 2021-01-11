@@ -5,7 +5,6 @@ import persist.UserDAO;
 
 /**
  * Class that represents a facade for the profile managment
- * @author emilie jean
  * @version 1.0
  * @see gui.controllers.UserProfileController
  */

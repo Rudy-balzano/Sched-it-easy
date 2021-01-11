@@ -10,7 +10,6 @@ import java.util.*;
 
 /**
  * Class that represents the facade for a reservation
- * @author emilie jean
  * @version 1.0
  * @see gui.controllers.RoomReservationController
  * @see gui.controllers.CreateMeetingController

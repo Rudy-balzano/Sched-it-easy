@@ -26,7 +26,6 @@ import java.util.ArrayList;
 
 /**
  * Class Controller of create meeting
- * @author emilie
  * @version 1.0
  */
 public class CreateMeetingController implements AlertShower {

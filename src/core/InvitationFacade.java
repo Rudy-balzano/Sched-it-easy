@@ -17,7 +17,6 @@ import java.util.HashMap;
 
 /**
  * Class that represents a facade for an invitation
- * @author emilie jean
  * @version 1.0
  * @see gui.controllers.InvitationController
  * @see gui.controllers.InvitePeopleController

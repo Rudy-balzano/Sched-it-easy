@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 
 /**
  * Class controller to see the account of an admin
- * @author emilie
  * @version 1.0
  */
 public class AdminSeeAccountController implements AlertShower{

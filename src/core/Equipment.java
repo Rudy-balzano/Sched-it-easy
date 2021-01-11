@@ -2,7 +2,6 @@ package core;
 
 /**
  * Class that represent an equipment
- * @author emilie jean
  * @version 1.0
  */
 public class Equipment {

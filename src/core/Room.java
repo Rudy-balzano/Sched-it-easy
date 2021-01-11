@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 /**
  * Class that represents a Room
- * @author emilie jean
  * @version 1.0
  */
 public class Room {

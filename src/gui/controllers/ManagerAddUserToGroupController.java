@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
 
 /**
  * Class controller to manage the add of an user to a group
- * @author
  * @version 1.0
  */
 public class ManagerAddUserToGroupController {

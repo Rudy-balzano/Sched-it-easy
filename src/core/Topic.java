@@ -2,7 +2,6 @@ package core;
 
 /**
  * Class that represents a Topic (Subject)
- * @author emilie jean
  * @version 1.0
  */
 public class Topic {

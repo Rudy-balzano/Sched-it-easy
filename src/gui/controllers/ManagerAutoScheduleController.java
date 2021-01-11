@@ -20,7 +20,6 @@ import java.util.*;
 
 /**
  * Class controller to manage the autoSchedule
- * @author
  * @version 1.0
  */
 public class ManagerAutoScheduleController {
