@@ -8,11 +8,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.apache.commons.lang3.tuple.Pair;
 
 
 import java.io.IOException;
@@ -52,6 +57,35 @@ public class RoomReservationController implements AlertShower{
      * List of rented equipment
      */
     private static Collection<String> rentedEquipment = new ArrayList<>();
+
+
+
+    private static void displayPopupUserInfo(Room room){
+        //Popup that displays information about the selected rooms
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.setTitle("Rooms information");
+
+        Label name = new Label("name : " + room.getNameRoom());
+        Label capacity = new Label("capacity : " + room.getCapacity());
+        String equipmentList = "";
+        Collection<Pair<String, Integer>> eq = room.getEquipment();
+        for (Pair<String, Integer> e : eq){
+            equipmentList += " "+e.getKey()+" -> quantity : "+e.getValue()+" \n";
+        }
+        Label equipments = new Label("Equipments : \n"+equipmentList);
+
+        Button b = new Button("Close");
+        b.setOnAction(actionEvent -> popup.close());
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(name,capacity,equipments,b);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout,200,150);
+        popup.setScene(scene);
+        popup.showAndWait();
+
+    }
 
 
     /**
@@ -97,7 +131,15 @@ public class RoomReservationController implements AlertShower{
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
 
+            infoButton.setOnAction(e -> {
+                String username = label.getText();
+                Room room = roomTopicFacade.displayRoomByName(labelText);
+                displayPopupUserInfo(room);
+            });
+
             this.getChildren().addAll(label, infoButton);
+
+
 
         }
 
@@ -111,36 +153,6 @@ public class RoomReservationController implements AlertShower{
 
         loadEquipment();
         loadAvailableRoom();
-/*
-        tableView.setPlaceholder(new Label("No equipments selected"));
-
-
-        nameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Room, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Room, String> p) {
-                return new ReadOnlyObjectWrapper(p.getValue().getNameRoom());
-            }
-        });
-
-
-        capacityColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Room, Integer>, ObservableValue<Integer>>() {
-            public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Room, Integer> p) {
-                return new ReadOnlyObjectWrapper(p.getValue().getCapacity());
-            }
-        });
-
-
-        equipmentColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Room, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Room, String> p) {
-                String res ="";
-                for (int i = 0 ; i < p.getValue().getEquipment().size() ; i++){
-                    res += p.getValue().getEquipment().get(i).getKey()+"  "+p.getValue().getEquipment().get(i).getKey();
-                }
-                return new ReadOnlyObjectWrapper(res);
-            }
-        });
-
-        tableView.setItems(listTabView);
-*/
     }
 
     /**
@@ -176,35 +188,6 @@ public class RoomReservationController implements AlertShower{
 
         listViewRooms.setItems(listRooms);
     }
-/*
-    public void seeRoomsAvailable(ActionEvent actionEvent) {
-
-        ArrayList<String> equipmentChecked = new ArrayList<>();
-        ArrayList<Room> roomAvailable = new ArrayList<>();
-        for (int i = 0 ; i < listViewEquipment.getItems().size(); i++){
-            if (listViewEquipment.getItems().get(i).checkBox.isSelected()){
-                equipmentChecked.add(listViewEquipment.getItems().get(i).label.getText());
-            }
-        }
-        if (equipmentChecked.isEmpty()){
-            System.out.println("aucun equipement selectionnés");
-        }
-        else {
-            roomAvailable = reservationFacade.findRoomByEquipment(equipmentChecked);
-            listViewRoom = FXCollections.observableArrayList();
-
-            for (Room room : roomAvailable){
-                RoomHBoxCell r = new RoomHBoxCell(room.getNameRoom());
-                listViewRoom.add(r);
-            }
-
-            listViewRooms.setItems(listViewRoom);
-
-        }
-
-    }
-
- */
 
     /**
      * Function used to book a room for a meeting
@@ -245,6 +228,7 @@ public class RoomReservationController implements AlertShower{
      * @throws IOException
      */
     public void handleCancel() throws IOException {
+
         reservationFacade.deleteMeeting(meeting.getId());
 
         if(SessionFacade.getConnectedUser().getIsManager()){
@@ -252,7 +236,6 @@ public class RoomReservationController implements AlertShower{
         }
         else{
             Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.userHomeRoot))));
-
         }
     }
 

@@ -15,6 +15,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -65,10 +66,12 @@ public class MyCustomPopOverCreateMeetingView extends EntryPopOverPane {
 
         TimeField startTimeField = new TimeField();
         startTimeField.setValue(entry.getStartTime());
+        startTimeField.disableProperty().bind(entry.getCalendar().readOnlyProperty());
 
 
         TimeField endTimeField = new TimeField();
         endTimeField.setValue(entry.getEndTime());
+        endTimeField.disableProperty().bind(entry.getCalendar().readOnlyProperty());
 
 
         DatePicker startDatePicker = new DatePicker();
@@ -87,6 +90,8 @@ public class MyCustomPopOverCreateMeetingView extends EntryPopOverPane {
             startDatePicker.setValue(entry.getStartDate());
             endDatePicker.setValue(entry.getEndDate());
         });
+
+
 
         HBox startDateBox = new HBox(10);
         HBox endDateBox = new HBox(10);
@@ -109,6 +114,7 @@ public class MyCustomPopOverCreateMeetingView extends EntryPopOverPane {
 
         vBox.getChildren().add(gridPane1);
         vBox.getChildren().add(popOverTitledPane);
+        vBox.setAlignment(Pos.CENTER);
         getChildren().add(vBox);
 
     }

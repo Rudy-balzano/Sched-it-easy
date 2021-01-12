@@ -172,5 +172,4 @@ public class RoomTopicFacade {
             //TODO envoyer à la vue
         }
     }
-
 }

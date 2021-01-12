@@ -67,6 +67,7 @@ public class CreateMeetingController implements AlertShower {
         createMeetingButton.setDisable(true);
         bookRoomButton.setDisable(true);
 
+
         EventHandler<CalendarEvent> handler = evt -> handle(evt);
         calendar.addEventHandler(handler);
 
