@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
+import util.InputVerificator;
 
 import java.io.IOException;
 
@@ -80,6 +81,11 @@ public class AdminRegisterController implements AlertShower{
         String ConfirmPassword = confirmPassword.getText();
         Window owner = registerButton.getScene().getWindow();
 
+        while(!(InputVerificator.verifyUsernameAndPassword(Username) && InputVerificator.verifyUsernameAndPassword(Password) && InputVerificator.verifyTextOnlyInput(Firstname) && InputVerificator.verifyTextOnlyInput(Lastname))){
+            showAlert(Alert.AlertType.ERROR,owner,"Error","Username and password should can only contain alphanumerical characters and the following : . - _\nFirst and last names should only contain letters !");
+            return;
+        }
+
         if (!Password.equals(ConfirmPassword) ){
             System.out.println("password and confirmPassword are different !");
             this.showAlert(Alert.AlertType.ERROR,owner,"Error","Impossible to register, password and confirmPassword are different...");
@@ -104,5 +110,14 @@ public class AdminRegisterController implements AlertShower{
         }
 
 
+    }
+
+    /**
+     * Function used to initialize the view and setting up buttons.
+     */
+    @FXML
+    private void initialize(){
+        //Desactivate button while inputs are empty
+        registerButton.disableProperty().bind(username.textProperty().isEmpty().or(firstname.textProperty().isEmpty().or(lastname.textProperty().isEmpty().or(password.textProperty().isEmpty().or(confirmPassword.textProperty().isEmpty())))));
     }
 }
