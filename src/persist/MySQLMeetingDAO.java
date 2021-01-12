@@ -288,10 +288,76 @@ public class MySQLMeetingDAO implements MeetingDAO{
         boolean result2 = false;
 
         Meeting m = new Meeting();
+
         try{
+
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from waiting_meetings where id = '" + id + "';");
-            ResultSet rs2 = stmt.executeQuery("select * from waiting_meetingsWithRoom where id = '" + id + "';");
+            Statement stmt2 = connection.createStatement();
+            ResultSet rs2 = stmt2.executeQuery("select * from waiting_meetingWithRoom where idMeeting = '" + id + "';");
+
+
+            if(rs.next()) {
+                m.setId(rs.getInt(1));
+                LocalDate dateBegin = rs.getDate(2).toLocalDate();
+                m.setDateBegin(dateBegin);
+                LocalTime hourBegin = rs.getTime(3).toLocalTime();
+                m.setHourBegin(hourBegin);
+                LocalDate dateEnd = rs.getDate(4).toLocalDate();
+                m.setDateEnd(dateEnd);
+                LocalTime hourEnd = rs.getTime(5).toLocalTime();
+                m.setHourEnd(hourEnd);
+                m.setClientMeeting(userDAO.findByUsername((rs.getString(6))).getUserName());
+                m.setMeetingTopic(topicDAO.findBy(rs.getString(7)));
+                try{
+                    stmt.executeUpdate("insert into meetings (id, dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + id + "','" + m.getDateBegin() + "','" + m.getHourBegin() + "','" + m.getDateEnd() + "','" + m.getHourEnd() +"','"+ m.getClientMeeting() +"', '"+ m.getMeetingTopic().getNameTopic() +"');");
+                    result1 = true;
+                } catch (SQLException ex){
+                    System.out.println(ex.getSQLState());
+                }
+                try{
+                    stmt.executeUpdate("DELETE FROM waiting_meetings WHERE id = '" + id + "';");
+                    result2 = true;
+
+                } catch (SQLException ex){
+                    System.out.println(ex.getSQLState());
+                }
+            }
+
+            if(rs2.next()){
+
+                int idMeeting = rs2.getInt(1);
+                String name = rs2.getString(2);
+
+                try{
+
+                    stmt.executeUpdate("insert meetingWithRoom (idMeeting, nameRoom) values('" + idMeeting + "','" + name + "');");
+                    result1 = true;
+
+                } catch (SQLException ex){
+                    System.out.println(ex.getSQLState());
+                }
+                try{
+                    System.out.println("zzzzzz");
+                    stmt.executeUpdate("DELETE FROM waiting_meetingWithRoom WHERE idMeeting = '" + idMeeting + "';");
+                    System.out.println("zzzzzz");
+                    result2 = true;
+                } catch (SQLException ex){
+                    System.out.println(ex.getSQLState());
+                }
+            }
+        } catch (SQLException ex){
+            System.out.println("SQL request error");
+        }
+        return result1 & result2;
+
+/*
+        try{
+
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from waiting_meetings where id = '" + id + "';");
+            ResultSet rs2 = stmt.executeQuery("select * from waiting_meetingWithRoom where idMeeting = '" + id + "';");
+
             if(rs.next()) {
                 m.setId(rs.getInt(1));
                 LocalDate dateBegin = rs.getDate(2).toLocalDate();
@@ -307,14 +373,14 @@ public class MySQLMeetingDAO implements MeetingDAO{
             }
 
             try{
-                Statement stmt1 = connection.createStatement();
-                stmt1.executeUpdate("insert into meetings (id, dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + id + "','" + m.getDateBegin() + "','" + m.getHourBegin() + "','" + m.getDateEnd() + "','" + m.getHourEnd() +"','"+ m.getClientMeeting() +"', '"+ m.getMeetingTopic().getNameTopic() +"');");
-                result1 = true;
 
+                stmt.executeUpdate("insert into meetings (id, dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + id + "','" + m.getDateBegin() + "','" + m.getHourBegin() + "','" + m.getDateEnd() + "','" + m.getHourEnd() +"','"+ m.getClientMeeting() +"', '"+ m.getMeetingTopic().getNameTopic() +"');");
+
+                result1 = true;
                 try{
-                    Statement stmt2 = connection.createStatement();
-                    stmt2.executeUpdate("DELETE FROM waiting_meetings WHERE id = '" + id + "';");
+                    stmt.executeUpdate("DELETE FROM waiting_meetings WHERE id = '" + id + "';");
                     result2 = true;
+
                 } catch (SQLException ex){
                     System.out.println(ex.getSQLState());
                 }
@@ -327,13 +393,12 @@ public class MySQLMeetingDAO implements MeetingDAO{
                 String name = rs2.getString(2);
 
                 try{
-                    Statement stmt1 = connection.createStatement();
-                    stmt1.executeUpdate("insert meetingsWithRoom (idMeeting, nameRoom) values('" + idMeeting + "','" + name + "');");
+
+                    stmt.executeUpdate("insert meetingWithRoom (idMeeting, nameRoom) values('" + idMeeting + "','" + name + "');");
                     result1 = true;
 
                     try{
-                        Statement stmt2 = connection.createStatement();
-                        stmt2.executeUpdate("DELETE FROM waiting_meetingsWithRoom WHERE id = '" + idMeeting + "';");
+                        stmt.executeUpdate("DELETE FROM waiting_meetingWithRoom WHERE id = '" + idMeeting + "';");
                         result2 = true;
                     } catch (SQLException ex){
                         System.out.println(ex.getSQLState());
@@ -345,7 +410,8 @@ public class MySQLMeetingDAO implements MeetingDAO{
         } catch (SQLException ex){
             System.out.println("SQL request error");
         }
-        return result1 & result2;
+
+ */
     }
 
     @Override

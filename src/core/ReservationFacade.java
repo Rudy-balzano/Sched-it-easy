@@ -161,13 +161,11 @@ public class ReservationFacade {
      */
     public Collection<String> getAvailableRooms(int capacity, Meeting m){
 
-        RoomTopicFacade rtfacade = new RoomTopicFacade();
-
-        Collection<String> res = rtfacade.getRooms();
+        Collection<String> res = topicFacade.getRooms();
         HashMap<Integer,String> takenRooms = roomDAO.getAllTakenRooms();
 
         for (String i : res){
-            if(rtfacade.displayRoomByName(i).getCapacity() >= capacity) {
+            if(topicFacade.displayRoomByName(i).getCapacity() >= capacity) {
                 for (Integer j : takenRooms.keySet()) {
                     if (i.equals(takenRooms.get(j))) {
                         Meeting m2 = findMeetingById(j);
