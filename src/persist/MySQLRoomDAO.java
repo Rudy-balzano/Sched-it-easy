@@ -172,13 +172,16 @@ public class MySQLRoomDAO implements RoomDAO {
     @Override
     public ArrayList<String> findAll() {
         ArrayList<String> rooms = new ArrayList<>();
+        String room=null;
         try{
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from rooms ;");
+
             while(rs.next()){
-                String room = rs.getString(1);
+                room = rs.getString(1);
                 rooms.add(room);
             }
+
         } catch (SQLException ex){
             System.out.println(ex.getSQLState());
         }
@@ -211,10 +214,21 @@ public class MySQLRoomDAO implements RoomDAO {
         HashMap<Integer,String> res = new HashMap<>();
 
         try{
+            System.out.println("azzz");
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from meetingWithRoom;");
-            while(rs.next()){
-                res.put(rs.getInt(1),rs.getString(2));
+            ResultSet rs1 = stmt.executeQuery("select * from meetingWithRoom;");
+            while(rs1.next()){
+                res.put(rs1.getInt(1),rs1.getString(2));
+            }
+
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        try{
+            Statement stmt = connection.createStatement();
+            ResultSet rs2 = stmt.executeQuery("select * from waiting_meetingWithRoom;");
+            while(rs2.next()){
+                res.put(rs2.getInt(1),rs2.getString(2));
             }
         } catch (SQLException throwables){
             throwables.printStackTrace();
