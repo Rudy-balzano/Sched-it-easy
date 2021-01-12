@@ -1,6 +1,7 @@
 package persist;
 
 import core.Admin;
+import util.PasswordUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -50,8 +51,10 @@ public class MySQLAdminDAO implements AdminDAO {
         boolean result = false;
 
         try{
+            //Hashing password
+            String password = PasswordUtil.encode(mdp);
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into admins (username,password,firstname,lastname) values('" + username + "','" + mdp + "','" + first + "','" + last +"');");
+            stmt.executeUpdate("insert into admins (username,password,firstname,lastname) values('" + username + "','" + password + "','" + first + "','" + last +"');");
             result = true;
         } catch (SQLException ex){
             ex.printStackTrace();

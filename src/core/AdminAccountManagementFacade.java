@@ -84,6 +84,7 @@ public class AdminAccountManagementFacade {
      * @return True if the new admin account has been created, false if not.
      */
     public boolean registerNewAdmin(String username, String firstName,String lastName, String password){
+
         return adminDAO.insertAdmin(username,firstName,lastName,password);
     }
 
