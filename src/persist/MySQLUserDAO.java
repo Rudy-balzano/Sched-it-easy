@@ -392,8 +392,8 @@ public class MySQLUserDAO implements UserDAO {
             ResultSet rs1 = stmt1.executeQuery("select * from users where username = '" + username + "';");
             ResultSet rs2 = stmt2.executeQuery("select * from waiting_users where username = '" + username + "';");
             return (rs1.next() || rs2.next());
-        } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
             return true;
         }
     }

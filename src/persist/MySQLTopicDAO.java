@@ -34,7 +34,7 @@ public class MySQLTopicDAO implements TopicDAO {
             stmt.executeUpdate("insert into topics (nameTopic,description) values('" + nameTopic + "','" + descriptionTopic + "');");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return result;
     }
@@ -48,7 +48,7 @@ public class MySQLTopicDAO implements TopicDAO {
             stmt.executeUpdate("UPDATE topics SET description = '" + description + "' WHERE nameTopic = '" + name + "';");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return result;
     }
@@ -61,7 +61,7 @@ public class MySQLTopicDAO implements TopicDAO {
             stmt.executeUpdate("DELETE FROM topics WHERE nameTopic = '" + name+ "';");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return result;
     }
@@ -76,7 +76,7 @@ public class MySQLTopicDAO implements TopicDAO {
                 t = new Topic(rs.getString(1),rs.getString(2));
             }
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return t;
     }
@@ -92,7 +92,7 @@ public class MySQLTopicDAO implements TopicDAO {
                 topics.add(t);
             }
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return topics;
     }

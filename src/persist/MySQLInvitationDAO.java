@@ -51,7 +51,7 @@ public class MySQLInvitationDAO implements InvitationDAO{
             stmt.executeUpdate("insert into invitations (invitedUsername, state, idMeetingInvitation) values('" + invitedUser + "','" + state + "','" + meetingInvitation + "');");
             result = true;
         } catch (SQLException ex) {
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
 
         return result;
@@ -66,7 +66,7 @@ public class MySQLInvitationDAO implements InvitationDAO{
             stmt.executeUpdate("insert into invitationGroups (groupName, idMeeting) values('" + groupName + "','" + meetingInvitation + "');");
             result = true;
         } catch (SQLException ex) {
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
 
         return result;
@@ -85,7 +85,7 @@ public class MySQLInvitationDAO implements InvitationDAO{
                 i.setMeetingInvitation(meetingDAO.findByID(rs.getInt(3)));
             }
         } catch (SQLException ex){
-            System.out.println("SQL request error");
+            ex.printStackTrace();
         }
         return i;
     }
@@ -150,7 +150,6 @@ public class MySQLInvitationDAO implements InvitationDAO{
                 i.setInvitedUser(userDAO.findByUsername(rs.getString(1)));
                 i.setState(rs.getInt(2));
                 i.setMeetingInvitation(meetingDAO.findByID(rs.getInt(3)));
-                System.out.println(i.getMeetingInvitation().getClientMeeting());
                 res.add(i);
             }
         } catch (SQLException throwables){
@@ -172,7 +171,6 @@ public class MySQLInvitationDAO implements InvitationDAO{
                 i.setInvitedUser(userDAO.findByUsername(rs.getString(1)));
                 i.setState(rs.getInt(2));
                 i.setMeetingInvitation(meetingDAO.findByID(rs.getInt(3)));
-                System.out.println(i.getMeetingInvitation().getClientMeeting());
                 res.add(i);
             }
         } catch (SQLException throwables){

@@ -43,7 +43,7 @@ public class MySQLRoomDAO implements RoomDAO {
             stmt.executeUpdate("insert into rooms (nameRoom,capacity) values('" + nameRoom + "','" + capacity + "');");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return result;
     }
@@ -62,7 +62,7 @@ public class MySQLRoomDAO implements RoomDAO {
             stmt.executeUpdate("insert into roomEquipments (nameRoom, nameEquipment, quantity) values('" + nameRoom + "','" + nameEquipment + "', '" +quantity + "');");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return result;
     }
@@ -88,7 +88,7 @@ public class MySQLRoomDAO implements RoomDAO {
             result1 = true;
             result2 = updateEquipmentsForRoom(name, equipments);
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return result1 & result2;
     }
@@ -111,7 +111,7 @@ public class MySQLRoomDAO implements RoomDAO {
                 result2 = insertEquipmentForRoom(name, equipment.getKey(), equipment.getValue());
             }
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return result1 & result2;
     }
@@ -126,7 +126,7 @@ public class MySQLRoomDAO implements RoomDAO {
             result1 = true;
             result2 = deleteEquipmentForRoom(name);
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return result1 & result2;
     }
@@ -143,7 +143,7 @@ public class MySQLRoomDAO implements RoomDAO {
             stmt.executeUpdate("DELETE FROM roomEquipments WHERE nameRoom = '" + name + "';");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return result;
     }
@@ -162,7 +162,7 @@ public class MySQLRoomDAO implements RoomDAO {
                 room.setEquipment(findEquipmentsForRoom(rs.getString(1)));
             }
         } catch (SQLException ex){
-            System.out.println("SQL request error");
+            ex.printStackTrace();
         }
 
 
@@ -183,7 +183,7 @@ public class MySQLRoomDAO implements RoomDAO {
             }
 
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return rooms;
     }
@@ -214,7 +214,6 @@ public class MySQLRoomDAO implements RoomDAO {
         HashMap<Integer,String> res = new HashMap<>();
 
         try{
-            System.out.println("azzz");
             Statement stmt = connection.createStatement();
             ResultSet rs1 = stmt.executeQuery("select * from meetingWithRoom;");
             while(rs1.next()){

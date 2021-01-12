@@ -39,7 +39,7 @@ public class MySQLAdminDAO implements AdminDAO {
                 a.setLastName(rs.getString(4));
             }
         } catch (SQLException ex){
-            System.out.println("SQL request error");
+            ex.printStackTrace();
         }
 
         return a;
@@ -54,7 +54,7 @@ public class MySQLAdminDAO implements AdminDAO {
             stmt.executeUpdate("insert into admins (username,password,firstname,lastname) values('" + username + "','" + mdp + "','" + first + "','" + last +"');");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return result;
     }

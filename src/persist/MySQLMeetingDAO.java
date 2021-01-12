@@ -186,7 +186,6 @@ public class MySQLMeetingDAO implements MeetingDAO{
                 m.setDateEnd(dateEnd);
                 LocalTime hourEnd = rs.getTime(5).toLocalTime();
                 m.setHourEnd(hourEnd);
-                System.out.println(m.getId() + " " + m.getDateBegin() + " " + m.getHourBegin() + " " + m.getDateEnd() + " " + m.getHourEnd());
                 m.setClientMeeting(userDAO.findByUsername((rs.getString(6))).getUserName());
                 m.setMeetingTopic(topicDAO.findBy(rs.getString(7)));
             }
@@ -313,14 +312,14 @@ public class MySQLMeetingDAO implements MeetingDAO{
                     stmt.executeUpdate("insert into meetings (id, dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + id + "','" + m.getDateBegin() + "','" + m.getHourBegin() + "','" + m.getDateEnd() + "','" + m.getHourEnd() +"','"+ m.getClientMeeting() +"', '"+ m.getMeetingTopic().getNameTopic() +"');");
                     result1 = true;
                 } catch (SQLException ex){
-                    System.out.println(ex.getSQLState());
+                    ex.printStackTrace();
                 }
                 try{
                     stmt.executeUpdate("DELETE FROM waiting_meetings WHERE id = '" + id + "';");
                     result2 = true;
 
                 } catch (SQLException ex){
-                    System.out.println(ex.getSQLState());
+                    ex.printStackTrace();
                 }
             }
 
@@ -335,83 +334,20 @@ public class MySQLMeetingDAO implements MeetingDAO{
                     result1 = true;
 
                 } catch (SQLException ex){
-                    System.out.println(ex.getSQLState());
+                    ex.printStackTrace();
                 }
                 try{
-                    System.out.println("zzzzzz");
                     stmt.executeUpdate("DELETE FROM waiting_meetingWithRoom WHERE idMeeting = '" + idMeeting + "';");
-                    System.out.println("zzzzzz");
                     result2 = true;
                 } catch (SQLException ex){
-                    System.out.println(ex.getSQLState());
+                    ex.printStackTrace();
                 }
             }
         } catch (SQLException ex){
-            System.out.println("SQL request error");
+            ex.printStackTrace();
         }
         return result1 & result2;
 
-/*
-        try{
-
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from waiting_meetings where id = '" + id + "';");
-            ResultSet rs2 = stmt.executeQuery("select * from waiting_meetingWithRoom where idMeeting = '" + id + "';");
-
-            if(rs.next()) {
-                m.setId(rs.getInt(1));
-                LocalDate dateBegin = rs.getDate(2).toLocalDate();
-                m.setDateBegin(dateBegin);
-                LocalTime hourBegin = rs.getTime(3).toLocalTime();
-                m.setHourBegin(hourBegin);
-                LocalDate dateEnd = rs.getDate(4).toLocalDate();
-                m.setDateEnd(dateEnd);
-                LocalTime hourEnd = rs.getTime(5).toLocalTime();
-                m.setHourEnd(hourEnd);
-                m.setClientMeeting(userDAO.findByUsername((rs.getString(6))).getUserName());
-                m.setMeetingTopic(topicDAO.findBy(rs.getString(7)));
-            }
-
-            try{
-
-                stmt.executeUpdate("insert into meetings (id, dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + id + "','" + m.getDateBegin() + "','" + m.getHourBegin() + "','" + m.getDateEnd() + "','" + m.getHourEnd() +"','"+ m.getClientMeeting() +"', '"+ m.getMeetingTopic().getNameTopic() +"');");
-
-                result1 = true;
-                try{
-                    stmt.executeUpdate("DELETE FROM waiting_meetings WHERE id = '" + id + "';");
-                    result2 = true;
-
-                } catch (SQLException ex){
-                    System.out.println(ex.getSQLState());
-                }
-            } catch (SQLException ex){
-                System.out.println(ex.getSQLState());
-            }
-            if(rs2.next()){
-
-                int idMeeting = rs2.getInt(1);
-                String name = rs2.getString(2);
-
-                try{
-
-                    stmt.executeUpdate("insert meetingWithRoom (idMeeting, nameRoom) values('" + idMeeting + "','" + name + "');");
-                    result1 = true;
-
-                    try{
-                        stmt.executeUpdate("DELETE FROM waiting_meetingWithRoom WHERE id = '" + idMeeting + "';");
-                        result2 = true;
-                    } catch (SQLException ex){
-                        System.out.println(ex.getSQLState());
-                    }
-                } catch (SQLException ex){
-                    System.out.println(ex.getSQLState());
-                }
-            }
-        } catch (SQLException ex){
-            System.out.println("SQL request error");
-        }
-
- */
     }
 
     @Override
@@ -423,7 +359,7 @@ public class MySQLMeetingDAO implements MeetingDAO{
             stmt.executeUpdate("DELETE FROM waiting_meetings WHERE id = '" + id + "';");
             result = true;
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
 
         return result;
