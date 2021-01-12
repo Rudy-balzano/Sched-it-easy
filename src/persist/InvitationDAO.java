@@ -65,5 +65,12 @@ public interface InvitationDAO {
      */
     ArrayList<String> getInvitedGroups(int idMeeting);
 
+    /**
+     * Set a bill to paid
+     * @param idMeeting
+     * @param username
+     */
+    void setPaid(int idMeeting, String username);
+
 
 }

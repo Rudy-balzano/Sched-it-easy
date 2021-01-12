@@ -128,6 +128,17 @@ public class MySQLInvitationDAO implements InvitationDAO{
     }
 
     @Override
+    public void setPaid(int idMeeting, String username) {
+
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("UPDATE rent_equipments SET paid = 1 where idMeeting = "+idMeeting+" and username = '"+username+"';");
+        } catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
     public ArrayList<Invitation> findAllInvitation(String username){
         ArrayList<Invitation> res = new ArrayList<>();
 
@@ -169,5 +180,7 @@ public class MySQLInvitationDAO implements InvitationDAO{
         }
         return res;
     }
+
+
 
 }

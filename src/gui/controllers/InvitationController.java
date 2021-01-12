@@ -99,6 +99,8 @@ public class InvitationController {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    facade.setPaid(idMeeting);
+                    refresh();
                 });
             }
 
@@ -142,9 +144,11 @@ public class InvitationController {
         Collection<Integer> meetingsWithRoom = facade.allMeetingsWithRoom();
 
         for(Integer i : meetingsWithRoom){
-            String str = facade.notifFacture(facade.getRentedEquipment(i),i);
-            HBoxCell hbc = new HBoxCell(str);
-            itemsInv.add(hbc);
+            if(!facade.getRentedEquipment(i).isEmpty()) {
+                String str = facade.notifFacture(facade.getRentedEquipment(i), i);
+                HBoxCell hbc = new HBoxCell(str);
+                itemsInv.add(hbc);
+            }
         }
 
         listwaitingsInvitation.setItems(itemsInv);
@@ -164,12 +168,13 @@ public class InvitationController {
         }
 
         Collection<Integer> meetingsWithRoom = facade.allMeetingsWithRoom();
-        System.out.println(meetingsWithRoom);
 
         for(Integer i : meetingsWithRoom){
-           String str = facade.notifFacture(facade.getRentedEquipment(i),i);
-            HBoxCell hbc = new HBoxCell(str);
-            itemsInv.add(hbc);
+            if(!facade.getRentedEquipment(i).isEmpty()) {
+                String str = facade.notifFacture(facade.getRentedEquipment(i), i);
+                HBoxCell hbc = new HBoxCell(str);
+                itemsInv.add(hbc);
+            }
         }
         listwaitingsInvitation.setItems(itemsInv);
     }

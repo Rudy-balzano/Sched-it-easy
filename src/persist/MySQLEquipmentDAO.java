@@ -85,9 +85,11 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
 
         try{
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select equipmentName from rent_equipments where idMeeting = " + idMeeting + " and username = '"+username+"';");
+            ResultSet rs = stmt.executeQuery("select * from rent_equipments where idMeeting = " + idMeeting + " and username = '"+username+"';");
             while(rs.next()){
-               rentedEquipment.add(findBy(rs.getString(1)));
+                if(rs.getInt(4) == 0) {
+                    rentedEquipment.add(findBy(rs.getString(3)));
+                }
             }
         } catch (SQLException throwables){
             throwables.printStackTrace();

@@ -287,4 +287,8 @@ public class InvitationFacade {
         document.save("BillForMeeting"+idMeeting+"_"+SessionFacade.getConnectedUser().getUserName()+".pdf");
         document.close();
     }
+
+    public void setPaid(int idMeeting){
+        invitationDAO.setPaid(idMeeting,SessionFacade.getConnectedUser().getUserName());
+    }
 }
