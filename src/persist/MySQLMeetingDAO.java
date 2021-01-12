@@ -111,6 +111,7 @@ public class MySQLMeetingDAO implements MeetingDAO{
 
         try {
             Statement stmt = connection.createStatement();
+            System.out.println(idMeeting);
             stmt.executeUpdate("insert into waiting_meetingWithRoom (idMeeting, nameRoom) values('" + idMeeting + "','" + nameRoom + "');");
             result = true;
         } catch (SQLException throwables) {
@@ -290,6 +291,7 @@ public class MySQLMeetingDAO implements MeetingDAO{
         try{
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from waiting_meetings where id = '" + id + "';");
+            ResultSet rs2 = stmt.executeQuery("select * from waiting_meetingsWithRoom where id = '" + id + "';");
             if(rs.next()) {
                 m.setId(rs.getInt(1));
                 LocalDate dateBegin = rs.getDate(2).toLocalDate();
@@ -306,9 +308,7 @@ public class MySQLMeetingDAO implements MeetingDAO{
 
             try{
                 Statement stmt1 = connection.createStatement();
-                //boolean res = insert( m.getDateBegin(), m.getHourBegin(),m.getDateEnd() ,m.getHourEnd() ,m.getClientMeeting(), m.getMeetingTopic().getNameTopic());
                 stmt1.executeUpdate("insert into meetings (id, dateBegin, hourBegin, dateEnd, hourEnd, userCreator, topic) values('" + id + "','" + m.getDateBegin() + "','" + m.getHourBegin() + "','" + m.getDateEnd() + "','" + m.getHourEnd() +"','"+ m.getClientMeeting() +"', '"+ m.getMeetingTopic().getNameTopic() +"');");
-                stmt1.executeUpdate("insert into meetingAttendence (username, idMeeting) values('" + m.getClientMeeting() + "','" + id + "');");
                 result1 = true;
 
                 try{
@@ -320,6 +320,27 @@ public class MySQLMeetingDAO implements MeetingDAO{
                 }
             } catch (SQLException ex){
                 System.out.println(ex.getSQLState());
+            }
+            if(rs2.next()){
+
+                int idMeeting = rs2.getInt(1);
+                String name = rs2.getString(2);
+
+                try{
+                    Statement stmt1 = connection.createStatement();
+                    stmt1.executeUpdate("insert meetingsWithRoom (idMeeting, nameRoom) values('" + idMeeting + "','" + name + "');");
+                    result1 = true;
+
+                    try{
+                        Statement stmt2 = connection.createStatement();
+                        stmt2.executeUpdate("DELETE FROM waiting_meetingsWithRoom WHERE id = '" + idMeeting + "';");
+                        result2 = true;
+                    } catch (SQLException ex){
+                        System.out.println(ex.getSQLState());
+                    }
+                } catch (SQLException ex){
+                    System.out.println(ex.getSQLState());
+                }
             }
         } catch (SQLException ex){
             System.out.println("SQL request error");
