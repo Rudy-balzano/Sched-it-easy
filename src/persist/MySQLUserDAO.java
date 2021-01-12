@@ -60,9 +60,6 @@ public class MySQLUserDAO implements UserDAO {
         allMeetings.addAll(findMeetingCreatedByUsername(username));
         allMeetings.addAll(findInvitationMeetingByUsername(username));
 
-        System.out.println(allMeetings.isEmpty());
-
-
         return allMeetings;
     }
 

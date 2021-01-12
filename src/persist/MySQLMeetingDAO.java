@@ -273,6 +273,8 @@ public class MySQLMeetingDAO implements MeetingDAO{
                 String str = rs.getString(2) + " " + rs.getInt(1);
                 res.put(rs.getInt(1), str);
             }
+
+
         } catch (SQLException throwables){
             throwables.printStackTrace();
         }

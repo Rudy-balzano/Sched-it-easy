@@ -88,7 +88,6 @@ public class ReservationFacade {
      */
     public boolean createMeetingWithRoom(int idMeeting, String nameRoom){
         User creator = SessionFacade.getConnectedUser();
-        String creatorUsername = creator.getUserName();
         boolean check = false;
         if (creator.getIsManager()){
             check = meetingDAO.insertMeetingWithRoom(idMeeting,nameRoom);
@@ -140,6 +139,10 @@ public class ReservationFacade {
      */
     public Meeting findMeetingById(int id){
         return meetingDAO.findByID(id);
+    }
+
+    public Meeting findWaitingMeetingById(int idMeeting) {
+        return meetingDAO.findWaitingMeetingByID(idMeeting);
     }
 
     /**

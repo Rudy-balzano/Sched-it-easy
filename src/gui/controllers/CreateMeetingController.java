@@ -179,10 +179,12 @@ public class CreateMeetingController implements AlertShower {
         if (!uniqueMeeting.getTitle().equals("Add the topic !")){
             idMeeting = reservationfacade.createMeetingAndGetId(uniqueMeeting.getStartDate(), uniqueMeeting.getStartTime(), uniqueMeeting.getEndDate(), uniqueMeeting.getEndTime(), uniqueMeeting.getTitle());
             if (idMeeting!=-1){
+                if (SessionFacade.getConnectedUser().getIsManager()){
+                    meeting = reservationfacade.findMeetingById(idMeeting);
+                }else {
+                    meeting = reservationfacade.findWaitingMeetingById(idMeeting);
+                }
                 System.out.println("Meeting inserted !");
-                meeting = reservationfacade.findMeetingById(idMeeting);
-                System.out.println(idMeeting);
-
                 Main.scheditWindow.setScene(new Scene(FXMLLoader.load(getClass().getResource(Roots.bookRoomRoot))));
             }
             else {
@@ -205,14 +207,11 @@ public class CreateMeetingController implements AlertShower {
 
         createMeeting = reservationfacade.createMeeting(uniqueMeeting.getStartDate(), uniqueMeeting.getStartTime(), uniqueMeeting.getEndDate(), uniqueMeeting.getEndTime(), uniqueMeeting.getTitle());
 
-        //Window owner = listEntries.getScene.getWindow();
         if (createMeeting){
             System.out.println("Meeting inserted !");
-            // this.showAlert(Alert.AlertType.CONFIRMATION,owner,"Success","Meeting successfully inserted !");
         }
         else {
             System.out.println("Meeting not inserted ...");
-            //this.showAlert(Alert.AlertType.ERROR,owner,"Error","Impossible to insert the meeting");
         }
     }
 }

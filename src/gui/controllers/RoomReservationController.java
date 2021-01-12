@@ -217,6 +217,7 @@ public class RoomReservationController implements AlertShower{
         if (listViewRooms.getSelectionModel().getSelectedItem()!=null){
             boolean res = false;
             String nameRoom = listViewRooms.getSelectionModel().getSelectedItem().label.getText();
+            System.out.println(nameRoom);
             res = reservationFacade.createMeetingWithRoom(meeting.getId(), nameRoom);
             if (res){
                 reservationFacade.rentEquipment(rentedEquipment, meeting.getId());
@@ -233,6 +234,8 @@ public class RoomReservationController implements AlertShower{
                 System.out.println("not added ...");
                 this.showAlert(Alert.AlertType.ERROR,owner,"Error"," Impossible to add this meeting with room d !");
             }
+        }else{
+            this.showAlert(Alert.AlertType.ERROR,owner,"Error"," Please select a room !");
         }
     }
 

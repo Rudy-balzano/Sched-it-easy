@@ -59,7 +59,6 @@ public class ManagerFacade {
      * @param id
      */
     public void validationMeeting(Integer id){
-
         meetingDAO.validateMeeting(id);
     }
 
