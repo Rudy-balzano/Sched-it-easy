@@ -6,17 +6,33 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="427.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.InvitePeopleController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.InvitePeopleController">
    <children>
-      <Label layoutX="263.0" layoutY="42.0" prefHeight="29.0" prefWidth="108.0" text="Invite people ">
+      <Label layoutX="97.0" layoutY="33.0" prefHeight="30.0" prefWidth="199.0" text="Invite people : ">
          <font>
-            <Font size="18.0" />
+            <Font size="25.0" />
          </font>
       </Label>
-      <ListView fx:id="listViewGroup" layoutX="89.0" layoutY="148.0" prefHeight="200.0" prefWidth="200.0" />
-      <ListView fx:id="listViewPeople" layoutX="347.0" layoutY="148.0" prefHeight="200.0" prefWidth="200.0" />
-      <TextField fx:id="searchBar" layoutX="237.0" layoutY="98.0" onAction="#research" />
-      <Button layoutX="161.0" layoutY="373.0" mnemonicParsing="false" text="Go back" onAction="#handleCancel"/>
+      <ListView fx:id="listViewGroup" layoutX="96.0" layoutY="197.0" prefHeight="407.0" prefWidth="431.0" />
+      <ListView fx:id="listViewPeople" layoutX="599.0" layoutY="203.0" prefHeight="407.0" prefWidth="431.0" />
+      <TextField fx:id="searchBar" layoutX="228.0" layoutY="93.0" onAction="#research" prefHeight="27.0" prefWidth="290.0" />
+      <Button layoutX="255.0" layoutY="630.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="36.0" prefWidth="82.0" text="Go back" />
+      <Text layoutX="97.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search : ">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="599.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Users : ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="96.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Groups : ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

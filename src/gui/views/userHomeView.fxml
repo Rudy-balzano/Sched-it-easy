@@ -3,10 +3,9 @@
 <?import com.calendarfx.view.page.WeekPage?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.UserHomeController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.UserHomeController">
    <children>
       <fx:include source="userMenu.fxml" />
-      <WeekPage fx:id="weekPage" layoutX="2.0" layoutY="34.0" prefHeight="366.0" prefWidth="600.0" />
+      <WeekPage fx:id="weekPage" layoutY="28.0" prefHeight="672.0" prefWidth="1100.0" />
    </children>
 </AnchorPane>

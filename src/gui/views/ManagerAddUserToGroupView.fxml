@@ -4,15 +4,23 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ManagerAddUserToGroupController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ManagerAddUserToGroupController">
    <children>
-      <ListView fx:id="listViewUsers" layoutX="120.0" layoutY="84.0" prefHeight="232.0" prefWidth="360.0" />
-      <Button layoutX="180.0" layoutY="333.0" mnemonicParsing="false" onAction="#cancel" prefHeight="39.0" prefWidth="86.0" text="Cancel" />
-      <Button layoutX="344.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleAddUsers" prefHeight="39.0" prefWidth="98.0" text="Add users" />
-      <TextField fx:id="searchButton" layoutX="284.0" layoutY="47.0" onAction="#handleSearch" prefHeight="26.0" prefWidth="188.0" />
-      <Text layoutX="151.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search by last name : " wrappingWidth="141.0" />
+      <ListView fx:id="listViewUsers" layoutX="67.0" layoutY="172.0" prefHeight="408.0" prefWidth="991.0" />
+      <Button layoutX="208.0" layoutY="619.0" mnemonicParsing="false" onAction="#cancel" prefHeight="39.0" prefWidth="86.0" text="Cancel" />
+      <Button layoutX="840.0" layoutY="619.0" mnemonicParsing="false" onAction="#handleAddUsers" prefHeight="39.0" prefWidth="98.0" text="Add users" />
+      <TextField fx:id="searchButton" layoutX="206.0" layoutY="122.0" onAction="#handleSearch" prefHeight="26.0" prefWidth="188.0" />
+      <Text layoutX="67.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search  : " wrappingWidth="141.0">
+         <font>
+            <Font size="15.0" />
+         </font></Text>
+      <Text layoutX="67.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add users to groups : ">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.InvitationController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.InvitationController">
    <children>
       <fx:include source="userMenu.fxml" />
-      <Label layoutX="254.0" layoutY="48.0" text="Notifications">
+      <Label layoutX="64.0" layoutY="72.0" text="All your invitations and bills : ">
          <font>
-            <Font name="System Bold" size="17.0" />
+            <Font name="System Bold" size="25.0" />
          </font></Label>
-      <ListView fx:id="listwaitingsInvitation" layoutX="50.0" layoutY="95.0" prefHeight="250.0" prefWidth="500.0" />
+      <ListView fx:id="listwaitingsInvitation" layoutX="64.0" layoutY="144.0" prefHeight="490.0" prefWidth="972.0" />
    </children>
 </AnchorPane>

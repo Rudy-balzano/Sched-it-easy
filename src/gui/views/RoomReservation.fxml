@@ -4,14 +4,21 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.RoomReservationController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.RoomReservationController">
    <children>
-      <ListView fx:id="listViewEquipment" layoutX="23.0" layoutY="100.0" prefHeight="179.0" prefWidth="200.0" />
-      <Label layoutX="27.0" layoutY="73.0" text="Equipment wanted" />
-      <Button fx:id="createMeetingButton" layoutX="407.0" layoutY="309.0" mnemonicParsing="false" onAction="#handleCreateMeeting" text="Book room" />
-      <Button fx:id="cancelButton" layoutX="281.0" layoutY="308.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
-      <Label layoutX="309.0" layoutY="73.0" text="Rooms available" />
-      <ListView fx:id="listViewRooms" layoutX="305.0" layoutY="100.0" prefHeight="179.0" prefWidth="252.0" />
+      <ListView fx:id="listViewEquipment" layoutX="77.0" layoutY="139.0" prefHeight="457.0" prefWidth="430.0" />
+      <Label layoutX="77.0" layoutY="73.0" text="Equipment wanted : ">
+         <font>
+            <Font size="25.0" />
+         </font></Label>
+      <Button fx:id="createMeetingButton" layoutX="954.0" layoutY="632.0" mnemonicParsing="false" onAction="#handleCreateMeeting" prefHeight="30.0" prefWidth="116.0" text="Book room" />
+      <Button fx:id="cancelButton" layoutX="445.0" layoutY="632.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="30.0" prefWidth="62.0" text="Cancel" />
+      <Label layoutX="640.0" layoutY="73.0" text="Rooms available : ">
+         <font>
+            <Font size="25.0" />
+         </font></Label>
+      <ListView fx:id="listViewRooms" layoutX="640.0" layoutY="139.0" prefHeight="457.0" prefWidth="430.0" />
    </children>
 </AnchorPane>

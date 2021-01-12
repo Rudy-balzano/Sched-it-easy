@@ -43,7 +43,7 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
                 equipment.setPrice(rs.getInt(3));
             }
         } catch (SQLException ex){
-            System.out.println("SQL request error");
+            ex.printStackTrace();
         }
 
         return equipment;
@@ -60,7 +60,7 @@ public class MySQLEquipmentDAO implements EquipmentDAO{
                 equipments.add(equipment);
             }
         } catch (SQLException ex){
-            System.out.println(ex.getSQLState());
+            ex.printStackTrace();
         }
         return equipments;
     }

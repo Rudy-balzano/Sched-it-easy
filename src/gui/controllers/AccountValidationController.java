@@ -55,7 +55,7 @@ public class AccountValidationController {
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
 
-            this.getChildren().addAll(label, button);
+            this.getChildren().addAll(label, button, button2);
 
             button.setOnAction(actionEvent -> {
                 String username = label.getText().split(" ")[0];

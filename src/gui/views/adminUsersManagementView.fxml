@@ -8,21 +8,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="461.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.AdminUsersManagementController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.AdminUsersManagementController">
    <children>
       <fx:include source="AdminMenu.fxml" />
-      <ListView fx:id="listViewU" layoutX="182.0" layoutY="85.0" prefHeight="148.0" prefWidth="378.0" />
-      <Button layoutX="280.0" layoutY="405.0" mnemonicParsing="false" onAction="#addNewAdmin" text="Add new Admin" />
-      <ListView fx:id="listViewM" layoutX="182.0" layoutY="243.0" prefHeight="148.0" prefWidth="378.0" />
-      <Label layoutX="51.0" layoutY="145.0" text="Users">
+      <ListView fx:id="listViewU" layoutX="182.0" layoutY="110.0" prefHeight="224.0" prefWidth="861.0" />
+      <Button layoutX="926.0" layoutY="636.0" mnemonicParsing="false" onAction="#addNewAdmin" prefHeight="38.0" prefWidth="117.0" text="Add new Admin" />
+      <ListView fx:id="listViewM" layoutX="182.0" layoutY="385.0" prefHeight="224.0" prefWidth="861.0" />
+      <Label layoutX="51.0" layoutY="96.0" text="Users">
          <font>
             <Font size="23.0" />
          </font></Label>
-      <Label layoutX="51.0" layoutY="303.0" text="Managers">
+      <Label layoutX="51.0" layoutY="371.0" text="Managers">
          <font>
             <Font size="22.0" />
          </font></Label>
-      <TextField layoutX="182.0" layoutY="42.0" prefHeight="27.0" prefWidth="271.0" fx:id="searchBar" onAction="#handleSearch"/>
+      <TextField fx:id="searchBar" layoutX="182.0" layoutY="42.0" onAction="#handleSearch" prefHeight="27.0" prefWidth="271.0" />
       <Text layoutX="51.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search : ">
          <font>
             <Font size="14.0" />

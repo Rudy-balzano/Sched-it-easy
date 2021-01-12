@@ -6,20 +6,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ManagerAddNewGroupController">
+<AnchorPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ManagerAddNewGroupController">
    <children>
-      <TextField fx:id="groupName" layoutX="255.0" layoutY="164.0" prefHeight="36.0" prefWidth="171.0" />
-      <Text layoutX="205.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a new group : " wrappingWidth="189.21630859375">
+      <TextField fx:id="groupName" layoutX="425.0" layoutY="350.0" prefHeight="36.0" prefWidth="238.0" />
+      <Text layoutX="217.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a new group : " wrappingWidth="251.21630859375">
          <font>
-            <Font size="19.0" />
+            <Font size="25.0" />
          </font>
       </Text>
-      <Text layoutX="128.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group name : " wrappingWidth="127.0">
+      <Text layoutX="217.0" layoutY="375.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group name : " wrappingWidth="127.0">
          <font>
-            <Font size="17.0" />
+            <Font size="20.0" />
          </font>
       </Text>
-      <Button layoutX="308.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleCreateGroup" prefHeight="36.0" prefWidth="109.0" text="Create group" />
-      <Button layoutX="165.0" layoutY="281.0" mnemonicParsing="false" onAction="#cancel" prefHeight="36.0" prefWidth="90.0" text="Cancel" />
+      <Button layoutX="554.0" layoutY="617.0" mnemonicParsing="false" onAction="#handleCreateGroup" prefHeight="36.0" prefWidth="109.0" text="Create group" />
+      <Button layoutX="425.0" layoutY="617.0" mnemonicParsing="false" onAction="#cancel" prefHeight="36.0" prefWidth="90.0" text="Cancel" />
    </children>
 </AnchorPane>
